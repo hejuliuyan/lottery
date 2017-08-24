@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/login.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init({  
+			  keyEventBind:{  
+			    backbutton:true  
+			  }  
+			});
+			
+			var first=null;  
+			mui.back=function(){  
+			  if(!first){  
+			    first=new Date().getTime();  
+			    mui.toast('再按一次退出应用!');  
+			  
+			    setTimeout(function(){  
+			      first=null;  
+			    },2000);  
+			  }else{  
+			    if(new Date().getTime()-first<2000){  
+			      plus.runtime.quit();  
+			   }  
+			 }  
+			};  
+    </script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">登录</h1>
+	</header>
+	<div class="mui-content">
+	    <div class="login">
+	    	 <div class="mui-input-row us">
+		       	<div class='head'><img src="wimages/head.png" width='15' height="15"/></div>
+		        <input id='user' type="text" class="mui-input-clear inp" placeholder="请输入手机号码/用户名">
+		    </div>
+		     <div class="mui-input-row pass">
+		       	<div class='head'><img src="wimages/lock.png" width='15' height="15"/></div>
+		        <input id='pass' type="password" class="mui-input-password inp" placeholder="请输入密码">
+		    </div>
+	    </div>
+	    
+	    <div class='mid_font'>
+	    	<div class='mm_login' ><input class='mdl' type="checkbox" />&nbsp;&nbsp;<span>30天免密登录</span></div>
+	    	<div class='foget_pass'>忘记密码？</div>
+	    	<div class='clear'></div>
+	    </div>
+	     <div class='sub_btn' ><button type="button" class="mui-btn mui-btn-danger sub log">登录</button></div>
+	      <div class='sub_btn' ><button type="button" class="mui-btn mui-btn-danger mui-btn-outlined sub reg">注册</button></div>
+	</div>
+</body>
+<script type="text/javascript">
+	
+	var userid = window.localStorage.getItem("token");
+	var openid = window.localStorage.getItem("openid");
+	var login_bs=window.localStorage.getItem("login_bs");
+	var next = window.localStorage.getItem("next");
+	
+	if(isWeiXin()){
+			/*if(!userid){
+				mui.openWindow({
+					url: config[0].url+'/index.php/wx?tz=1', 
+					id:'wx'						 
+				});
+			}*/
+			
+			if(login_bs==1){
+				mui.ajax(config[0].url+'/index.php/wxlogin',{
+					data:{userid:userid,},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						if(typeof data == "string") {var data = eval('('+data+')');}
+						//console.log(data);
+						
+						if(data.data){
+							
+							if(data.tata[0].active==1){
+								mui.alert('该账号已被禁用');
+								return;
+							}
+							var userid = data.data[0].tokenid;
+							
+							//window.localStorage.setItem('nickname', data.data[0].wx_name);
+							window.localStorage.setItem('token', userid);
+							window.localStorage.setItem('phone',data.data[0].mobile);
+							
+							mui.ajax(config[0].url+'/index.php/wx_name',{
+								data:{token:userid,type:1},
+								dataType:'json',//服务器返回json格式数据
+								type:'post',//HTTP请求类型
+								timeout:10000,//超时时间设置为10秒；
+								success:function(data){
+									if(typeof data == "string") {var data = eval('('+data+')');}
+									console.log(data);
+									window.localStorage.setItem('nickname',data.nickname);
+									window.localStorage.setItem('headimgurl', data.headimgurl);
+									window.localStorage.setItem('login_bs','1');
+									
+									
+									mui.openWindow({
+										    url: 'index.html', 
+										    id:'index',
+										    createNew:true
+										});
+									
+									
+								},
+								error:function(xhr,type,errorThrown){
+									//异常处理；
+									console.log(type);
+									switch (type) {
+						              case "timeout":
+						                mui.toast('连接超时，请重试');
+						                break;
+						              default:
+						                mui.toast('请重试或重新登录');
+						            }
+								}
+							});
+							
+//							
+						}else{
+							
+							
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(type);
+						switch (type) {
+			              case "timeout":
+			                mui.toast('连接超时，请重试');
+			                break;
+			              default:
+			                mui.toast('请重试或重新登录');
+			            }
+					}
+				});
+				
+			}else{
+			
+				
+				
+				
+				
+			}
+	
+	}else{
+		
+		if(login_bs==1){
+			var log_time=parseInt(window.localStorage.getItem('login_time'));
+			var now_time=parseInt(Date.parse(new Date()));
+			var c_time=log_time-now_time;
+			var th_time=30*24*3600;
+			if(c_time>0){
+				mui.openWindow({
+				    url: 'index.html', 
+				    id:'index',
+				    createNew:true
+				});
+			}else{
+				
+			}
+		}
+		/*if(userid){
+			var log_time=parseInt(window.localStorage.getItem('login_time'));
+			var now_time=parseInt(Date.parse(new Date()));
+			var c_time=log_time-now_time;
+			var th_time=30*24*3600;
+			if(c_time>0){
+				mui.openWindow({
+				    url: 'index.html', 
+				    id:'index'						 
+				});
+			}else{
+				mui.openWindow({
+				    url: 'index.html', 
+				    id:'index'						 
+				});
+			}
+			
+		}*/
+	}
+	
+	
+window.onload = function(){
+	    if(isWeiXin()){
+	        jQuery('.mm_login').hide();
+	        jQuery('.log').on('tap',function(){
+				var phone=jQuery('#user').val();
+				var pass=jQuery('#pass').val();
+				//var userid = window.localStorage.getItem("token");
+				
+				
+				
+				mui.ajax(config[0].url+'/index.php/login',{
+					data:{mobile:phone,password:pass,
+					},
+					dataType:'json',//服务器返回json格式数据
+				  	type:'post',//HTTP请求类型
+				  	timeout:10000,//超时时间设置为10秒；
+				 	success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					    if(data==false){
+					   		mui.toast('账号不存在或者密码错误')
+						}else{
+					   		
+						   	window.localStorage.setItem('token',data[0].tokenid);
+						   	window.localStorage.setItem('phone',phone);
+						   	var userid = data[0].tokenid;
+						   	mui.ajax(config[0].url+'/index.php/wx_name',{
+								data:{token:userid,type:1},
+								dataType:'json',//服务器返回json格式数据
+								type:'post',//HTTP请求类型
+								timeout:10000,//超时时间设置为10秒；
+								success:function(data){
+									if(typeof data == "string") {var data = eval('('+data+')');}
+									console.log(data);
+									
+									window.localStorage.setItem('nickname',data.nickname);
+									window.localStorage.setItem('headimgurl', data.headimgurl);
+									window.localStorage.setItem('login_bs','1');
+									 //alert('qq'+window.localStorage.getItem('userid'));
+									if(next=='p3'){
+										mui.openWindow({
+										    url: 'p3_sec.html', 
+										    id:'p3_sec',
+										    createNew:true
+										});
+										return;
+									}else if(next=='p5'){
+										mui.openWindow({
+										    url: 'p5_sec.html', 
+										    id:'p5_sec',
+										    createNew:true
+										});
+										return;
+									}else if(next=='dlt'){
+										mui.openWindow({
+										    url: 'dlt_sec.html', 
+										    id:'dlt_sec',
+										    createNew:true
+										});
+										return;
+									}else if(next=='qxc'){
+										mui.openWindow({
+										    url: 'qxc_sec.html', 
+										    id:'qxc_sec',
+										    createNew:true
+										});
+										return;
+									}
+									
+									mui.openWindow({
+									    url: 'index.html', 
+									    id:'index',
+									    createNew:true
+									});
+									
+								},
+								error:function(xhr,type,errorThrown){
+									//异常处理；
+									console.log(type);
+									switch (type) {
+						              case "timeout":
+						                mui.toast('连接超时，请重试');
+						                break;
+						              default:
+						                mui.toast('请重试或重新登录');
+						            }
+								}
+							});
+						   	//alert(window.localStorage.getItem('userid'));
+					    	
+						}
+								 
+			
+					},
+					error:function(xhr,type,errorThrown){
+					    //异常处理；
+					    console.log(type);
+					    switch (type) {
+			              case "timeout":
+			                mui.toast('连接超时，请重试');
+			                break;
+			              default:
+			                mui.toast('请重试或重新登录');
+			            }
+						}
+				});
+	
+			})
+	    }else{
+	    	jQuery('.log').on('tap',function(){
+				var phone=jQuery('#user').val();
+				var pass=jQuery('#pass').val();
+				mui.ajax(config[0].url+'/index.php/login',{
+					data:{mobile:phone,password:pass,
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					    /*console.log(JSON.stringify(data));*/
+					    if(data==false){
+					   		mui.toast('账号不存在或者密码错误')
+					    }else{
+						   	if(jQuery('.mdl').is(':checked')){
+								var login_time = Date.parse(new Date())+30*24*3600;
+							
+								 window.localStorage.setItem('login_time',login_time);
+							}
+						   	window.localStorage.setItem('token',data[0].tokenid);
+						   	window.localStorage.setItem('phone',phone);
+						   	window.localStorage.setItem('login_bs','1');
+					   	  
+	
+						    mui.openWindow({
+							    url: 'index.html', 
+							    id:'index',
+							    createNew:true
+							});
+						}
+							 
+		
+					},
+					error:function(xhr,type,errorThrown){
+						    //异常处理；
+						    console.log(type);
+						    switch (type) {
+				              case "timeout":
+				                mui.toast('连接超时，请重试');
+				                break;
+				              default:
+				                mui.toast('请重试或重新登录');
+				            }
+						}
+				});
+	
+			})
+		}
+	}
+	
+function isWeiXin(){
+	    var ua = window.navigator.userAgent.toLowerCase();
+	    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+	        return true;
+	    }else{
+	        return false;
+	    }
+}
+
+function GetRequest() {
+  
+  var url = location.search; //获取url中"?"符后的字串
+   var theRequest = new Object();
+   if (url.indexOf("?") != -1) {
+      var str = url.substr(1);
+      strs = str.split("&");
+      for(var i = 0; i < strs.length; i ++) {
+         theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+      }
+   }
+   return theRequest;
+}
+
+	
+	//注册跳转
+	jQuery('.reg').on('tap',function(){
+		 mui.openWindow({
+						    url: 'reg.html', 
+						    id:'reg',
+						    createNew:true
+						});
+	})
+	
+	//手机号匹配
+	function iphone(obj){   
+           
+        reg=/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;    
+        if(!reg.test(obj)){   
+           return false;
+        }else{   
+           return true;
+        }   
+    }   
+    
+    //密码匹配
+    function passwd(obj){   
+           
+        reg=/^\w{6,20}$/;    
+        if(!reg.test(obj)){   
+           return false;
+        }else{   
+           return true;   
+        }   
+    }
+   
+
+</script>
+</html>

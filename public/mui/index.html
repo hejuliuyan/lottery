@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>首页</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/config.js"></script>
+	<!--标准mui.css-->
+	<link rel="stylesheet" href="css/mui.min.css">
+	<link rel="stylesheet" href="css/css.css">
+
+	<style>
+		body {
+			background-color: #f2f2f2;
+		}
+		/*.mui-slider .mui-slider-group .mui-slider-item img{ height: 180px;}*/
+
+		footer li div {
+			margin-top: 0 !important;
+		}
+
+		.mui-grid-view.mui-grid-9 .mui-table-view-cell>a:not (.mui-btn) {
+			margin: -14px;
+			padding: 4px 0 2px 0;
+		}
+
+		.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+			font-size: 14px;
+		}
+
+		.mui-slider .mui-slider-group .mui-slider-item img {
+			height: 200px;
+		}
+
+		.mui-grid-view.mui-grid-9 {
+			margin: 0;
+			padding: 0;
+			background-color: #fff;
+		}
+
+		.mui-grid-view.mui-grid-9 {
+			border-top: none;
+			border-left: none;
+		}
+
+		.bottom_nav {
+			display: table-cell;
+			overflow: hidden;
+			width: 1%;
+			height: 50px;
+			text-align: center;
+			vertical-align: middle;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			color: #929292;
+		}
+
+		.bottom_nav .mui-icon {
+			top: 3px;
+			width: 24px;
+			height: 24px;
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		.mui-bar-tab .bottom_nav .mui-icon~.mui-tab-label {
+			font-size: 11px;
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.index {
+			background-image: url(./wimages/index.png);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			width: 24px;
+			height: 22px;
+			background-position: center;
+			display: block;
+			margin: 0 auto;
+			margin-top: 3px;
+		}
+
+		.index_font {
+			font-size: 11px;
+			color: #56abe4;
+		}
+
+		.wd_font {
+			font-size: 11px;
+			color: lightgray;
+		}
+
+		.wd {
+			background-image: url(./wimages/gr2.png);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			width: 24px;
+			height: 22px;
+			background-position: center;
+			display: block;
+			margin: 0 auto;
+			margin-top: 3px;
+		}
+		
+		.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+			padding: 11px 9px;
+		}
+
+		.wi {
+			width: 100%;
+			height: 70px;
+			background-color: #fff;
+		}
+
+		.w_left,
+		.w_mid,
+		.w_right {
+			width: 30%;
+			height: 70px;
+			float: left;
+			/*border: 1px solid black;*/
+			margin-left: 2%;
+			text-align: center;
+		}
+
+		.pic_one {
+			background-image: url(wimages/b1.png);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			width: 32px;
+			height: 38px;
+			background-position: center;
+			display: block;
+			margin: 0 auto;
+			margin-top: 4px;
+		}
+
+		.pic_two {
+			background-image: url(wimages/z1.png);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			width: 32px;
+			height: 38px;
+			background-position: center;
+			display: block;
+			margin: 0 auto;
+			margin-top: 4px;
+		}
+
+		.pic_three {
+			background-image: url(wimages/d1.png);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			width: 32px;
+			height: 38px;
+			background-position: center;
+			display: block;
+			margin: 0 auto;
+			margin-top: 4px;
+		}
+
+		.pic_font {
+			color: #56abe4;
+			font-size: 14px;
+		}
+
+		.index_center {
+			background-color: #f2f2f2;
+			color: gray;
+		}
+
+		.w96 {
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<!--<footer>
+		<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="cpkj.html">
+						<span class="bot_ico"></span><div class="mui-media-body">首页</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="bot_ico"></span><div class="mui-media-body">门店</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="bot_ico"></span><div class="mui-media-body">我的</div>
+					</a>
+				</li>
+			</ul>
+	</footer>-->
+	<nav class="mui-bar mui-bar-tab">
+		<a class="bottom_nav mui-active" href="#tabbar">
+			<span class="index"></span>
+			<span class="mui-tab-label index_font">首页</span>
+		</a>
+		<!--<a class="bottom_nav" href="#tabbar-with-chat">
+			<span class="mui-icon mui-icon-email"></span>
+			<span class="mui-tab-label">搜店</span>
+		</a> -->
+		<!--线路-->
+		
+		<a class="bottom_nav w_info">
+			<span class="wd"></span>
+			<span class="mui-tab-label wd_font">我的</span>
+		</a>
+
+	</nav>
+	<!--滚动图片-->
+	<section id="slider" class="mui-slider">
+		<div class="mui-slider-group mui-slider-loop">
+			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<!--<a href="#"><img src="images/1.jpg"></a>-->
+			</div>
+			<div class="mui-slider-item">
+				<a href="#"><img src="/admin/uploads/images/1467106126.jpg"></a>
+			</div>
+			<div class="mui-slider-item">
+				<a href="#"><img src="/admin/uploads/images/1467106118.jpg"></a>
+			</div>
+			<div class="mui-slider-item">
+				<a href="#"><img src="/admin/uploads/images/1467106101.jpg"></a>
+			</div>
+			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<!--<a href="#"><img src="images/1.jpg"></a>-->
+			</div>
+		</div>
+		<div class="mui-slider-indicator">
+			<!--<div class="mui-indicator mui-active"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>-->
+		</div>
+	</section>
+	<!--中间区域-->
+	<section>
+		<div class="index_center">关于我们</div>
+		<div class="w96 wi" style='border:1px solid #56abe4'>
+			<div class='w_left' style='margin-left: 3%;'>
+				<dt class='pic_one'></dt>
+				<dt class='pic_font'>消费者保障服务</dt>
+			</div>
+			<div class='w_mid'>
+				<dt class='pic_two'></dt>
+				<dt class='pic_font'>官方授权代销</dt>
+			</div>
+			<div class='w_right'>
+				<dt class='pic_three'></dt>
+				<dt class='pic_font'>实体店出票兑奖</dt>
+			</div>
+		</div>
+		<div class="index_center">数字</div>
+		<div class="w96">
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3">
+					<a href="dlt.html"> <span class="ico ico1"></span>
+						<div class="mui-media-body">大乐透</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3">
+					<a href="qxc.html"> <span class="ico ico2"></span>
+						<div class="mui-media-body">七星彩</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3">
+					<a href="p3.html"> <span class="ico ico3"></span>
+						<div class="mui-media-body">排列三</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3">
+					<a href="p5.html"> <span class="ico ico4"></span>
+						<div class="mui-media-body">排列五</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="index_center">竞彩</div>
+		<div class="w96">
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3">
+					<a href="javascript:void(0)" onclick="qd()"> <span class="ico ico5"></span>
+						<div class="mui-media-body">竞彩足球</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3">
+					<a href="javascript:void(0)" onclick="qd()"> <span class="ico ico6"></span>
+						<div class="mui-media-body">竞彩篮球</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3">
+					<a href="javascript:void(0)" onclick="qd()"> <span class="ico ico7"></span>
+						<div class="mui-media-body">任选九</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3">
+					<a href="javascript:void(0)" onclick="qd()"> <span class="ico ico8"></span>
+						<div class="mui-media-body">胜负彩</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+
+	</section>
+	<!--主体底部图片-->
+	<section class="index_bot">
+		<div>
+				<!--<img src="wimages/index_bot.png">-->
+		</div>
+	</section>
+	<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+	<script src="js/jquery-latest.js"></script>
+	<script src="js/tk_check.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+	//alert(config[0].url);
+		mui.init({
+			keyEventBind: {
+				backbutton: true
+			}
+		});
+
+		var first = null;
+		mui.back = function() {
+			if (!first) {
+				first = new Date().getTime();
+				mui.toast('再按一次退出应用!');
+
+				setTimeout(function() {
+					first = null;
+				}, 2000);
+			} else {
+				if (new Date().getTime() - first < 2000) {
+					plus.runtime.quit();
+				}
+			}
+		};
+	</script>
+	<script>
+		/*if(navigator.geolocation){
+				      alert('支持');
+				    }else{
+				      alert('不支持');
+				    }*/
+
+
+		var position_option = {
+			enableHighAccuracy: true,
+			maximumAge: 30000,
+			timeout: 20000
+		};
+		navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError, position_option);
+//alert(222)
+		function getPositionSuccess(position) {
+			var lat = position.coords.latitude;
+			var lng = position.coords.longitude;
+			window.localStorage.setItem('lat', lat);
+			window.localStorage.setItem('long', lng);
+			//alert(lat)
+			//		        alert( "您所在的位置： 纬度" + lat + "，经度" + lng );
+			if (typeof position.address !== "undefined") {
+				var country = position.address.country;
+				var province = position.address.region;
+				var city = position.address.city;
+				//		                alert(' 您位于 ' + country + province + '省' + city +'市');
+			}
+		}
+
+		function getPositionError(error) {
+			switch (error.code) {
+				case error.TIMEOUT:
+					//		            alert("连接超时，请重试");
+					break;
+				case error.PERMISSION_DENIED:
+					alert("您拒绝了使用位置共享服务，查询已取消");
+					break;
+				case error.POSITION_UNAVAILABLE:
+					alert("获取位置信息失败");
+					break;
+			}
+		}
+
+
+		window.localStorage.setItem('nb_type', '');
+		window.localStorage.setItem('nb', '');
+		window.localStorage.setItem('update_num', '');
+		window.localStorage.setItem('next', '');
+		window.localStorage.setItem('choose_shop', '');
+		
+		function qd(){
+			mui.toast('敬请期待');
+		}
+
+
+		if (isWeiXin()) {
+
+
+
+
+
+
+			/**
+			 * 测试
+			 */
+
+			//页面标题
+			mui.ajax(config[0].url+'/index.php/index_title', {
+				data: {
+
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					//if(typeof data == "string") {var data = eval('('+data+')');}
+					//					console.log(data);
+					if (data == false) {
+						window.document.title = "首页";
+						//document.title='首页';
+						//$(document).attr("title", "bbbbbbbbbbb");
+					} else {
+						//document.title=data[0].shop_name;
+						window.document.title = data[0].shop_name;
+					}
+
+
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+					switch (type) {
+						case "timeout":
+							mui.toast('连接超时，请重试');
+							break;
+						default:
+							mui.toast('请重试或重新登录');
+					}
+				}
+			});
+
+
+			var url = window.location.href;
+			//alert(url);
+			var tk = url.substr(url.lastIndexOf('?') + 1, 2);
+			var sid = url.substr(url.lastIndexOf('?') + 1, 6);
+			//alert(sid);
+			if (window.localStorage.getItem('shop_id')) {
+				window.localStorage.setItem('shop_id', '');
+			}
+
+
+			//alert(tk)
+			//从正常用户端进入
+			if (tk == 'tk') {
+				//window.localStorage.setItem('shop_bj',0);
+				var token = url.substring(url.lastIndexOf('=') + 1, url.length);
+				window.localStorage.setItem('token', token);
+				phone(token);
+				wx_name(token, 1);
+				mui.ajax(config[0].url+'/index.php/index_title', {
+					data: {
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//if(typeof data == "string") {var data = eval('('+data+')');}
+						console.log(data);
+						if (data == false) {
+							window.document.title = "首页";
+							//document.title='首页';
+							//$(document).attr("title", "bbbbbbbbbbb");
+						} else {
+							//document.title=data[0].shop_name;
+							window.document.title = data[0].shop_name;
+						}
+
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+
+				//alert(3);
+				//alert(1)
+			} else {
+				//扫店铺码进入
+				if (sid == 'shopid') {
+					//alert(2);
+					//window.localStorage.setItem('shop_bj',1);
+					var shopid = url.substring(url.lastIndexOf('=') + 1, url.length);
+					var userid = window.localStorage.getItem('token');
+
+
+					console.log(userid);
+					//get_token(userid);
+					if (userid == '' || userid == null || userid == undefined) {
+						var url = config[0].url+"/index.php/wx?tz=1&&shopid=" + shopid;
+						mui.openWindow({
+								url: url,
+							})
+							//alert(4)
+					} else {
+
+
+
+
+						//alert(1)
+						mui.ajax(config[0].url+'/index.php/session_shop', {
+							data: {
+								token: userid,
+								shopid: shopid,
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								//if(typeof data == "string") {var data = eval('('+data+')');}
+								console.log(data);
+
+
+
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+								switch (type) {
+									case "timeout":
+										mui.toast('连接超时，请重试');
+										break;
+									default:
+										mui.toast('请重试或重新登录');
+								}
+							}
+						});
+					}
+
+
+
+
+				} else {
+					var userid = window.localStorage.getItem('token');
+					console.log(userid);
+					if (userid == '' || userid == null || userid == undefined) {
+						mui.openWindow({
+							url: config[0].url+"/index.php/wx?tz=1",
+						})
+					}
+
+				}
+
+				mui.ajax(config[0].url+'/index.php/index_title', {
+					data: {
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//if(typeof data == "string") {var data = eval('('+data+')');}
+						console.log(data);
+						if (data == false) {
+							window.document.title = "首页";
+							//document.title='首页';
+							//$(document).attr("title", "bbbbbbbbbbb");
+						} else {
+							//document.title=data[0].shop_name;
+							window.document.title = data[0].shop_name;
+						}
+
+
+
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+				//window.localStorage.setItem('shop_bj',0);
+				//var shop_bj=window.localStorage.getItem('shop_bj');
+
+
+			}
+
+
+			mui.ajax(config[0].url+'/index.php/jdk', {
+				data: {
+					url: url
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if (typeof data == "string") {
+						var data = eval('(' + data + ')');
+					}
+					console.log(data);
+					/*$('.timestamp').val(data.time);
+					$('.nonceStr').val(data.noncestr);
+					$('.signature').val(data.data);*/
+					var time = data.time;
+					var nonc = data.noncestr;
+					var sig = data.data;
+
+					wx.config({
+
+						debug: false,
+						appId: 'wxe71525fd5bf234b2',
+						timestamp: time,
+						nonceStr: nonc,
+						signature: sig,
+						jsApiList: ['openLocation', 'getLocation']
+					});
+
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+					switch (type) {
+						case "timeout":
+							mui.toast('连接超时，请重试');
+							break;
+						default:
+							mui.toast('请重试或重新登录');
+					}
+				}
+			});
+			wx.ready(function() {
+				wx.getLocation({
+					type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+					success: function(res) {
+						var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+						var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+						var speed = res.speed; // 速度，以米/每秒计
+						var accuracy = res.accuracy; // 位置精度
+						// console.log(res);
+						/* Location(); */
+						/*window.localStorage.setItem('lat', latitude);
+						window.localStorage.setItem('long', longitude);*/
+					}
+				});
+			})
+
+
+
+			$(document).on('tap', '.w_info', function() {
+				//alert(123);
+				var userid = window.localStorage.getItem('token');
+				var html = 'zx_personal.html';
+				token_check(userid, html);
+
+			});
+
+
+
+
+		} else {
+
+			var token = window.localStorage.getItem('token');
+			phone(token);
+			wx_name(token, 1);
+
+			$(document).on('tap', '.w_info', function() {
+				//alert(123);
+				var userid = window.localStorage.getItem('token');
+				var html = 'zx_personal.html';
+				token_check(userid, html);
+
+				/*mui.openWindow({
+					url:'login.html'
+				})*/
+
+			});
+
+
+		}
+
+		mui.get(config[0].url+'/index.php/index_pic', function(data) {
+			var html_pic = '';
+			html_pic = '<div class="mui-slider-item mui-slider-item-duplicate"></div>';
+
+			for (var i = 0; i < data.length; i++) {
+				//		 	alert(data[i].p_name);
+				html_pic += '<div class="mui-slider-item"><a href="#"><img src="http://test.foodietech.cn/admin/uploads/images/' + data[i].p_name + '"></a></div>';
+			}
+			html_pic += '<div class="mui-slider-item mui-slider-item-duplicate"></div>';
+			jQuery('.mui-slider-loop').html(html_pic);
+			var pic_list = '<div class="mui-indicator mui-active"></div>';
+			for (var i = 0; i < (data.length - 1); i++) {
+				pic_list += '<div class="mui-indicator"></div>';
+			}
+			jQuery('.mui-slider-indicator').html(pic_list); /*  mui-slider-indicator */
+			//console.log(html_pic);
+
+		}, 'json');
+
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		//获取电话号码
+		function phone(obj) {
+			//var ul=config[0].url+'/index.php/get_phone';
+			mui.ajax(config[0].url+'/index.php/get_phone', {
+				data: {
+					token: obj,
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if (typeof data == "string") {
+						var data = eval('(' + data + ')');
+					}
+					//alert(123)
+					window.localStorage.setItem('phone', data);
+
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+					switch (type) {
+						case "timeout":
+							mui.toast('连接超时，请重试');
+							break;
+						default:
+							mui.toast('请重试或重新登录');
+					}
+				}
+			});
+		}
+
+		//获取用户微信相关信息
+		function wx_name(token, type) {
+			mui.ajax(config[0].url+'/index.php/wx_name', {
+				data: {
+					token: token,
+					type: type,
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if (typeof data == "string") {
+						var data = eval('(' + data + ')');
+					}
+					//console.dir(data.headimgurl);
+					window.localStorage.setItem('nickname', data.nickname);
+					window.localStorage.setItem('headimgurl', data.headimgurl);
+					//console.log(window.localStorage.getItem('nickname'));
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+					switch (type) {
+						case "timeout":
+							mui.toast('连接超时，请重试');
+							break;
+						default:
+							mui.toast('请重试或重新登录');
+					}
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

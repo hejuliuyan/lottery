@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的钱箱</title>
+    <meta name="viewport" content="width=device-width, 		initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <style>
+        .header_d>.mui-btn {
+            border-color: #FFFFFF;
+            margin: 15px 15px 0 0;
+        }
+
+        .mui-bar {
+            background-color: #EEEEEE;
+        }
+    </style>
+</head>
+
+<body>
+    <!--<header class="mui-bar mui-bar-nav"><h1 class="mui-title">我的钱包</h1></header>-->
+    <header class="mui-bar mui-bar-nav">
+        <a href="shop_zx.html" class=" mui-icon mui-icon-left-nav mui-pull-left bck"></a>
+        <h1 class="mui-title">交易流水</h1>
+    </header>
+    <!--<section class="ord1_top">
+    <div class="head_div head_col">
+        <div class="header_d">
+            <p class="head_col">账户余额（元）</p>
+            <p class="head_col head_money">0</p>
+        </div>
+        <div class="header_d head_col">
+            <button type="button"
+                    class="mui-btn mui-btn-outlined head_col withdrawal">提现
+            </button>
+            <button type="button"
+                    class="mui-btn mui-btn-outlined head_col money_up">充值
+            </button>
+        </div>
+    </div>
+</section>-->
+    <section style="margin-top: 46px;">
+        <!--<p class="p_color">额度限制</p>
+    <div class="balance_div div_color">
+        每日单笔提现限<span class="yu_e">1000元</span>
+    </div>
+    <p class="p_color">最近交易记录</p>-->
+        <div style="width: 100%"><input type="text" name="phone" class="input_s" id="search_data" style="border: none; margin-bottom: 0px;width: 85%" placeholder="输入用户手机号查找" /><button id="search_but" style="width: 14%;height:40px;">GO</button></div>
+        <div class="div_color">
+            <button type="button" class="a_action but_ccl mui-btn  mui-btn-outlined search_b" data-id="1">最近一周
+        </button>
+            <button type="button" class="but_ccl mui-btn  mui-btn-outlined search_b" data-id="2">最近一月
+        </button>
+            <button type="button" class="but_ccl mui-btn  mui-btn-outlined search_b" data-id="3">最近三月
+        </button>
+        </div>
+    </section>
+    <div class="oldd" style="padding-top: 30px;"></div>
+
+
+</body>
+<script>
+    var shopid = window.localStorage.getItem('shopid');
+
+    $('#search_but').on('tap', function() {
+        var phone = $('#search_data').val();
+        read('1', phone);
+    });
+    /*read('1');*/
+    $('.but_ccl').on('tap', function() {
+        /*$(".but_ccl").click(function() {*/
+        var a = $(this).data('id');
+        $(this).siblings(".but_ccl").removeClass("a_action");
+        $(this).addClass("a_action");
+        var phone = $('#search_data').val();
+        read(a, phone);
+    });
+    /**
+     * 获取交易列表信息
+     */
+    function read(obj, phone) {
+        jQuery('.oldd').html('');
+
+        mui.get(
+            config[0].url+'/index.php/mycashbox', {
+                phone: phone,
+                date: obj,
+                token: shopid
+            },
+            function(data) {
+                /* if(data.res[0].trans_balance){
+                 jQuery('.head_money').text('');
+                 } */
+                //jQuery('.head_money').text('');
+                var y_e = Math.floor(data.res);
+                if (y_e == '' || y_e == null) {
+                    var y_e = '0';
+                }
+                jQuery('.head_money').text(y_e);
+                for (var i = 0; i < data.arr.length; i++) {
+                    if (data.arr[i].trans_title == 1) {
+                        data.arr[i].trans_title = '充值';
+                        data.arr[i].img = 'lower_money.png';
+                        data.arr[i].f_color = 'red';
+                        data.arr[i].fuhao = '+';
+                    } else if (data.arr[i].trans_title == 2) {
+                        data.arr[i].trans_title = '用户消费';
+                        data.arr[i].img = 'upper_money.png';
+                        data.arr[i].f_color = '#30D65A';
+                        data.arr[i].fuhao = '-';
+                    } else if (data.arr[i].trans_title == 3) {
+                        data.arr[i].trans_title = '派奖';
+                        if (data.arr[i].trans_way == 2) {
+                            data.arr[i].img = 'equal.png';
+                        } else {
+                            data.arr[i].img = 'lower_money.png';
+                        }
+                        //data.arr[i].img = 'upper_money.png';
+                        data.arr[i].f_color = '#30D65A';
+                        data.arr[i].fuhao = '-';
+                    } else if (data.arr[i].trans_title == 4) {
+                        data.arr[i].trans_title = '提现';
+                        data.arr[i].img = 'upper_money.png';
+                        data.arr[i].f_color = '#30D65A';
+                        data.arr[i].fuhao = '-';
+                    } else if (data.arr[i].trans_title == 5) {
+                        data.arr[i].trans_title = '用户充值';
+                        data.arr[i].img = 'lower_money.png';
+                        data.arr[i].f_color = 'red';
+                        data.arr[i].fuhao = '+';
+                    }
+                }
+                /* console.info(data); */
+                var html = '';
+                for (var i = 0; i < data.arr.length; i++) {
+                    html += '<section class="money_list"><div class="lists"><div class="list_left"><dt class="list_left_font">' +
+                        data.arr[i].trans_title +
+                        '</dt><dt class="list_left_time" style="font-size: small; color: #909090;">' +
+                        data.arr[i].trans_date +
+                        '</dt></div><div class="list_img"><img	src="wimages/' + data.arr[i].img + '" /></div><div class="list_right"><div class="div_left"><dt style="color: ' +
+                        data.arr[i].f_color + ';">' +
+                        data.arr[i].fuhao +
+                        Math.floor(data.arr[i].trans_price) +
+                        '<dt style="font-size: smaller; color: #909090;">余额' +
+                        Math.floor(data.arr[i].trans_balance) +
+                        '元</dt></div><div class="a_img"><button type="button" class="go_info" data-id=' + data.arr[i].id +
+                        '><img src="/mui/wimages/aaa_ok.png" /></button></div></div></div></section>';
+                }
+                /* console.info(html); */
+                jQuery('.oldd').html(html);
+            }, 'json');
+        return false;
+
+    }
+
+    $(document).on(
+        'tap',
+        '.withdrawal',
+        function() {
+            window.location.href = "mycashbox_wd.html?money=" +
+                jQuery('.head_money').text();
+        });
+    $(document).on(
+        'tap',
+        '.money_up',
+        function() {
+            /* mui.openWindow({
+             url: 'mywallet_info.html'
+             }); */
+
+            window.location.href = "mycashbox_up.html?money=" +
+                jQuery('.head_money').text();
+            /* $(this).siblings(".but_ccl").removeClass("a_action");
+             $(this).addClass("a_action");
+             read(a); */
+        });
+    /* 跳转到详情页 */
+    $(document).on('tap', '.go_info', function() {
+        var id = $(this).data('id');
+        window.localStorage.setItem('shop_member_id', id);
+        mui.openWindow({
+            url: 'mycashbox_info.html',
+            createNew: true
+        });
+    });
+</script>
+
+</html>

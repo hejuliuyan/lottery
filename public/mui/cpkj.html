@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>彩票开奖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!--标准mui.css-->
+<link rel="stylesheet" href="css/mui.min.css">
+<link rel="stylesheet" href="css/css.css">
+<style>
+	.cpkj_wx>a:not(.mui-btn) {
+		color: rgba(13, 122, 241, 0.67);
+		font-size: 12px;
+	}
+	.mui-table-view-cell {
+	    padding: 8px 15px;
+	}
+</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">彩票开奖</h1>
+	</header>
+	<!--微信订阅-->
+	<section class="cpkj">
+		<div class="mui-table-view-cell cpkj_wx">
+			<a class="mui-navigate-right">免费订阅,开奖结果自动通知到微信</a>
+		</div>
+	</section>
+	<!--彩票开奖结果-->
+	<section>
+		<ul class="mui-table-view mui-table-view-chevron">
+			<li class="mui-table-view-cell mui-media">
+				<a class="mui-navigate-right">
+					<div class="mui-media-body">
+						<dt class="cpkj_dt">
+							<span>福彩3D</span><span>20160202期</span><span>2016-01-02</span>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt class='cp_fc'>
+							<div class="">组三<span>7</span><span>9</span><span>8</span></div>
+							<span>试机号: 1机1球  6 8 1</span>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt>每天晚20:30开奖</dt>
+					</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a class="mui-navigate-right">
+					<div class="mui-media-body">
+						<dt class="cpkj_dt">
+							<span>双色球</span><span>20160202期</span><span>2016-01-02</span>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt class='cp_fc'>
+							<div class=""><span>7</span><span>7</span><span>7</span><span>7</span><span>9</span><span>8</span></div>
+							<div><span>7</span></div>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt>每周二、四、日晚21:15开奖</dt>
+					</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a class="mui-navigate-right">
+					<div class="mui-media-body">
+						<dt class="cpkj_dt">
+							<span>大乐透</span><span class="w_1num">20160202期</span><span class="w_1date">2016-01-02</span>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt class='cp_fc'>
+							<div class="w_1numbers"><span>7</span><span>7</span><span>7</span><span>9</span><span>8</span></div>
+							<div class="w_1numbersb"><span>7</span><span>7</span></div>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt>每周一、三、六晚20:30开奖</dt>
+					</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a class="mui-navigate-right">
+					<div class="mui-media-body">
+						<dt class="cpkj_dt">
+							<span>足球胜负/任九</span><span class="w_2num">20160202期</span><span class="w_2date">2016-01-02</span>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt class='cp_rj'>
+							<div class="w_2numbers">
+								<span>7</span><span>7</span><span>7</span><span>9</span><span>8</span><span>7</span><span>7</span><span>7</span><span>9</span><span>8</span><span>9</span><span>8</span>
+								<div style="clear: both;"></div>
+							</div>
+						</dt>
+					</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a class="mui-navigate-right">
+					<div class="mui-media-body">
+						<dt class="cpkj_dt">
+							<span>排列三</span><span class="w_3num">20160202期</span><span class="w_3date">2016-01-02</span>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt class='cp_fc'>
+							<div class="w_3numbers"><span>7</span><span>7</span><span>7</span></div>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt>每周一、三、六晚20:30开奖</dt>
+					</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a class="mui-navigate-right">
+					<div class="mui-media-body">
+						<dt class="cpkj_dt">
+							<span>排列五</span><span class="w_5num">20160202期</span><span class="w_5date">2016-01-02</span>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt class='cp_fc'>
+							<div class="w_5numbers"><span>7</span><span>6</span><span>1</span><span>9</span><span>7</span></div>
+							<div style="clear: both;"></div>
+						</dt>
+						<dt>每周一、三、六晚20:30开奖</dt>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</section>
+<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+<script src="js/jquery-latest.js"></script>
+<script>
+mui.ajax('/index.php/cplist',{
+	data:{
+	},
+	dataType:'json',//服务器返回json格式数据
+	type:'get',//HTTP请求类型
+	timeout:10000,//超时时间设置为10秒；
+	success:function(data){
+		if(typeof data == "string") {
+			var data = eval('('+data+')');
+		}
+		console.log(JSON.stringify(data));
+		var datalist = data.lists;
+		for (var i=0;i<datalist.length;i++){
+			if(datalist[i].types==1){//1为大乐透
+				var num = datalist[i].num;//期数
+				var numbers = datalist[i].numbers;//开奖号码
+				var date = datalist[i].date;//开奖日期
+				$('.w_1num').text(datalist[i].num);
+				$('.w_1date').text(datalist[i].date);
+				var index_q = numbers.indexOf("|");
+				var q_num = numbers.substr(0,index_q);
+				var h_num = numbers.substr(index_q+1,numbers.length);
+				q_strs=q_num.split(","); //字符分割
+				h_strs=h_num.split(","); //字符分割
+				var w_numbers=[];var w_numbersb=[];
+				for (l=0;l<q_strs.length ;l++ ){
+					w_numbers[l] = '<span>'+q_strs[l]+'</span>'; //分割后的字符输出 
+				}
+				$('.w_1numbers').html(w_numbers);
+				for (l=0;l<h_strs.length ;l++ ){
+					w_numbersb[l] = '<span>'+h_strs[l]+'</span>'; //分割后的字符输出 
+				}
+				$('.w_1numbersb').html(w_numbersb);
+			}
+			if(datalist[i].types==2){//2为足球胜负/任九
+				var num = datalist[i].num;//期数
+				var numbers = datalist[i].numbers;//开奖号码
+				var date = datalist[i].date;//开奖日期
+				$('.w_2num').text(datalist[i].num);
+				$('.w_2date').text(datalist[i].date);
+				var numbers = numbers.replace("|", ","); 
+				strs=numbers.split(","); //字符分割
+				var w_numbers=[];
+				for (l=0;l<strs.length ;l++ ){
+					w_numbers[l] = '<span>'+strs[l]+'</span>'; //分割后的字符输出 
+				} 
+				$('.w_2numbers').html(w_numbers);
+			}
+			if(datalist[i].types==3){//3为排列3
+				var num = datalist[i].num;//期数
+				var numbers = datalist[i].numbers;//开奖号码
+				var date = datalist[i].date;//开奖日期
+				$('.w_3num').text(datalist[i].num);
+				$('.w_3date').text(datalist[i].date);
+				var numbers = numbers.replace("|", ","); 
+				strs=numbers.split(","); //字符分割
+				var w_numbers=[];
+				for (l=0;l<strs.length ;l++ ){
+					w_numbers[l] = '<span>'+strs[l]+'</span>'; //分割后的字符输出 
+				} 
+				$('.w_3numbers').html(w_numbers);
+			}
+			if(datalist[i].types==5){//5为排列5
+				var num = datalist[i].num;//期数
+				var numbers = datalist[i].numbers;//开奖号码
+				var date = datalist[i].date;//开奖日期
+				$('.w_5num').text(datalist[i].num);
+				$('.w_5date').text(datalist[i].date);
+				var numbers = numbers.replace("|", ","); 
+				strs=numbers.split(","); //字符分割
+				var w_numbers=[];
+				for (l=0;l<strs.length ;l++ ){
+					w_numbers[l] = '<span>'+strs[l]+'</span>'; //分割后的字符输出 
+				} 
+				$('.w_5numbers').html(w_numbers);
+			}
+		}
+		
+	},
+	error:function(xhr,type,errorThrown){
+		//异常处理；
+		//console.log(type);
+		switch (type) {
+			case "timeout":
+				mui.toast('连接超时，请重试');
+				break;
+			default:
+				mui.toast('请重试或重新登录');
+		}
+	}
+});
+
+</script>
+</body>
+</html>

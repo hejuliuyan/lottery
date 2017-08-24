@@ -1,0 +1,53 @@
+html,body {
+	background-color: #efeff4;
+	min-width: 320px;
+	max-width: 640px;
+	margin:0 auto;
+			}
+			
+.clear{
+	clear:both;
+}
+
+.mui-content .header{
+	width:100%;
+	height:100px;
+	text-align: center;
+	margin-top:10px;
+}
+
+
+
+
+.us,.pass,.phone,.realname{
+	height:42px;
+	width:90%;
+	border:1px solid gray;
+	margin-left: 5%;
+	background-color: #fff;
+	margin-top: 14px;
+}
+
+
+.person .idcard{
+	height:42px;
+	width:90%;
+	border:1px solid gray;
+	margin-left: 5%;
+	background-color: #fff;
+	margin-top: 14px;
+}
+.head{
+	float:left;
+	margin: 0 auto;
+	padding: 11px 5px;
+}
+
+.mui-input-row .inp{
+	border: 0;
+	font-size: 12px;
+	width:64%;
+	margin-right: 4%;
+	background-color: #fff;
+	float:left;
+}

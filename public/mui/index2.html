@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!--标准mui.css-->
+<link rel="stylesheet" href="css/mui.min.css">
+<link rel="stylesheet" href="css/css.css">
+<script type="text/javascript" src="js/common.js"></script>
+
+<style>
+body {
+	background-color: #f2f2f2;
+}
+/*.mui-slider .mui-slider-group .mui-slider-item img{ height: 180px;}*/
+footer li div {
+	margin-top: 0 !important;
+}
+
+.mui-grid-view.mui-grid-9 .mui-table-view-cell>a:not (.mui-btn ) {
+	margin: -14px;
+	padding: 4px 0 2px 0;
+}
+
+.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+	font-size: 14px;
+}
+
+.mui-slider .mui-slider-group .mui-slider-item img {
+	height: 200px;
+}
+
+.mui-grid-view.mui-grid-9 {
+	margin: 0;
+	padding: 0;
+	background-color: #fff;
+}
+
+.mui-grid-view.mui-grid-9 {
+	border-top: none;
+	border-left: none;
+}
+
+.bottom_nav {
+	display: table-cell;
+	overflow: hidden;
+	width: 1%;
+	height: 50px;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #929292;
+}
+
+.bottom_nav .mui-icon {
+	top: 3px;
+	width: 24px;
+	height: 24px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.mui-bar-tab .bottom_nav .mui-icon ~.mui-tab-label {
+	font-size: 11px;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.index {
+    background-image: url(./wimages/index.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 22px;
+    background-position: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 3px;
+}
+.index_font{
+    font-size: 11px;
+    color: #56abe4;
+}
+
+.wd_font{
+	font-size: 11px;
+    color: lightgray;
+}
+
+.wd {
+    background-image: url(./wimages/gr2.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 22px;
+    background-position: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 3px;
+}
+
+.mui-grid-view.mui-grid-9 .mui-table-view-cell { 
+    padding: 11px 9px;
+}
+
+.wi{
+	width:100%;
+	height:70px;
+	background-color: #fff;
+}
+
+.w_left,.w_mid,.w_right{
+	width:30%;
+	height: 70px;
+	float: left;
+	/*border: 1px solid black;*/
+	margin-left: 2%;
+	text-align: center;
+}
+
+.pic_one{
+	background-image: url(wimages/b1.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 38px;
+    background-position: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 4px;
+}
+
+.pic_two{
+	background-image: url(wimages/z1.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 38px;
+    background-position: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 4px;
+}
+
+.pic_three{
+	background-image: url(wimages/d1.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 38px;
+    background-position: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 4px;
+}
+
+
+
+.pic_font{
+	color:#56abe4;
+	font-size: 14px;
+}
+
+.index_center {
+	background-color: #f2f2f2;
+	color: gray;
+}
+
+.w96{
+	width:100%;
+}
+</style>
+</head>
+<body>
+	<!--<footer>
+		<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="cpkj.html">
+						<span class="bot_ico"></span><div class="mui-media-body">首页</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="bot_ico"></span><div class="mui-media-body">门店</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="bot_ico"></span><div class="mui-media-body">我的</div>
+					</a>
+				</li>
+			</ul>
+	</footer>-->
+	<nav class="mui-bar mui-bar-tab">
+		<a class="bottom_nav mui-active" href="#tabbar"> 
+			<span class="index"></span> 
+			<span class="mui-tab-label index_font">首页</span>
+		</a> 
+		<!--<a class="bottom_nav" href="#tabbar-with-chat">
+			<span class="mui-icon mui-icon-email"></span> 
+			<span class="mui-tab-label">搜店</span>
+		</a> -->
+		<a class="bottom_nav w_info"> 
+			<span class="wd"></span> 
+			<span class="mui-tab-label wd_font">我的</span>
+		</a>
+
+	</nav>
+	<!--滚动图片-->
+	<section id="slider" class="mui-slider">
+		<div class="mui-slider-group mui-slider-loop">
+			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<!--<a href="#"><img src="images/1.jpg"></a>-->
+			</div>
+			<div class="mui-slider-item">
+				<a href="#"><img src=""></a>
+			</div>
+			<div class="mui-slider-item">
+				<a href="#"><img src=""></a>
+			</div>
+			<div class="mui-slider-item">
+				<a href="#"><img src=""></a>
+			</div>
+			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<!--<a href="#"><img src="images/1.jpg"></a>-->
+			</div>
+		</div>
+		<div class="mui-slider-indicator">
+			<!--<div class="mui-indicator mui-active"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>-->
+		</div>
+	</section>
+	<!--彩票排列-->
+	<section>
+		<div class="index_center">关于我们</div>
+		<div class="w96 wi" style='border:1px solid #56abe4'>
+			<div class='w_left' style='margin-left: 3%;'>
+				<dt class='pic_one'></dt>
+				<dt class='pic_font'>消费者保障服务</dt>
+			</div>
+			<div class='w_mid'>
+				<dt class='pic_two'></dt>
+				<dt class='pic_font'>官方授权代销</dt>
+			</div>
+			<div class='w_right'>
+				<dt class='pic_three'></dt>
+				<dt class='pic_font'>实体店出票兑奖</dt>
+			</div>
+		</div>
+		<div class="index_center">数字</div>
+		<div class="w96">
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3"><a
+					href="dlt.html"> <span class="ico ico1"></span>
+					<div class="mui-media-body">大乐透</div>
+				</a></li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3"><a
+					href="qxc.html"> <span class="ico ico2"></span>
+					<div class="mui-media-body">七星彩</div>
+				</a></li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3"><a
+					href="p3.html"> <span class="ico ico3"></span>
+					<div class="mui-media-body">排列三</div>
+				</a></li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3"><a
+					href="p5.html"> <span class="ico ico4"></span>
+					<div class="mui-media-body">排列五</div>
+				</a></li>
+			</ul>
+		</div>
+		<div class="index_center">竞彩</div>
+		<div class="w96">
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3"><a
+					href="#"> <span class="ico ico5"></span>
+					<div class="mui-media-body">竞彩足球</div>
+				</a></li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3"><a
+					href="#"> <span class="ico ico6"></span>
+					<div class="mui-media-body">竞彩篮球</div>
+				</a></li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3"><a
+					href="#"> <span class="ico ico7"></span>
+					<div class="mui-media-body">任选九</div>
+				</a></li>
+				<li class="mui-table-view-cell mui-media w25 mui-col-sm-3"><a
+					href="#"> <span class="ico ico8"></span>
+					<div class="mui-media-body">胜负彩</div>
+				</a></li>
+			</ul>
+		</div>
+		
+		
+	</section>
+	<!--主体底部图片-->
+	<section class="index_bot">
+		<div>
+		<!--	<img src="wimages/index_bot.png">-->
+		</div>
+	</section>
+	<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+	<script src="js/jquery-latest.js"></script>
+	<script src="js/tk_check.js"></script>
+	<script>
+		// H5 plus事件处理
+		function plusReady(){
+			// 获取摄像头目录对象
+			plus.io.resolveLocalFileSystemURL( "_doc/", function ( entry ) {
+				entry.getDirectory( "camera", {create:true}, function ( dir ) {
+					gentry = dir;
+					updateHistory();
+				}, function ( e ) {
+					outSet( "Get directory \"camera\" failed: "+e.message );
+				} );
+			}, function ( e ) {
+				outSet( "Resolve \"_doc/\" failed: "+e.message );
+			} );
+		}
+		if(window.plus){
+			plusReady();
+		}else{
+			document.addEventListener("plusready",plusReady,false);
+		}
+		
+		// 拍照
+		function getImage() {
+			//outSet( "开始拍照：" );
+			var cmr = plus.camera.getCamera();
+			cmr.captureImage( function ( p ) {
+				//outLine( "成功："+p );
+				plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
+					//createItem( entry );
+					var s = entry.toLocalURL();
+					mui.alert(s);
+                    uploadHead(s); /*上传图片*/ 
+				}, function ( e ) {
+					//outLine( "读取拍照文件错误："+e.message );
+					alert(1);
+				} );
+			}, function ( e ) {
+				//outLine( "失败："+e.message );
+				alert(2);
+			}, {filename:"_doc/camera/",index:1} );
+		}
+		
+		$(document).on('tap', '.w_info', function() {
+			//mui.alert(1);
+			getImage();
+						
+		});
+		
+		//上传头像图片 
+        function uploadHead(imgPath) {
+        	mui.alert(123)
+            console.log("imgPath = " + imgPath); 
+            mainImage.src = imgPath; 
+            mainImage.style.width = "300px"; 
+            mainImage.style.height = "200px"; 
+ 
+            var image = new Image(); 
+            image.src = imgPath; 
+          
+            	
+                //var imgData = getBase64Image(image); 
+                var imgData=image;
+                /*在这里调用上传接口*/ 
+            	mui.ajax("http://test.foodietech.cn/index.php/pic_upload", { 
+                  	data: { 
+                       pic:imgData,
+                  	}, 
+                  	dataType: 'json', 
+                 	type: 'post', 
+                  	timeout: 10000, 
+                  	success: function(data) { 
+                  		if(data==1){
+                  			mui.alert('上传成功');
+                  		}else if(data==2){
+                  			mui.alert('上传失败');
+                  		}
+                       
+                  	}, 
+                  	error: function(xhr, type, errorThrown) { 
+                      mui.toast('网络异常，请稍后再试！'); 
+                  	} 
+              	}); 
+            
+    	}
+        
+        //将图片压缩转成base64 
+        function getBase64Image(img) { 
+            var canvas = document.createElement("canvas"); 
+            var width = img.width; 
+            var height = img.height; 
+            // calculate the width and height, constraining the proportions 
+            if (width > height) { 
+                if (width > 100) { 
+                    height = Math.round(height *= 100 / width); 
+                    width = 200; 
+                } 
+            } else { 
+                if (height > 100) { 
+                    width = Math.round(width *= 100 / height); 
+                    height = 200; 
+                } 
+            } 
+            canvas.width = width;   /*设置新的图片的宽度*/ 
+            canvas.height = height; /*设置新的图片的长度*/ 
+            var ctx = canvas.getContext("2d"); 
+            ctx.drawImage(img, 0, 0, width, height); /*绘图*/ 
+            var dataURL = canvas.toDataURL("image/png", 0.8); 
+            return dataURL.replace("data:image/png;base64,", ""); 
+        }    
+
+	
+	</script>
+	<script type="text/javascript" src="js/immersed.js" ></script>
+
+</body>
+
+</html>

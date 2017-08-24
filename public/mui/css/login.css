@@ -1,0 +1,74 @@
+html,body {
+	background-color: #efeff4;
+	min-width: 320px;
+	max-width: 640px;
+	margin:0 auto;
+			}
+			
+.clear{
+	clear:both;
+}
+
+
+ .us{
+	height:42px;
+	width:90%;
+	border:1px solid gray;
+	margin-left: 5%;
+	background-color: #fff;
+	margin-top: 14px;
+}
+
+.login .pass{
+	height:42px;
+	width:90%;
+	border:1px solid gray;
+	margin-left: 5%;
+	background-color: #fff;
+	margin-top: 14px;
+}
+
+.head{
+	float:left;
+	margin: 0 auto;
+	padding: 11px 5px;
+}
+
+.mui-input-row .inp{
+	border: 0;
+	font-size: 12px;
+	width:64%;
+	margin-right: 4%;
+	background-color: #fff;
+	float:left;
+}
+
+.mid_font{
+	width: 100%;
+	font-size: 12px;
+	color: gray;
+	margin-top: 22px;
+}
+
+.mm_login{
+	width:30%;
+	float: left;
+	margin-left: 5%;	
+}
+
+.foget_pass{
+	width:20%;
+	float: right;
+}
+
+.sub_btn{
+	width:100%;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.sub{
+	width:80%;
+	
+	
+}

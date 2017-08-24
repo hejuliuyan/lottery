@@ -1,0 +1,64 @@
+wget http://sphinxsearch.com/files/sphinx-2.2.8-1.rhel7.x86_64.rpm
+yum install postgresql-libs unixODBC
+rpm -qpl sphinx-2.2.8-1.rhel7.x86_64.rpm #查看文件安装在哪
+rpm -Uhv sphinx-2.2.8-1.rhel7.x86_64.rpm
+
+Sphinx installed!
+Now create a full-text index, start the search daemon, and you're all set.
+
+To manage indexes:
+    editor /etc/sphinx/sphinx.conf
+
+To rebuild all disk indexes:
+    sudo -u sphinx indexer --all --rotate
+
+To start/stop search daemon:
+    service searchd start/stop
+
+To query search daemon using MySQL client:
+    mysql -h 0 -P 9306
+    mysql> SELECT * FROM test1 WHERE MATCH('test');
+
+See the manual at /usr/share/doc/sphinx-2.2.8 for details.
+
+For commercial support please contact Sphinx Technologies Inc at
+http://sphinxsearch.com/contacts.html
+
+或者编译:
+$ tar xzvf sphinx-2.2.8-release.tar.gz
+$ cd sphinx
+$ ./configure
+There's a number of options to configure. The complete listing may be obtained by using --help switch. The most important ones are:
+
+--prefix, which specifies where to install Sphinx; such as --prefix=/usr/local/sphinx (all of the examples use this prefix)
+
+--with-mysql, which specifies where to look for MySQL include and library files, if auto-detection fails;
+
+--with-static-mysql, which builds Sphinx with statically linked MySQL support;
+
+--with-pgsql, which specifies where to look for PostgreSQL include and library files.
+
+--with-static-pgsql, which builds Sphinx with statically linked PostgreSQL support;
+$ make
+$ make install
+
+配置文件在/usr/local/etc/sphinx.conf
+生成索引：/usr/local/coreseek/bin/indexer --config /usr/local/coreseek/etc/sphinx.conf –all
+若此时searchd守护进程已经启动，那么需要加上—rotate参数：
+/usr/local/coreseek/bin/indexer --config /usr/local/coreseek/etc/sphinx.conf --all --rotate
+/usr/local/coreseek/bin/searchd --config /usr/local/coreseek/etc/sphinx.conf
+
+然后安装php的sphinx扩展
+wget http://pecl.php.net/get/sphinx-1.3.2.tgz
+tar xzf sphinx-1.3.2.tgz 
+phpize
+configure: error: Cannot find libsphinxclient headers的话,在sphinx安装包目录下有/sphinx-2.2.8-release/api/libsphinxclient/
+cd /sphinx-2.2.8-release/api/libsphinxclient/
+./configure
+make && make install
+然后继续
+./configure --with-php-config=/usr/local/php5_nginx/bin/php-config
+make
+make install
+
+

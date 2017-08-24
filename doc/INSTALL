@@ -1,0 +1,10 @@
+需要的一些PHP扩展：
+sphinx
+Imagick
+
+需要安装的一些软件
+sphinx全文搜索
+imagick图片处理 http://imagemagick.org
+
+需要满足的环境
+laravel 5框架的需求。

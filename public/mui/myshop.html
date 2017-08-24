@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/myshop.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+		<script src="js/jquery-latest.js"></script>
+		<script src="js/tk_check.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+		    <h1 class="mui-title">我的彩店</h1>
+		</header>
+		<div class="mui-content">
+		    <div class='heads'>
+		    	<div class='h_left'>
+		    		<div class='hpic'>
+		    			<img class='headimgurl' src="" width='80' height='80'/>
+		    		</div>
+		    		<div class='hfont'>
+		    			<dt class='shop_name'>第一彩票店</dt>
+		    			<dt class='shop_level'></dt>
+		    		</div>
+		    	</div>
+		    	<div class='h_right'>
+		    		<div class='r_font'>已认证</div>
+		    		<div class='r_pic'></div>
+		    	</div>
+		    </div>
+		    <div class='h_mid'>
+		    	<div class='m_left'>
+		    		<dt>绑定人次</dt>
+		    		<dt>800</dt>
+		    	</div>
+		    	<div class='m_right'>
+		    		<dt>出票次数</dt>
+		    		<dt>1000</dt>
+		    	</div>
+		    </div>
+		    <div class='h_bottom'>
+		    	<div class='list'>
+		    		<div class='add_pic'></div>
+		    		<div class='add_font'>松花江路</div>
+		    		<!--<div class='s_right'></div>-->
+		    	</div>
+		    	<div class='list'>
+		    		<div class='ph_pic'></div>
+		    		<div class='ph_font'>11265459855</div>
+		    		<!--<div class='s_right'></div>-->
+		    	</div>
+		    </div>
+		</div>
+	</body>
+	<script>
+		var userid=window.localStorage.getItem('token');
+		 mui.ajax(config[0].url+'/index.php/myshop', {
+        data: {
+            token: userid,
+        },
+        dataType: 'json',//服务器返回json格式数据
+        type: 'post',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            /*console.log(JSON.stringify(data));*/
+            console.log(data);
+            
+            if(data==false){
+            	mui.alert('暂未设置我的彩店',function(){
+            		window.location.href='search_shop.html'
+            	})
+            	return;
+            }
+            $('.shop_name').text(data[0].shop_name);
+           	$('.add_font').text(data[0].address);
+           	$('.ph_font').text(data[0].keeper_mobile);
+            var star_length = data[0].shop_level;
+            console.log(star_length);
+            if (star_length == 0) {
+                var a = '';
+                for (var i = 0; i < 5; i++) {
+
+                    a = "<div class='star'><img  src='wimages/no_star.png' width='30' height='30'/></div>";
+                    $('.shop_level').append(a);
+                }
+
+            } else {
+                var b = '';
+                var c = '';
+                var d = '';
+                for (var i = 0; i < star_length; i++) {
+
+                    b += "<div class='star'><img  src='wimages/read_star.png' width='30' height='30'/></div>";
+                }
+
+                for (var k = 0; k < 5 - star_length; k++) {
+
+                    c += "<div class='star'><img  src='wimages/no_star.png' width='30' height='30'/></div>";
+
+                }
+
+                d = b + c;
+
+                $('.shop_level').append(d);
+            }
+            var token=data[0].shop_token;
+            mui.ajax(config[0].url+'/index.php/wx_name', {
+				data : {
+					token : token,type:2,
+				},
+				dataType : 'json',//服务器返回json格式数据
+				type : 'post',//HTTP请求类型
+				timeout : 10000,//超时时间设置为10秒；
+				success : function(data) {
+					if (typeof data == "string") {
+						var data = eval('(' + data + ')');
+					}
+					//console.dir(data.headimgurl);
+					$('.headimgurl').attr('src',data.headimgurl);
+					
+				},
+				error : function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+				}
+			});
+
+
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+            console.log(type);
+        }
+    });
+    
+    $(document).on('tap','.bk',function(){
+				window.location.href='myshop_main.html';
+			})
+		
+	</script>
+</html>

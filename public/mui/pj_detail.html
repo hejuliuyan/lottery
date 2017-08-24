@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/cp_upload.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+      <script src="js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a href='shop_order.html' class=" bkk mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">订单详情</h1>
+	</header>
+	<nav class='mui-bar mui-bar-tab'>
+		<button type="button" class="mui-btn mui-btn-red pj_ready">确认派奖</button>
+	</nav>
+		
+	
+	<div class="mui-content">
+	   <div class='cp_list'>
+	    	<div class='cp_title'>选号内容</div>
+	    	<div class='cp_content'>
+	    		<dt><span class='c_type'></span><span class='dlt_qi'></span>期</dt>
+	    		<dt>
+	    			<span style="margin-right: 9px;"><span class='f_red dlt_z'></span>注<span class='f_red dlt_b'></span>倍</span>
+	    			<span class='zj'></span>
+	    		</dt>
+	    	</div>
+	    	<div class='cp_money'>
+	    		<span class='f_red dlt_m'></span>元
+	    	</div>
+	    	<div class='clear'></div>
+	    </div>
+	    <div class="cp_list">
+	    	<div class='cp_title'>手机号码</div>
+	    	<div class="cp_content dlt_phone">
+	    		
+	    	</div>
+	    </div>
+	     <div class="cp_list">
+	    	<div class='cp_title'>取票方式</div>
+	    	<div class="cp_content dlt_cp">
+	    		
+	    	</div>
+	    </div>
+	     <div class="cp_list">
+	    	<div class='cp_title'>订单编号</div>
+	    	<div class="cp_content dlt_num">
+	    		
+	    	</div>
+	    </div>
+	     <div class="cp_list">
+	    	<div class='cp_title'>下单时间</div>
+	    	<div class="cp_content dlt_time">
+	    		
+	    	</div>
+	    </div>
+	    <div class="cp_list_num">
+	    	<div class='cp_title tz_num'>中奖号码</div>
+	    	<div class='clear'></div>
+	    	<div class='zj_num'>
+	    		
+	    	</div>
+	    </div>
+	    <div class="cp_list_num">
+	    	<div class='cp_title tz_num'>中奖详情</div>
+	    	<div class='clear'></div>
+	    	<div class='zj_detail'>
+	    		<table class='zj_tab' width="90%">
+	    			<tr>
+	    				<th>奖级</th>
+	    				<th>中奖注数</th>
+	    				<th>奖金</th>
+	    			</tr>
+	    		</table>
+	    		<div class='zj_total'>中奖总金额：&nbsp;&nbsp;<span class='f_red zj_money'></span>&nbsp;&nbsp;<span class='zj_font'>元</span></div>
+	    	</div>
+	    </div>
+	    <div class="cp_list_num">
+	    	<div class='cp_title tz_num'>投注号码</div>
+	    	<div class='clear'></div>
+	    	<div class='cp_numm'>
+	    		
+	    	</div>
+	    </div>
+	    <div class='cp_list_camera' >
+	    	<div class='cp_title tz_num'>出票照片</div>
+	    	<div class='clear'></div>
+	    	<div class='photo'>
+	    		 <div id="pics"></div>
+	    		<!--<img id='p_img' src="wimages/photo.png" width='50' height='50'/>-->
+	    	</div>
+	    	
+	    </div>
+	   
+	</div>
+	<!--以下是支付涉及到的页面-->
+	<section>
+		<style>
+			.fc{position: fixed; left: 0; top: 0; right: 0; bottom: 0; background-color: #000; opacity: 0.5;z-index: 10; display: none;}
+			.pay{position: fixed; left: 0;right: 0; bottom: 0; background-color: #fff;z-index: 11; display: none;}
+			.pay>div>dt{ width: 90%; margin: 0 auto;}
+			.pay>div{ border-bottom: 1px solid #ccc; height: 50px; line-height: 50px;}
+			.pay>div:nth-child(2) span{background: red; font-size: 13px;padding: 1px 2px;border-radius: 4px;margin-left: 4px; color: #fff;}
+			.pay_one{ background: #ccc; text-align: center; position: relative; color: #1F7BE0;}
+			.pay_one span{ position: absolute; left: 5%; color: #000}
+			.pay_r{ float: right;}
+			.pay_last{ font-weight: bold; font-size: 18px;}
+			.pay_last span{ color: red;}
+			.pay> div.pay_bot>dt{height: 35px;width: 80%;text-align: center;background-color: red;color: #fff;font-size: 14px;line-height: 35px;margin-top: 10px;border-radius: 4px;}
+			.mui-radio.mui-left input[type=radio] {left: 10px;top: 9px;}
+			.mui-radio.mui-left label {padding-right: 15px;padding-left: 29px;}
+			.mui-radio label { width: 50%;};
+			.shop_balance{color:red};
+		</style>
+		<div class="fc"></div>
+		<!--<div class="pay">
+			<div class="pay_one"><dt><span class="w_close">X</span>付款详情</dt></div>
+			<div><dt>微信支付<span>默认</span><div class="pay_r wx_name"></div></dt></div>
+			<div><dt>其他付款方式<div class="pay_r">待开发></div></dt></div>
+			<div class="pay_last"><dt>需付款<div class="pay_r"><span class='zj_mon'></span>元</div></dt></div>
+			<div class="pay_bot" data-id=""><dt>确认支付</dt></div>
+		</div>-->
+		
+		<div class="pay">
+			<div class="pay_one"><dt><span class="w_close">X</span>付款详情</dt></div>
+			<!-- <div class="mui-input-row mui-radio mui-left">
+				<dt>
+					<label>银联支付<span>默认</span></label>
+					<input name="radio1" type="radio" checked value='1' class='bank'>
+					<div class="pay_r wx_name">&lt;!&ndash;182******44&ndash;&gt;</div>
+				</dt>
+			</div > -->
+			<!--<div class="mui-input-row mui-radio mui-left">
+				<dt>
+					<label>余额支付</label>
+					<div class="pay_r">余额：<span class='shop_balance'></span>元</div>
+					<input name="radio1" type="radio" value='2' class='balance'>
+					
+				</dt>
+			</div>-->
+			<div class="pay_last"><dt>需付款<div class="pay_r"><span class='zj_mon'></span>元</div></dt></div>
+			<div class="pay_bot" data-id=""><dt>确认支付</dt></div>
+			<input type="hidden" value='' class='p_mon' />
+		</div>
+			
+	</section>
+</body>
+<script type="text/javascript">
+		var order_id=window.localStorage.getItem('cp_id');
+		var shop_nickname=window.localStorage.getItem('shop_nickname');
+		var shopid=window.localStorage.getItem('shopid');
+		console.log(shop_nickname);
+		if(!order_id){
+			mui.openWindow({
+			    url: 'shop_order.html', 
+			    id:'shop_order',
+			    createNew:true
+			});
+		}
+		//$('.wx_name').text(shop_nickname);
+		var cp_sta=window.localStorage.getItem('cp_sta');
+		if(cp_sta==0){
+			mui.openWindow({
+			    url: 'shop_order.html', 
+			    id:'shop_order',
+			    createNew:true
+			});
+		}
+		jQuery('.bkk').on('tap',function(){
+			window.localStorage.setItem('cp_ss',0);
+			window.localStorage.setItem('cp_id','');			
+				mui.openWindow({
+				    url: 'shop_order.html', 
+				    id:'shop_order',
+				    createNew:true
+				});
+		})
+
+						mui.ajax(config[0].url+'/index.php/show_pic',{
+							data:{
+							  	oid:order_id,
+							},
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success:function(data){
+							    if(typeof data == "string") {var data = eval('('+data+')');}
+									
+								for(var i=0;i<data.length;i++){
+		                   	 		$("#pics").append("<img src=../../Uploads/photo/"+data[i].p_name+" width='100%' height='400' / >");
+		                		}
+							},
+							error:function(xhr,type,errorThrown){
+							    //异常处理；
+							    //console.log(type);
+								switch (type) {
+									case "timeout":
+										mui.toast('连接超时，请重试');
+										break;
+									default:
+										mui.toast('请重试或重新登录');
+								}
+							}
+						});
+		
+		
+		mui.ajax(config[0].url+'/index.php/cp_detail',{
+							  data:{
+							  	order_id:order_id,
+							  },
+							  dataType:'json',//服务器返回json格式数据
+							  type:'post',//HTTP请求类型
+							  timeout:10000,//超时时间设置为10秒；
+							  success:function(data){
+							    if(typeof data == "string") {var data = eval('('+data+')');}
+							    
+							    if(data.data[0].type=='01'){
+						 			var c_type='大乐透';
+						 		}else if(data.data[0].type=='02'){
+						 			var c_type='七星彩';
+						 		}else if(data.data[0].type=='03'){
+						 			if(data.data[0].tz_type==0){
+										var c_type='排列三·直选';
+									}else if(data.data[0].tz_type==1){
+										var c_type='排列三·组三';
+									}else if(data.data[0].tz_type==2){
+										var c_type='排列三·组六';
+									}else if(data.data[0].tz_type==3){
+										var c_type='排列三·直选复式胆拖';
+									}
+						 		}else if(data.data[0].type=='04'){
+						 			var c_type='排五';
+						 		}
+						 		$('.c_type').text(c_type);
+							    
+							  jQuery('.dlt_qi').text(data.data[0].order_qi);
+							  var zj_qi=data.data[0].order_qi;
+							  jQuery('.dlt_phone').text(data.data[0].user_mobile);
+							var a=data.data[0].order_z;
+							var b=data.data[0].order_money;
+							var c=data.data[0].order_b;
+							
+								
+								jQuery('.dlt_z').text(a);
+								jQuery('.dlt_b').text(c);
+								jQuery('.dlt_m').text(b);
+								
+								if(data.data[0].order_type==1){
+									jQuery('.dlt_cp').text('自行取票');
+								}else if(data.data[0].order_type==2){
+									jQuery('.dlt_cp').text('代管代兑');
+								}else if(data.data[0].order_type==3){
+									jQuery('.dlt_cp').text('快递');
+								}
+								jQuery('.dlt_num').text(data.data[0].order_num);
+								
+								if(data.data[0].add==1){
+									jQuery('.zj').text('追加');
+								}
+							     
+							  jQuery('.dlt_time').text(data.data[0].times);
+							  
+							  
+							
+					mui.ajax(config[0].url+'/index.php/zj_num_home',{
+							  data:{
+							  	order_qi:zj_qi,order_id:order_id,
+							  },
+							  dataType:'json',//服务器返回json格式数据
+							  type:'post',//HTTP请求类型
+							  timeout:10000,//超时时间设置为10秒；
+							  success:function(data){
+							    if(typeof data == "string") {var data = eval('('+data+')');}
+							    if(data[0].types=='01'){
+						    		var arr=[];
+									var crr=[];
+									var drr=[];
+									//console.log(data);
+									arr=data[0].numbers.split('|');
+									
+									crr=arr[0].split(',');
+									drr=arr[1].split(',');
+											
+									var a='';
+									var b='';
+									var c='';
+									
+									for(var j=1;j<=crr.length;j++){
+										a+="<div class='choose_rball rxq'>"+crr[j-1]+"<input class='choose_h1' type='hidden' value="+crr[j-1]+"></div>";																							
+									}
+													
+									for(var h=1;h<=drr.length;h++){														
+										b+="<div class='choose_bball bxq'>"+drr[h-1]+"<input class='choose_h2' type='hidden' value="+drr[h-1]+"></div>";																							
+									}					
+											
+									c="<div class='cp_num'>"+a+b+"<div class='clear'></div></div>";
+									jQuery('.zj_num').append(c);
+						    	}else if(data[0].types=='03'){
+						    		var arr=[];
+									//console.log(data);
+									arr=data[0].numbers.split(',');
+																							
+									var a='';
+									var c='';
+									
+									for(var j=1;j<=arr.length;j++){
+										a+="<div class='choose_rball rxq'>"+arr[j-1]+"<input class='choose_h1' type='hidden' value="+arr[j-1]+"></div>";																							
+									}
+																	
+											
+									c="<div class='cp_num'>"+a+"<div class='clear'></div></div>";
+									jQuery('.zj_num').append(c);
+						    	}else if(data[0].types=='04'){
+						    		var arr=[];
+									//console.log(data);
+									arr=data[0].numbers.split(',');
+																							
+									var a='';
+									var c='';
+									
+									for(var j=1;j<=arr.length;j++){
+										a+="<div class='choose_rball rxq'>"+arr[j-1]+"<input class='choose_h1' type='hidden' value="+arr[j-1]+"></div>";																							
+									}
+																	
+											
+									c="<div class='cp_num'>"+a+"<div class='clear'></div></div>";
+									jQuery('.zj_num').append(c);
+						    	}else if(data[0].types=='02'){
+						    		var arr=[];
+									//console.log(data);
+									arr=data[0].numbers.split(',');
+																							
+									var a='';
+									var c='';
+									
+									for(var j=1;j<=arr.length;j++){
+										a+="<div class='choose_rball rxq'>"+arr[j-1]+"<input class='choose_h1' type='hidden' value="+arr[j-1]+"></div>";																							
+									}
+																	
+											
+									c="<div class='cp_num'>"+a+"<div class='clear'></div></div>";
+									jQuery('.zj_num').append(c);
+						    	}
+		
+						},
+							  error:function(xhr,type,errorThrown){
+							    //异常处理；
+							    //console.log(type);
+								  switch (type) {
+									  case "timeout":
+										  mui.toast('连接超时，请重试');
+										  break;
+									  default:
+										  mui.toast('请重试或重新登录');
+								  }
+					}
+			});
+   
+							 
+		
+						},
+							  error:function(xhr,type,errorThrown){
+							    //异常处理；
+							   /* console.log(type);*/
+								  switch (type) {
+									  case "timeout":
+										  mui.toast('连接超时，请重试');
+										  break;
+									  default:
+										  mui.toast('请重试或重新登录');
+								  }
+					}
+			});
+			
+			
+			mui.ajax(config[0].url+'/index.php/zj_detail_home',{
+							  data:{
+							  	order_id:order_id,
+							  },
+							  dataType:'json',//服务器返回json格式数据
+							  type:'post',//HTTP请求类型
+							  timeout:10000,//超时时间设置为10秒；
+							  success:function(data){
+							    if(typeof data == "string") {var data = eval('('+data+')');}
+							 		//console.log(data);
+							 		if(data.type=='01'){
+							 			var a='';
+								 		var b='';
+								 		var c='';
+								 		var d='';
+								 		var e='';
+								 		var f='';
+								 		
+									 	if(parseInt(data.one.money)>0 && data.one.z>0){
+								 			a="<tr><td>一等奖(含追加)</td><td>"+data.one.z+"</td><td>"+data.one.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(a);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.two.money)>0 && data.two.z>0){
+								 			b="<tr><td>二等奖(含追加)</td><td>"+data.two.z+"</td><td>"+data.two.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(b);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.three.money)>0 && data.three.z>0){
+								 			c="<tr><td>三等奖(含追加)</td><td>"+data.three.z+"</td><td>"+data.three.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(c);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.four.money)>0 && data.four.z>0){
+								 			d="<tr><td>四等奖(含追加)</td><td>"+data.four.z+"</td><td>"+data.four.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(d);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.five.money)>0 && data.five.z>0){
+								 			e="<tr><td>五等奖(含追加)</td><td>"+data.five.z+"</td><td>"+data.five.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(e);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.six.money)>0 && data.six.z>0){
+								 			f="<tr><td>六等奖(含追加)</td><td>"+data.six.z+"</td><td>"+data.six.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(f);
+								 			
+									 	}
+									 	
+									 	jQuery('.zj_money').text(data.total);
+									 	
+							 		}else if(data.type=='03'){
+							 			if(parseInt(data.zx.money)>0 && data.zx.z>0){
+								 			a="<tr><td>直选</td><td>"+data.zx.z+"</td><td>"+data.zx.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(a);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.z3.money)>0 && data.z3.z>0){
+								 			b="<tr><td>组三</td><td>"+data.z3.z+"</td><td>"+data.z3.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(b);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.z6.money)>0 && data.z6.z>0){
+								 			c="<tr><td>组六</td><td>"+data.z6.z+"</td><td>"+data.z6.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(c);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.zdan.money)>0 && data.zdan.z>0){
+								 			d="<tr><td>直选复式胆拖</td><td>"+data.zdan.z+"</td><td>"+data.zdan.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(d);
+								 			
+									 	}
+									 	
+									 	jQuery('.zj_money').text(data.total);
+							 		}else if(data.type=='04'){
+							 			if(parseInt(data.zx.money)>0 && data.zx.z>0){
+								 			a="<tr><td>一等奖</td><td>"+data.zx.z+"</td><td>"+data.zx.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(a);
+								 			
+									 	}
+									 	
+									 	
+									 	jQuery('.zj_money').text(data.total);
+							 		}else if(data.type=='02'){
+							 			var a='';
+								 		var b='';
+								 		var c='';
+								 		var d='';
+								 		var e='';
+								 		var f='';
+								 		
+									 	if(parseInt(data.one.money)>0 && data.one.z>0){
+								 			a="<tr><td>一等奖(含追加)</td><td>"+data.one.z+"</td><td>"+data.one.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(a);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.two.money)>0 && data.two.z>0){
+								 			b="<tr><td>二等奖(含追加)</td><td>"+data.two.z+"</td><td>"+data.two.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(b);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.three.money)>0 && data.three.z>0){
+								 			c="<tr><td>三等奖(含追加)</td><td>"+data.three.z+"</td><td>"+data.three.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(c);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.four.money)>0 && data.four.z>0){
+								 			d="<tr><td>四等奖(含追加)</td><td>"+data.four.z+"</td><td>"+data.four.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(d);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.five.money)>0 && data.five.z>0){
+								 			e="<tr><td>五等奖(含追加)</td><td>"+data.five.z+"</td><td>"+data.five.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(e);
+								 			
+									 	}
+									 	
+									 	if(parseInt(data.six.money)>0 && data.six.z>0){
+								 			f="<tr><td>六等奖(含追加)</td><td>"+data.six.z+"</td><td>"+data.six.money+"</td></tr>";
+								 			jQuery('.zj_tab').append(f);
+								 			
+									 	}
+									 	
+									 	jQuery('.zj_money').text(data.total);
+									 	
+							 		}
+						},
+							  error:function(xhr,type,errorThrown){
+							    //异常处理；
+							    /*console.log(type);*/
+								  switch (type) {
+									  case "timeout":
+										  mui.toast('连接超时，请重试');
+										  break;
+									  default:
+										  mui.toast('请重试或重新登录');
+								  }
+					}
+			});
+			
+			
+			
+			
+			
+			
+			mui.ajax(config[0].url+'/index.php/cp_detail_num',{
+							  data:{
+							  	order_id:order_id,
+							  },
+							  dataType:'json',//服务器返回json格式数据
+							  type:'post',//HTTP请求类型
+							  timeout:10000,//超时时间设置为10秒；
+							  success:function(data){
+							    if(typeof data == "string") {var data = eval('('+data+')');}
+							  console.log(data);
+							  if(data.data[0].type=='01'){
+							  var arr=[];
+							  var brr=[];
+							  
+							  for(var i=0;i<data.data.length;i++){
+							  		var a='';
+									var b='';
+									var c='';
+										
+							  		brr[i]=data.data[i].numbers.split('|');
+							  		/*drr=brr[i][0];*/
+							  		if(brr[i][0].indexOf(';') == -1 && brr[i][1].indexOf(';') == -1 ){
+							  				var crr=[];
+							  				var drr=[];
+							  				/*console.log(brr[i][0]);*/
+							  				crr=brr[i][0].split(',');
+							  				drr=brr[i][1].split(',');
+							  				
+							  				var a='';
+											var b='';
+											var c='';
+											
+																    
+											for(var j=1;j<=crr.length;j++){
+													a+="<div class='choose_rball rxq'>"+crr[j-1]+"<input class='choose_h1' type='hidden' value="+crr[j-1]+"></div>";																							
+												}
+													
+											for(var h=1;h<=drr.length;h++){														
+													b+="<div class='choose_bball bxq'>"+drr[h-1]+"<input class='choose_h2' type='hidden' value="+drr[h-1]+"></div>";																							
+													}					
+											
+											c="<div class='cp_num'>"+a+b+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(c);
+											
+							  		}
+							  		
+							  		if(brr[i][0].indexOf(';')>-1 && brr[i][1].indexOf(';') == -1){
+							  				var crr=[];
+							  				var drr=[];
+							  				var err=[];
+							  				var grr=[];
+							  				console.log(brr[i]);
+							  				console.log(brr[i][0]);
+							  				crr=brr[i][0].split(';');
+							  				console.log(crr);
+							  				grr=crr.pop().split(',');
+							  				console.log(grr);
+							  				//err=crr.split(';');
+							  				console.log(crr);
+							  				drr=brr[i][1].split(',');
+							  				
+							  				
+									  		var b='';
+											var a='';
+											var c='';
+											var d='';
+											var e='';
+											var f='';
+											var g='';
+											for( var j=0;j<crr.length;j++){
+													a+="<div class='choose_rball rxd rd'>"+crr[j]+"<input class='choose_h1' type='hidden' value="+crr[j]+"></div>";
+					}
+					a="<div style='float:left'>[胆:</div>"+a+"<div style='float:left'>]</div>";
+													
+											for(var h=0;h<grr.length;h++){														
+													b+="<div class='choose_rball rxq'>"+grr[h]+"<input class='choose_h1' type='hidden' value="+grr[h]+"></div>";																							
+													}
+											
+											for(var k=0;k<drr.length;k++){
+													d+="<div class='choose_bball bxq'>"+drr[k]+"<input class='choose_h2' type='hidden' value="+drr[k]+"></div>";	
+											}
+											
+											c="<div class='cp_num'>"+a+b+d+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(c);
+							  				
+							  		}
+							  		
+							  		
+							  		if(brr[i][0].indexOf(';') == -1 && brr[i][1].indexOf(';') >-1){
+							  				var crr=[];
+							  				var drr=[];
+							  				var grr=[];
+							  				/*console.log(brr[i][0]);*/
+							  				crr=brr[i][0].split(',');
+							  				drr=brr[i][1].split(';');
+							  				grr=drr.pop().split(',');
+							  				
+							  				var a='';
+											var b='';
+											var c='';
+											var d='';
+											
+											
+																    
+											for(var j=0;j<crr.length;j++){
+													a+="<div class='choose_rball rxq'>"+crr[j]+"<input class='choose_h1' type='hidden' value="+crr[j]+"></div>";																							
+												}
+											
+											for( var h=0;h<drr.length;h++){
+													b+="<div class='choose_bball bxd bd'>"+drr[h]+"<input class='choose_h2' type='hidden' value="+drr[h]+"></div>";
+					}
+					b="<div style='float:left'>[胆:</div>"+b+"<div style='float:left'>]</div>";
+											
+											for(var k=0;k<grr.length;k++){
+													d+="<div class='choose_bball bxq'>"+grr[k]+"<input class='choose_h1' type='hidden' value="+grr[k]+"></div>";	
+											
+							  		}
+							  		
+							  				c="<div class='cp_num'>"+a+b+d+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(c);
+							  	
+							  	}
+							  		
+							  		if(brr[i][0].indexOf(';') > -1 && brr[i][1].indexOf(';') >-1){
+							  				var crr=[];
+							  				var drr=[];
+							  				var grr=[];
+							  				var err=[];
+							  				/*console.log(brr[i][0]);*/
+							  				crr=brr[i][0].split(';');
+							  				drr=brr[i][1].split(';');
+							  				grr=drr.pop().split(',');
+							  				err=crr.pop().split(',');
+							  				
+							  				var a='';
+											var b='';
+											var c='';
+											var d='';
+											var e='';
+											
+											for( var p=0;p<crr.length;p++){
+													e+="<div class='choose_rball rxd rd'>"+crr[p]+"<input class='choose_h1' type='hidden' value="+crr[p]+"></div>";
+					}
+					e="<div style='float:left'>[胆:</div>"+e+"<div style='float:left'>]</div>";
+											
+																    
+											for(var j=0;j<err.length;j++){
+													a+="<div class='choose_rball rxq'>"+err[j]+"<input class='choose_h1' type='hidden' value="+err[j]+"></div>";																							
+												}
+											
+											for( var h=0;h<drr.length;h++){
+													b+="<div class='choose_bball bxd bd'>"+drr[h]+"<input class='choose_h2' type='hidden' value="+drr[h]+"></div>";
+					}
+					b="<div style='float:left'>[胆:</div>"+b+"<div style='float:left'>]</div>";
+											
+											for(var k=0;k<grr.length;k++){
+													d+="<div class='choose_bball bxq'>"+grr[k]+"<input class='choose_h1' type='hidden' value="+grr[k]+"></div>";	
+											
+							  		}
+							  		
+							  				c="<div class='cp_num'>"+e+a+b+d+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(c);
+							  		}
+							  		
+							  }
+							}else if(data.data[0].type=='03'){
+							 	if(data.data[0].tz_type==0){
+							 		var a='';
+								 	var b='';
+								 	var c='';
+								 	var d='';
+								 	var e='';
+								 	var f="<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+								 	var arr=[];							  
+								  	for(var i=0;i<data.data.length;i++){
+								  		arr[i]=data.data[i].numbers.split('|');
+								  		console.log(arr);
+								  		if(arr[i][0].indexOf(',') > -1){
+								  			var brr=[];
+								  			brr=arr[i][0].split(',');
+								  			
+								  			for(var j=1;j<=brr.length;j++){
+												a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+											}
+								  		}else if(arr[i][0].indexOf(',') == -1){							  			
+												a="<div class='choose_rball rxq'>"+arr[i][0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][1].indexOf(',') > -1){
+								  			var crr=[];
+								  			crr=arr[i][1].split(',');
+								  			
+								  			for(var k=1;k<=crr.length;k++){
+												b+="<div class='choose_rball rxq'>"+crr[k-1]+"<input class='choose_h1' type='hidden' value="+crr[k-1]+"></div>";																							
+											}
+								  		}else if(arr[i][1].indexOf(',') == -1){							  			
+												b="<div class='choose_rball rxq'>"+arr[i][1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][2].indexOf(',') > -1){
+								  			var drr=[];
+								  			drr=arr[i][2].split(',');
+								  			
+								  			for(var h=1;h<=drr.length;h++){
+												c+="<div class='choose_rball rxq'>"+drr[h-1]+"<input class='choose_h1' type='hidden' value="+drr[h-1]+"></div>";																							
+											}
+								  		}else if(arr[i][2].indexOf(',') == -1){							  			
+												c="<div class='choose_rball rxq'>"+arr[i][2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";																							
+											
+								  		}
+								  		
+								  		e="<div class='cp_num'>"+a+f+b+f+c+"<div class='clear'></div></div>";
+										jQuery('.cp_numm').append(e);
+								  		
+								  		
+								  	}
+							 	}else if(data.data[0].tz_type==1 || data.data[0].tz_type==2 || data.data[0].tz_type==3 ){
+					 									  
+								  	for(var i=0;i<data.data.length;i++){
+								  		var a='';
+									 	var b='';
+									 	var c='';
+									 	var d='';
+									 	var e='';	
+								  		if(data.data[i].numbers.indexOf(';')==-1){
+								  			var brr=[];
+								  			brr=data.data[i].numbers.split(',');
+								  			console.log(brr);
+								  			for(var j=1;j<=brr.length;j++){
+												a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+											}
+								  			e="<div class='cp_num'>"+a+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(e);
+								  		}
+								  		
+								  		if(data.data[i].numbers.indexOf(';')>-1){
+							  				var drr=[];
+							  				var crr=[];
+							  				var grr=[];
+								  			crr=data.data[i].numbers.split(';');
+								  			console.log(crr);
+								  			grr=crr.pop().split(',');
+								  			console.log(grr);
+								  			console.log(crr);
+								  			
+								  			for( var p=0;p<crr.length;p++){
+													a+="<div class='choose_rball rxd rd'>"+crr[p]+"<input class='choose_h1' type='hidden' value="+crr[p]+"></div>";
+					}
+					a="<div style='float:left'>[胆:</div>"+a+"<div style='float:left'>]</div>";
+													
+											for(var h=0;h<grr.length;h++){														
+													b+="<div class='choose_rball rxq'>"+grr[h]+"<input class='choose_h1' type='hidden' value="+grr[h]+"></div>";																							
+													}
+								  			
+								  			e="<div class='cp_num'>"+a+b+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(e);
+								  			
+							  			
+							  				
+								  		}
+				
+								  	}
+							 	}
+							 	
+							}else if(data.data[0].type=='04'){
+								
+							 		var a='';
+								 	var b='';
+								 	var c='';
+								 	var d='';
+								 	var e='';
+								 	var g='';
+								 	var m='';
+								 	var f="<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+								 	var arr=[];							  
+								  	for(var i=0;i<data.data.length;i++){
+								  		arr[i]=data.data[i].numbers.split('|');
+								  		console.log(arr);
+								  		if(arr[i][0].indexOf(',') > -1){
+								  			var brr=[];
+								  			brr=arr[i][0].split(',');
+								  			
+								  			for(var j=1;j<=brr.length;j++){
+												a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+											}
+								  		}else if(arr[i][0].indexOf(',') == -1){							  			
+												a="<div class='choose_rball rxq'>"+arr[i][0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][1].indexOf(',') > -1){
+								  			var crr=[];
+								  			crr=arr[i][1].split(',');
+								  			
+								  			for(var k=1;k<=crr.length;k++){
+												b+="<div class='choose_rball rxq'>"+crr[k-1]+"<input class='choose_h1' type='hidden' value="+crr[k-1]+"></div>";																							
+											}
+								  		}else if(arr[i][1].indexOf(',') == -1){							  			
+												b="<div class='choose_rball rxq'>"+arr[i][1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][2].indexOf(',') > -1){
+								  			var drr=[];
+								  			drr=arr[i][2].split(',');
+								  			
+								  			for(var h=1;h<=drr.length;h++){
+												c+="<div class='choose_rball rxq'>"+drr[h-1]+"<input class='choose_h1' type='hidden' value="+drr[h-1]+"></div>";																							
+											}
+								  		}else if(arr[i][2].indexOf(',') == -1){							  			
+												c="<div class='choose_rball rxq'>"+arr[i][2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][3].indexOf(',') > -1){
+								  			var err=[];
+								  			err=arr[i][3].split(',');
+								  			
+								  			for(var p=1;p<=err.length;p++){
+												g+="<div class='choose_rball rxq'>"+err[p-1]+"<input class='choose_h1' type='hidden' value="+err[p-1]+"></div>";																							
+											}
+								  		}else if(arr[i][3].indexOf(',') == -1){							  			
+												g="<div class='choose_rball rxq'>"+arr[i][3]+"<input class='choose_h1' type='hidden' value="+arr[3]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][4].indexOf(',') > -1){
+								  			var grr=[];
+								  			grr=arr[i][4].split(',');
+								  			
+								  			for(var u=1;u<=grr.length;u++){
+												m+="<div class='choose_rball rxq'>"+grr[u-1]+"<input class='choose_h1' type='hidden' value="+grr[u-1]+"></div>";																							
+											}
+								  		}else if(arr[i][4].indexOf(',') == -1){							  			
+												m="<div class='choose_rball rxq'>"+arr[i][4]+"<input class='choose_h1' type='hidden' value="+arr[4]+"></div>";																							
+											
+								  		}
+								  		
+								  		e="<div class='cp_num'>"+a+f+b+f+c+f+g+f+m+"<div class='clear'></div></div>";
+										jQuery('.cp_numm').append(e);
+								  		
+								  		
+								  	}
+							 	}else if(data.data[0].type=='02'){
+								
+							 		var a='';
+								 	var b='';
+								 	var c='';
+								 	var d='';
+								 	var e='';
+								 	var g='';
+								 	var m='';
+								 	var n='';
+								 	var f="<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+								 	var arr=[];							  
+								  	for(var i=0;i<data.data.length;i++){
+								  		arr[i]=data.data[i].numbers.split('|');
+								  		console.log(arr);
+								  		if(arr[i][0].indexOf(',') > -1){
+								  			var brr=[];
+								  			brr=arr[i][0].split(',');
+								  			
+								  			for(var j=1;j<=brr.length;j++){
+												a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+											}
+								  		}else if(arr[i][0].indexOf(',') == -1){							  			
+												a="<div class='choose_rball rxq'>"+arr[i][0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][1].indexOf(',') > -1){
+								  			var crr=[];
+								  			crr=arr[i][1].split(',');
+								  			
+								  			for(var k=1;k<=crr.length;k++){
+												b+="<div class='choose_rball rxq'>"+crr[k-1]+"<input class='choose_h1' type='hidden' value="+crr[k-1]+"></div>";																							
+											}
+								  		}else if(arr[i][1].indexOf(',') == -1){							  			
+												b="<div class='choose_rball rxq'>"+arr[i][1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][2].indexOf(',') > -1){
+								  			var drr=[];
+								  			drr=arr[i][2].split(',');
+								  			
+								  			for(var h=1;h<=drr.length;h++){
+												c+="<div class='choose_rball rxq'>"+drr[h-1]+"<input class='choose_h1' type='hidden' value="+drr[h-1]+"></div>";																							
+											}
+								  		}else if(arr[i][2].indexOf(',') == -1){							  			
+												c="<div class='choose_rball rxq'>"+arr[i][2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][3].indexOf(',') > -1){
+								  			var err=[];
+								  			err=arr[i][3].split(',');
+								  			
+								  			for(var p=1;p<=err.length;p++){
+												g+="<div class='choose_rball rxq'>"+err[p-1]+"<input class='choose_h1' type='hidden' value="+err[p-1]+"></div>";																							
+											}
+								  		}else if(arr[i][3].indexOf(',') == -1){							  			
+												g="<div class='choose_rball rxq'>"+arr[i][3]+"<input class='choose_h1' type='hidden' value="+arr[3]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][4].indexOf(',') > -1){
+								  			var grr=[];
+								  			grr=arr[i][4].split(',');
+								  			
+								  			for(var u=1;u<=grr.length;u++){
+												m+="<div class='choose_rball rxq'>"+grr[u-1]+"<input class='choose_h1' type='hidden' value="+grr[u-1]+"></div>";																							
+											}
+								  		}else if(arr[i][4].indexOf(',') == -1){							  			
+												m="<div class='choose_rball rxq'>"+arr[i][4]+"<input class='choose_h1' type='hidden' value="+arr[4]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][5].indexOf(',') > -1){
+								  			var hrr=[];
+								  			hrr=arr[i][5].split(',');
+								  			
+								  			for(var x=1;x<=hrr.length;x++){
+												d+="<div class='choose_rball rxq'>"+hrr[x-1]+"<input class='choose_h1' type='hidden' value="+hrr[x-1]+"></div>";																							
+											}
+								  		}else if(arr[i][5].indexOf(',') == -1){							  			
+												d="<div class='choose_rball rxq'>"+arr[i][5]+"<input class='choose_h1' type='hidden' value="+arr[5]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][6].indexOf(',') > -1){
+								  			var trr=[];
+								  			trr=arr[i][6].split(',');
+								  			
+								  			for(var z=1;z<=trr.length;z++){
+												n+="<div class='choose_rball rxq'>"+trr[z-1]+"<input class='choose_h1' type='hidden' value="+trr[z-1]+"></div>";																							
+											}
+								  		}else if(arr[i][6].indexOf(',') == -1){							  			
+												n="<div class='choose_rball rxq'>"+arr[i][6]+"<input class='choose_h1' type='hidden' value="+arr[6]+"></div>";																							
+											
+								  		}
+								  		
+								  		e="<div class='cp_num'>"+a+f+b+f+c+f+g+f+m+f+d+f+n+"<div class='clear'></div></div>";
+										jQuery('.cp_numm').append(e);
+								  		
+								  		
+								  	}
+								} 
+		
+						},
+					  	error:function(xhr,type,errorThrown){
+					   	 	//异常处理；
+					    	//onsole.log(type);
+							switch (type) {
+								case "timeout":
+									mui.toast('连接超时，请重试');
+									break;
+								default:
+									mui.toast('请重试或重新登录');
+							}
+					}
+				});
+			
+			
+			 
+		$(document).on('tap','.pj_ready',function(){
+			 var btnArray = ['取消', '确定'];
+	        mui.prompt('为了您的资金安全：', '请输入支付密码', '支付密码', btnArray, function (e) {                                /*console.info(e);
+	         alert(e);*/
+	
+	            if (e.index == 1) {
+	                if (e.value == '' || e.value == null) {
+	                    mui.alert('请输入密码', function () {
+	                        window.location.reload();
+	                    });
+	                    return false;
+	                }
+	                //var openid=window.localStorage.getItem('openid');
+	                mui.post(config[0].url+'/index.php/dosp_pay_psd', {
+	                            token: shopid,
+	                            psd: e.value
+	                        }, function (data) {
+	                            //console.info(data);
+	                            /*alert(data);
+	                             console.info(data);*/
+	                            //return false;
+	                            if (data == '1') {
+	
+	                            mui.ajax(config[0].url+'/index.php/zj_total_home',{
+									  data:{
+									  	order_id:order_id,
+									  },
+									  dataType:'json',//服务器返回json格式数据
+									  type:'post',//HTTP请求类型
+									  timeout:10000,//超时时间设置为10秒；
+									  success:function(data){
+									    if(typeof data == "string") {var data = eval('('+data+')');}
+									 		console.log(data);
+									 		if(parseInt(data[0].win_total)>10000){
+									 			mui.alert('中奖金额过大，需用户自行去体彩中心兑奖');
+									 			return;
+									 		}
+										$('.zj_mon').text(data[0].new_money);
+										$('.p_mon').val(data[0].win_total);
+										//var openid=window.localStorage.getItem('openid');
+										/*mui.ajax(config[0].url+'/index.php/shop_balance',{
+										  	data:{
+											  	shopid:shopid,
+											},
+										  	dataType:'json',//服务器返回json格式数据
+										  	type:'post',//HTTP请求类型
+										  	timeout:10000,//超时时间设置为10秒；
+										  	success:function(data){
+											    if(typeof data == "string") {var data = eval('('+data+')');}
+											 		console.log(data);
+												if(data==false || data=='zero' || data==undefined){
+													$('.shop_balance').text(0);
+													$('.balance').attr('disabled',true);
+												}else{
+													$('.shop_balance').text(data);
+													var pay_m=$('.p_mon').val();
+													if(data<pay_m){
+														$('.balance').attr('disabled',true);
+														
+													}
+												}
+											},
+										 	 error:function(xhr,type,errorThrown){
+											    //异常处理；
+											   	console.log(type);
+											}
+										});*/
+										$('.fc').fadeIn();
+										$('.pay').fadeIn(100);
+										
+								},
+									  error:function(xhr,type,errorThrown){
+									    //异常处理；
+									    console.log(type);
+							}
+					});
+	
+	                            } else if (data == '2') {
+	                                mui.alert('密码错误', function () {
+	                                    window.location.reload();
+	                                });
+	                                //window.location.reload();
+	                                return false;
+	                            } else if (data == '3') {
+	                                //var btnArray = ['否', '是'];
+	                                mui.confirm('还未设置支付密码，去设置？',function (e) {
+	                                    if (e.index == 1) {
+	                                        window.location.href = 'pay_psd_add.html?update=2';
+	                                        return false;
+	                                    } else {
+	                                        window.location.reload();
+	                                        return false;
+	                                    }
+	                                })
+	                            }
+	
+	                        }, 'json'
+	                );
+	
+	
+	            } else {
+	                window.location.reload();
+	                return false;
+	            }
+	        }, 'div')
+			
+	document.querySelector('.mui-popup-input input').type = 'password';
+			
+		})
+		
+		
+		
+		$(document).on('tap','.pay_bot',function(){
+			var pay_type=$("input[name='radio1']:checked").val();
+			// if(pay_type==1){
+				mui.ajax(config[0].url+'/index.php/shop_banks',{
+					data:{
+						order_id:order_id
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						if(typeof data == "string") {
+							var data = eval('('+data+')');
+						}
+						
+						if(data.data==false){
+							mui.toast(支付失败);
+							return;
+						}else{
+								//console.log(data);
+							var openid=data[0].openid;
+				 			var userid=data[0].id;
+							mui.ajax(config[0].url+'/index.php/send',{
+								data:{
+									muban_id:3,openid:openid,order_id:order_id, userid:userid,
+								},
+								dataType:'json',//服务器返回json格式数据
+								type:'post',//HTTP请求类型
+								timeout:10000,//超时时间设置为10秒；
+								success:function(data){
+									
+								},
+								error:function(xhr,type,errorThrown){
+									//异常处理；
+									//console.log(type);
+
+								}
+							});
+						}
+						
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						/*console.log(type);*/
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+				
+				
+			/*}else if(pay_type==2){
+				mui.ajax(config[0].url+'/index.php/shop_balance_pays',{
+					data:{
+						order_id:order_id
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						if(typeof data == "string") {
+							var data = eval('('+data+')');
+						}
+						
+						if(data.data==false){
+							mui.toast(支付失败);
+							return;
+						}else{
+								//console.log(data);
+							var openid=data[0].openid;
+				 			var userid=data[0].id;
+							mui.ajax(config[0].url+'/index.php/send',{
+								data:{
+									muban_id:3,openid:openid,order_id:order_id, userid:userid,
+								},
+								dataType:'json',//服务器返回json格式数据
+								type:'post',//HTTP请求类型
+								timeout:10000,//超时时间设置为10秒；
+								success:function(data){
+									
+								},
+								error:function(xhr,type,errorThrown){
+									//异常处理；
+									console.log(type);
+								}
+							});
+						}
+						
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+//						console.log(type);
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+			}*/
+			mui.ajax(config[0].url+'/index.php/orderlog',{
+					data:{
+						order_id:order_id,order_status:'07',value:'店铺已派奖',
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						if(typeof data == "string") {
+							var data = eval('('+data+')');
+						}
+						window.location.href='mywallet_info.html?paj='+order_id;
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+//						console.log(type);
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+			
+		})
+		
+		
+		$(document).on('tap','.w_close',function(){
+			$(".fc").fadeOut();
+			$('.pay').fadeOut(100);
+		})
+		
+		
+		
+		
+		
+		
+</script>
+</html>

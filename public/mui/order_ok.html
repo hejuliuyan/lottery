@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/cp_upload.css" rel="stylesheet"/>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <link href="css/css.css" rel="stylesheet"/>
+    <style>
+        .mui-content {
+            background-color: #fff;
+        }
+
+        .w_cpstatus {
+            color: #F4C600
+        }
+
+        .cp_title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .mui-content .cp_numm .cp_num .rxq, .bxq {
+            color: #fff;
+        }
+
+        .clear {
+            clear: both
+        }
+
+        .kj {
+            width: 20%;
+            height: 65px;
+            float: left;
+            background-image: url(wimages/kj.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: block;
+
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav hd">
+    <a class="mui-icon mui-icon-left-nav mui-pull-left bck"></a>
+    <a style="position: absolute; left: 0; width: 44px; top: 0; height: 44px;z-index: 1;"></a>
+    <h1 class="mui-title">订单详情</h1>
+    <a class="mui-icon  mui-pull-right ts_tb" style='margin-right: 63px;margin-top: 10px;'></a>
+    <a class="mui-icon  mui-pull-right shop_tb" style='margin-right: -54px;margin-top: 10px;'></a>
+</header>
+<nav class='mui-bar mui-bar-tab w_cpok' style='display: none'>
+    <button type="button" class="mui-btn mui-btn-red cp_up ">出票确认</button>
+</nav>
+<nav class='mui-bar mui-bar-tab no_pay' style='display: none'>
+    <button type="button" class="mui-btn mui-btn-red pay_order">支付</button>
+</nav>
+<nav class='mui-bar mui-bar-tab yes_pay' style='display: none'>
+    <button type="button" class="mui-btn mui-btn-blue out_order" style='margin-left: 5%;'>退单</button>
+    <button type="button" class="mui-btn mui-btn-blue c_order" style='margin-left: 8%;'>催单</button>
+</nav>
+<nav class='mui-bar mui-bar-tab yes_order' style='display: none'>
+    <button type="button" class="mui-btn mui-btn-blue cp_order" style='margin-left: 10%;'>催单</button>
+</nav>
+
+<nav class='mui-bar mui-bar-tab order_again' style='display: none'>
+	<button type='button' class='mui-btn mui-btn-blue order_more' style='margin-left: 10%;width:80%;float:left;'>再来一单</button>	
+</nav>
+
+<nav class='mui-bar mui-bar-tab reset_again' style='display: none'>
+    <button type="button" class="mui-btn mui-btn-blue order_reset" style='margin-left: 10%;width: 80%;'>重新下单</button>
+</nav>
+<div class="mui-content">
+    <div class="ordok_top">
+        <span class="w_qi"></span><a href="javascript:void(0)"><span class="w_cpstatus"></span></a>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="ordok_top2">
+        <span><font class="w_z">1</font>注<font class="w_b">1</font>倍</span><span>追加</span><span><font
+            class="w_y"></font>元</span>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="ordok_top3">
+        <span class="w_shopname"></span><sup></sup>
+    </div>
+    <div class="ordok_top4" style='float:left;margin-left: 5%;width:70%;'>
+        <dt>订单编号：<span class="w_order"></span></dt>
+        <dt>提交时间：<span class="w_date"><!--2016-12-11 12:30:12--></span></dt>
+    </div>
+    <div class='kj' style='display:none'></div>
+    <div class='clear'></div>
+    <div style="border-bottom: 1px solid #ccc;"></div>
+    <div class='cp_list'>
+        <div class="cp_list_num zj_n" style='display:none'>
+            <div class='cp_title tz_num'>中奖号码</div>
+            <div class='clear'></div>
+            <div class='zj_num'>
+
+            </div>
+        </div>
+
+        <div class="cp_list_num zj_detail" style='display:none'>
+            <div class='cp_title tz_num'>中奖详情</div>
+            <div class='clear'></div>
+            <div class='zj_detail'>
+                <table class='zj_tab' width="90%">
+                    <tr>
+                        <th>奖级</th>
+                        <th>中奖注数</th>
+                        <th>奖金</th>
+                    </tr>
+                </table>
+                <div class='zj_total'>中奖总金额：&nbsp;&nbsp;<span class='f_red zj_money'></span>&nbsp;&nbsp;<span
+                        class='zj_font'>元</span></div>
+            </div>
+        </div>
+
+        <div class="cp_list_num">
+            <div class='cp_title tz_num'>投注号码</div>
+            <div class='clear'></div>
+            <div class='cp_numm'>
+            </div>
+        </div>
+
+        <div class='cp_list_camera' style='display:none'>
+            <div class='cp_title tz_num'>出票拍照</div>
+            <div class='clear'></div>
+            <div class='photo'>
+                <div id='pics'></div>
+                <img id='p_img' src="wimages/photo.png" width='50' height='50'/>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!--以下是支付涉及到的页面-->
+<section>
+    <style>
+        .fc {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #000;
+            opacity: 0.5;
+            z-index: 10;
+            display: none;
+        }
+
+        .pay {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            z-index: 11;
+            display: none;
+        }
+
+        .pay > div > dt {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .pay > div {
+            border-bottom: 1px solid #ccc;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .pay > div:nth-child(2) span {
+            background: red;
+            font-size: 13px;
+            padding: 1px 2px;
+            border-radius: 4px;
+            margin-left: 4px;
+            color: #fff;
+        }
+
+        .pay_one {
+            background: #ccc;
+            text-align: center;
+            position: relative;
+            color: #1F7BE0;
+        }
+
+        .pay_one span {
+            position: absolute;
+            left: 5%;
+            color: #000
+        }
+
+        .pay_r {
+            float: right;
+        }
+
+        .pay_last {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .pay_last span {
+            color: red;
+        }
+
+        .pay > div.pay_bot > dt {
+            height: 36px;
+            width: 80%;
+            text-align: center;
+            background-color: red;
+            color: #fff;
+            font-size: 14px;
+            line-height: 36px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .mui-radio.mui-left input[type=radio] {
+            left: 10px;
+            top: 9px;
+        }
+
+        .mui-radio.mui-left label {
+            padding-right: 15px;
+            padding-left: 29px;
+        }
+
+        .mui-radio label {
+            width: 50%;
+        }
+
+        .user_balance {
+            color: red
+        }
+
+    </style>
+    <div class="fc"></div>
+    <div class="pay">
+        <div class="pay_one">
+            <dt><span class="w_close">X</span>付款详情</dt>
+        </div>
+        <!--<div class="mui-input-row mui-radio mui-left">
+				<dt>
+					<label>银联支付<span>默认</span></label>
+					<input name="radio1" type="radio" checked value='1' class='bank'>
+					<div class="pay_r wx_name">&lt;!&ndash;182******44&ndash;&gt;</div>
+				</dt>
+			</div >-->
+        <div class="mui-input-row mui-radio mui-left">
+            <dt>
+                <label>余额支付</label>
+            <div class="pay_r">余额：<span class='user_balance'></span>元</div>
+            <input name="radio1" type="radio" value='2' class='balance' checked />
+
+            </dt>
+        </div>
+        <div class="pay_last">
+            <dt>需付款
+            <div class="pay_r"><span class='zj_mon'></span>元</div>
+            </dt></div>
+        <div class="pay_bot" data-id="">
+            <dt>确认支付</dt>
+        </div>
+    </div>
+
+</section>
+</body>
+<script src="js/tk_check.js"></script>
+
+<script>
+
+    var url = window.location.search;
+    var loc = url.substring(url.lastIndexOf('=') + 1, url.length);
+    /*if(loc=='tz'){
+     $(".bck").attr("href","tz_record.html");
+     }*/
+
+
+    //var shopid=window.localStorage.getItem('choose_shop');
+
+    var order_id = window.localStorage.getItem("order_id");
+
+    userid = window.localStorage.getItem("token");
+    //openid = window.localStorage.getItem("openid");
+
+
+    if (!userid) {
+        token_check(userid);
+    }
+    
+    $(document).on('tap','.bck',function(){
+    	//mui.back();
+    	//window.localStorage.setItem('reset',1);
+    	/*mui.plusReady(function () {
+			var web=plus.webview.getWebviewById('tz_record_main.html');
+        	web.close();
+				             
+        	});*/			
+        	/*mui.plusReady(function () {
+				var web=plus.webview.getWebviewById('tz_record_main.html');
+				if(web){
+					web.show();
+				}else{
+					mui.openWindow({
+					    url: 'tz_record_main.html', 
+					    id:'tz_record_main',
+					    createNew:true
+					});
+				}
+	        	
+				             
+        	});*/
+    	mui.openWindow({
+		    url: 'zx_personal.html', 
+		    id:'zx_personal',
+		    createNew:true
+		});
+    })
+
+
+    $(document).on('tap', '.w_cpstatus', function () {
+        var html = 'order_status.html?' + order_id;
+        token_check(userid, html);
+        //window.location.href='order_status.html?'+order_id;
+        /*mui.openWindow({
+         url: 'order_status.html',
+         id:'order_status'
+         });*/
+
+    })
+
+    $(document).on('tap', '.ts_tb', function () {
+        mui.alert('客服电话:0877-3249568');
+    })
+
+    $(document).on('tap', '.shop_tb', function () {
+        mui.ajax(config[0].url+'/index.php/shop_phone', {
+            data: {
+                order_id: order_id,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+
+                if (data) {
+                    var phone = "店铺电话：" + data[0]['keeper_mobile'] + "";
+                    mui.alert(phone);
+                } else if (data == false) {
+                    mui.toast('异常错误');
+                }
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                //console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+    })
+
+    $(document).on('tap', '.out_order', function () {
+        var btnArray = ['是', '否'];
+        mui.confirm('确定退单？', '', btnArray, function (e) {
+            if (e.index == 0) {
+                mui.ajax(config[0].url+'/index.php/order_check', {
+                    data: {
+                        order_id: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+
+                        if (data == 2) {
+                            mui.alert('店铺已接单');
+                            return;
+                        } else if (data == 3) {
+                            mui.alert('店铺已出票');
+                            return;
+                        } else {
+                            mui.ajax(config[0].url+'/index.php/out_order', {
+                                data: {
+                                    order_id: order_id, userid: userid,
+                                },
+                                dataType: 'json',//服务器返回json格式数据
+                                type: 'post',//HTTP请求类型
+                                timeout: 10000,//超时时间设置为10秒；
+                                success: function (data) {
+                                    if (typeof data == "string") {
+                                        var data = eval('(' + data + ')');
+                                    }
+
+                                    if (data == true) {
+                                        var order_id = window.localStorage.getItem("order_id");
+                                        mui.ajax(config[0].url+'/index.php/orderlog', {
+                                            data: {
+                                                order_id: order_id, order_status: '05', value: '用户已退单',
+                                            },
+                                            dataType: 'json',//服务器返回json格式数据
+                                            type: 'post',//HTTP请求类型
+                                            timeout: 10000,//超时时间设置为10秒；
+                                            success: function (data) {
+                                                if (typeof data == "string") {
+                                                    var data = eval('(' + data + ')');
+                                                }
+
+                                                window.location.href = 'tz_record_main.html';
+                                            },
+                                            error: function (xhr, type, errorThrown) {
+                                                //异常处理；
+                                                //console.log(type);
+                                                switch (type) {
+                                                    case "timeout":
+                                                        mui.toast('连接超时，请重试');
+                                                        break;
+                                                    default:
+                                                        mui.toast('请重试或重新登录');
+                                                }
+                                            }
+                                        });
+
+                                    } else if (data == false) {
+                                        mui.toast('退单失败');
+                                    }
+                                },
+                                error: function (xhr, type, errorThrown) {
+                                    //异常处理；
+                                    //console.log(type);
+                                    switch (type) {
+                                        case "timeout":
+                                            mui.toast('连接超时，请重试');
+                                            break;
+                                        default:
+                                            mui.toast('请重试或重新登录');
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+            } else {
+
+            }
+        })
+
+    })
+
+    $(document).on('tap', '.c_order', function () {
+        $('.c_order').attr('disabled', true);
+        mui.ajax(config[0].url+'/index.php/shop_search', {
+            data: {
+                order_id: order_id,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                var shop_openid = data[0].shop_openid;
+                var userid = window.localStorage.getItem("token");
+                mui.ajax(config[0].url+'/index.php/send', {
+                    data: {
+                        muban_id: 4,
+                        openid: shop_openid,
+                        order_id: order_id,
+                        userid: userid,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+                mui.toast('催单成功，已通知店铺');
+
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                //console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+        mui.toast('催单成功，已通知店铺');
+    })
+
+
+    $(document).on('tap', '.order_more', function () {
+        mui.ajax(config[0].url+'/index.php/order_more', {
+            data: {
+                order_id: order_id,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (data == false) {
+                    mui.toast('异常错误');
+                    return;
+                } else {
+                    window.localStorage.setItem('order_id', data);
+                    mui.openWindow({
+                        url: 'order_ok.html',
+                        id: 'order_ok',
+                        createNew:true
+                    });
+                }
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                //console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+    })
+
+
+    if (order_id == '' || order_id == undefined || order_id == null) {
+        mui.openWindow({
+            url: 'index.html',
+            id: 'index',
+            createNew:true
+        });
+    }
+    mui.ajax(config[0].url+'/index.php/cp_detail', {
+        data: {
+            order_id: order_id,
+        },
+        dataType: 'json',//服务器返回json格式数据
+        type: 'post',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            var shop_id = data.data[0].shop_id;
+            //alert(shop_id);
+            console.log(data);
+            if (data.data[0].type == '01') {
+                jQuery('.w_qi').text('大乐透' + data.data[0].order_qi + '期');
+            } else if (data.data[0].type == '03') {
+                if (data.data[0].tz_type == 0) {
+                    jQuery('.w_qi').text('排列三·直选' + data.data[0].order_qi + '期');
+                } else if (data.data[0].tz_type == 1) {
+                    jQuery('.w_qi').text('排列三·组三' + data.data[0].order_qi + '期');
+                } else if (data.data[0].tz_type == 2) {
+                    jQuery('.w_qi').text('排列三·组六' + data.data[0].order_qi + '期');
+                } else if (data.data[0].tz_type == 3) {
+                    jQuery('.w_qi').text('排列三·直选复式胆拖' + data.data[0].order_qi + '期');
+                }else if (data.data[0].tz_type == 4) {
+                    jQuery('.w_qi').text('排列三·和值·直选' + data.data[0].order_qi + '期');
+                }else if (data.data[0].tz_type == 5) {
+                    jQuery('.w_qi').text('排列三·和值·组三' + data.data[0].order_qi + '期');
+                }else if (data.data[0].tz_type == 6) {
+                    jQuery('.w_qi').text('排列三·和值·组六' + data.data[0].order_qi + '期');
+                }
+
+            } else if (data.data[0].type == '04') {
+                jQuery('.w_qi').text('排列五' + data.data[0].order_qi + '期');
+            } else if (data.data[0].type == '02') {
+                jQuery('.w_qi').text('七星彩' + data.data[0].order_qi + '期');
+            }
+
+            if (data.data[0].award == 1) {
+                $('.kj').show();
+            }
+
+            //jQuery('.dlt_phone').text(data.data[0].user_mobile);
+
+            jQuery('.w_z').text(data.data[0].order_z);
+            jQuery('.w_b').text(data.data[0].order_b);
+            jQuery('.w_y').text(data.data[0].order_money);
+            var pay_m = data.data[0].order_money;
+            if (data.data[0].order_type == 1) {
+                jQuery('sup').text('自行取票');
+            } else if (data.data[0].order_type == 2) {
+                jQuery('sup').text('代管代兑');
+            } else if (data.data[0].order_type == 3) {
+                jQuery('sup').text('快递');
+            }
+            if (data.data[0].status == 0) {
+                var userid = window.localStorage.getItem("token");
+                $('.w_cpstatus').text('未支付');
+                $('.no_pay').show();
+                var nickname = window.localStorage.getItem('nickname');
+                //$('.wx_name').text(nickname);
+                $(document).on('tap', '.w_close', function () {
+                    $(".fc").fadeOut();
+                    $('.pay').fadeOut(100);
+                });
+                $(document).on('tap', '.pay_order', function () {
+                    token_check(userid);
+                    var order_id = window.localStorage.getItem('order_id');
+                    var btnArray = ['取消', '确定'];
+                    mui.prompt('为了您的资金安全：', '请输入支付密码', '支付密码', btnArray, function (e) {
+                        //document.querySelector('.mui-popup-input input').type='password'
+                        /*console.info(e);
+                         alert(e);*/
+
+                        if (e.index == 1) {
+                            if (e.value == '' || e.value == null) {
+                                mui.alert('请输入密码', function () {
+                                    window.location.reload();
+                                });
+                                return false;
+                            }
+                            mui.post(config[0].url+'/index.php/do_pay_psd', {
+                                        token: userid,
+                                        psd: e.value
+                                    }, function (data) {
+                                        /*alert(data);*/
+                                        console.info(data);
+                                        if (data == '1') {
+                                            mui.ajax(config[0].url+'/index.php/order_detail', {
+                                                data: {
+                                                    userid: userid, order_id: order_id,
+                                                },
+                                                dataType: 'json',//服务器返回json格式数据
+                                                type: 'post',//HTTP请求类型
+                                                timeout: 10000,//超时时间设置为10秒；
+                                                success: function (data) {
+                                                    if (typeof data == "string") {
+                                                        var data = eval('(' + data + ')');
+                                                    }
+                                                    //console.log(data.order_money);
+                                                    $('.zj_mon').text(data.data[0].order_money);
+                                                },
+                                                error: function (xhr, type, errorThrown) {
+                                                    //异常处理；
+                                                    console.log(type);
+                                                }
+                                            });
+
+
+                                            mui.ajax(config[0].url+'/index.php/user_balance', {
+                                                data: {
+                                                    token: userid, shopid: shop_id,
+                                                },
+                                                dataType: 'json',//服务器返回json格式数据
+                                                type: 'post',//HTTP请求类型
+                                                timeout: 10000,//超时时间设置为10秒；
+                                                success: function (data) {
+                                                    if (typeof data == "string") {
+                                                        var data = eval('(' + data + ')');
+                                                    }
+                                                    if (data.balance == 0 || data.balance=='') {
+                                                        $('.user_balance').text('0');
+                                                        $('.balance').attr('disabled', true);
+                                                        mui.alert('你在该店铺的余额不足', function() {
+                                                            	mui.openWindow({
+                                                            		url:'tz_record_main.html',
+                                                            		createNew:true
+                                                            	})
+                                                        });
+                                                        return false;
+                                                    }
+                                                    //console.log(data);
+                                                    //console.log(data.order_money);
+
+                                                    $('.user_balance').text(data.balance);
+                                                    var pay_m = parseInt($('.zj_mon').text());
+
+                                                    if (parseInt(data.balance) < pay_m) {
+
+                                                        //$('.pay_bot>dt').attr('disabled', true);
+                                                        //$('.pay_bot>dt').remove();
+                                                        mui.alert('你在该店铺的余额不足', function() {
+                                                            mui.openWindow({
+                                                            	url:'tz_record_main.html',
+                                                            	createNew:true
+                                                            })
+                                                        });
+                                                        return false;
+                                                    }
+
+                                                },
+                                                error: function (xhr, type, errorThrown) {
+                                                    //异常处理；
+                                                    //console.log(type);
+                                                    switch (type) {
+                                                        case "timeout":
+                                                            mui.toast('连接超时，请重试');
+                                                            break;
+                                                        default:
+                                                            mui.toast('请重试或重新登录');
+                                                    }
+                                                }
+                                            });
+
+
+                                            $('.fc').fadeIn();
+                                            $('.pay').fadeIn(100);
+
+
+                                        } else if (data == '2') {
+                                            mui.alert('密码错误', function () {
+                                                window.location.reload();
+                                            });
+                                            //window.location.reload();
+                                            return false;
+                                        } else if (data == '3') {
+                                            //var btnArray = ['否', '是'];
+                                            mui.confirm('还未设置支付密码，去设置？', function (e) {
+                                                if (e.index == 1) {
+                                                    window.location.href = 'pay_psd_add.html?update=1';
+                                                    return false;
+                                                } else {
+                                                    window.location.reload();
+                                                    return false;
+                                                }
+                                            })
+
+                                        }
+
+                                    }, 'json'
+                            );
+
+
+                        } else {
+                            window.location.reload();
+                            return false;
+                        }
+                    }, 'div')
+                    document.querySelector('.mui-popup-input input').type = 'password'
+
+                })
+                //var openid = window.localStorage.getItem("openid");
+                $(document).on('tap', '.pay_bot dt', function () {
+                    var pay_type = $("input[name='radio1']:checked").val();
+                    $('.pay_bot dt').attr('disabled', "true");
+                    //var orderid = $('.pay_bot').attr("data-id");
+                    var money = $('.zj_mon').text();
+                    var order_id = window.localStorage.getItem("order_id");
+                    //var select_shop = window.localStorage.getItem("choose_shop");
+                    var select_shop = data.data[0].shop_id;
+                    if (pay_type == 1) {
+                        mui.ajax(config[0].url+'/index.php/order_bank', {
+                            data: {
+                                order_id: order_id, userid: userid, money: money, select_shop: select_shop,
+                            },
+                            dataType: 'json',//服务器返回json格式数据
+                            type: 'post',//HTTP请求类型
+                            timeout: 10000,//超时时间设置为10秒；
+                            success: function (data) {
+                                if (typeof data == "string") {
+                                    var data = eval('(' + data + ')');
+                                }
+                                //var datalist = data.data.lists;
+                                //console.log(JSON.stringify(datalist));
+                                //window.localStorage.setItem('orderid', orderid);
+                                if (data.data == false) {
+                                    mui.toast(支付失败);
+                                    return;
+                                } else {
+                                    mui.ajax(config[0].url+'/index.php/send', {
+                                        data: {
+                                            muban_id: 1, orderid: order_id, userid: userid,
+                                        },
+                                        dataType: 'json',//服务器返回json格式数据
+                                        type: 'post',//HTTP请求类型
+                                        timeout: 10000,//超时时间设置为10秒；
+                                        success: function (data) {
+
+                                        },
+                                        error: function (xhr, type, errorThrown) {
+                                            //异常处理；
+                                            //console.log(type);
+                                            switch (type) {
+                                                case "timeout":
+                                                    mui.toast('连接超时，请重试');
+                                                    break;
+                                                default:
+                                                    mui.toast('请重试或重新登录');
+                                            }
+                                        }
+                                    });
+                                }
+
+                            },
+                            error: function (xhr, type, errorThrown) {
+                                //异常处理；
+                                //console.log(type);
+                                switch (type) {
+                                    case "timeout":
+                                        mui.toast('连接超时，请重试');
+                                        break;
+                                    default:
+                                        mui.toast('请重试或重新登录');
+                                }
+                            }
+                        });
+                    } else if (pay_type == 2) {
+                        mui.ajax(config[0].url+'/index.php/order_balance', {
+                            data: {
+                                order_id: order_id, userid: userid, money: money,select_shop: select_shop,
+                            },
+                            dataType: 'json',//服务器返回json格式数据
+                            type: 'post',//HTTP请求类型
+                            timeout: 10000,//超时时间设置为10秒；
+                            success: function (data) {
+                                if (typeof data == "string") {
+                                    var data = eval('(' + data + ')');
+                                }
+                                //var datalist = data.data.lists;
+                                //console.log(JSON.stringify(datalist));
+                                //window.localStorage.setItem('orderid', orderid);
+                                mui.ajax(config[0].url+'/index.php/send', {
+                                    data: {
+                                        muban_id: 1, orderid: order_id, userid: userid,
+                                    },
+                                    dataType: 'json',//服务器返回json格式数据
+                                    type: 'post',//HTTP请求类型
+                                    timeout: 10000,//超时时间设置为10秒；
+                                    success: function (data) {
+										
+                                    },
+                                    error: function (xhr, type, errorThrown) {
+                                        //异常处理；
+                                        //console.log(type);
+                                        switch (type) {
+                                            case "timeout":
+                                                mui.toast('连接超时，请重试');
+                                                break;
+                                            default:
+                                                mui.toast('请重试或重新登录');
+                                        }
+                                    }
+                                });
+                            },
+                            error: function (xhr, type, errorThrown) {
+                                //异常处理；
+                                //console.log(type);
+                                switch (type) {
+                                    case "timeout":
+                                        mui.toast('连接超时，请重试');
+                                        break;
+                                    default:
+                                        mui.toast('请重试或重新登录');
+                                }
+                            }
+                        });
+                    }
+
+
+                    mui.ajax(config[0].url+'/index.php/cp_status', {
+                        data: {
+                            order_id: order_id, status: '01', biaoshi: '1',
+                        },
+                        dataType: 'json',//服务器返回json格式数据
+                        type: 'post',//HTTP请求类型
+                        timeout: 10000,//超时时间设置为10秒；
+                        success: function (data) {
+
+                        },
+                        error: function (xhr, type, errorThrown) {
+                            //异常处理；
+                            //console.log(type);
+                            switch (type) {
+                                case "timeout":
+                                    mui.toast('连接超时，请重试');
+                                    break;
+                                default:
+                                    mui.toast('请重试或重新登录');
+                            }
+                        }
+                    });
+
+                    mui.ajax(config[0].url+'/index.php/orderlog', {
+                        data: {
+                            order_id: order_id, order_status: '01', value: '等待店铺接单',
+                        },
+                        dataType: 'json',//服务器返回json格式数据
+                        type: 'post',//HTTP请求类型
+                        timeout: 10000,//超时时间设置为10秒；
+                        success: function (data) {
+                            if (typeof data == "string") {
+                                var data = eval('(' + data + ')');
+                            }
+                            //window.location.href='mywallet_info.html?pay='+order_id;
+                            window.location.href = 'order_status.html?' + order_id;
+                        },
+                        error: function (xhr, type, errorThrown) {
+                            //异常处理；
+                            //console.log(type);
+                            switch (type) {
+                                case "timeout":
+                                    mui.toast('连接超时，请重试');
+                                    break;
+                                default:
+                                    mui.toast('请重试或重新登录');
+                            }
+                        }
+                    });
+
+                });
+
+            } else if (data.data[0].status == 1) {
+                $('.w_cpstatus').text('已支付');
+                $('.yes_pay').show();
+                var order_id = window.localStorage.getItem('order_id');
+
+            } else if (data.data[0].status == 2) {
+                $('.w_cpstatus').text('已接单');
+                $('.yes_order').show();
+                var order_id = window.localStorage.getItem('order_id');
+
+                $(document).on('tap', '.ts_order', function () {
+                    mui.alert('客服电话:0877-3249568');
+                })
+
+                $(document).on('tap', '.cp_order', function () {
+                    $('.cp_order').attr('disabled', true);
+                    mui.ajax(config[0].url+'/index.php/shop_search', {
+                        data: {
+                            order_id: order_id,
+                        },
+                        dataType: 'json',//服务器返回json格式数据
+                        type: 'post',//HTTP请求类型
+                        timeout: 10000,//超时时间设置为10秒；
+                        success: function (data) {
+                            if (typeof data == "string") {
+                                var data = eval('(' + data + ')');
+                            }
+                            var shop_openid = data[0].shop_openid;
+                            var userid = window.localStorage.getItem("token");
+                            mui.ajax(config[0].url+'/index.php/send', {
+                                data: {
+                                    muban_id: 5,
+                                    openid: shop_openid,
+                                    order_id: order_id,
+                                    userid: userid,
+                                },
+                                dataType: 'json',//服务器返回json格式数据
+                                type: 'post',//HTTP请求类型
+                                timeout: 10000,//超时时间设置为10秒；
+                                success: function (data) {
+
+                                },
+                                error: function (xhr, type, errorThrown) {
+                                    //异常处理；
+                                    //console.log(type);
+                                    switch (type) {
+                                        case "timeout":
+                                            mui.toast('连接超时，请重试');
+                                            break;
+                                        default:
+                                            mui.toast('请重试或重新登录');
+                                    }
+                                }
+                            });
+                            mui.toast('催单成功，已通知店铺');
+
+                        },
+                        error: function (xhr, type, errorThrown) {
+                            //异常处理；
+                            //console.log(type);
+                            switch (type) {
+                                case "timeout":
+                                    mui.toast('连接超时，请重试');
+                                    break;
+                                default:
+                                    mui.toast('请重试或重新登录');
+                            }
+                        }
+                    });
+
+
+                })
+
+            } else if (data.data[0].status == 3) {
+                $('.w_cpstatus').text('已出票');
+                $('.w_cpok').show();
+                $('#p_img').remove();
+                $('.cp_list_camera').show();
+                var order_id = window.localStorage.getItem('order_id');
+                mui.ajax(config[0].url+'/index.php/show_pic', {
+                    data: {
+                        oid: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'get',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+
+                        for (var i = 0; i < data.length; i++) {
+                            $("#pics").append("<img src=http://test.foodietech.cn/Uploads/photo/" + data[i].p_name + " width='100%' height='400' / >");
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+
+            } else if (data.data[0].status == 4) {
+                $('.w_cpstatus').text('已确认出票');
+                $('.order_again').show();
+                $('.cp_list_camera').show();
+                $('#p_img').remove();
+                var order_id = window.localStorage.getItem('order_id');
+                mui.ajax(config[0].url+'/index.php/show_pic', {
+                    data: {
+                        oid: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'get',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+
+                        for (var i = 0; i < data.length; i++) {
+                            $("#pics").append("<img src=http://test.foodietech.cn/Uploads/photo/" + data[i].p_name + " width='100%' height='400' / >");
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+            } else if (data.data[0].status == 5) {
+                $('.w_cpstatus').text('已退单');
+                $('.reset_again').show();
+                var order_id = window.localStorage.getItem('order_id');
+                var tp = data.data[0].type;
+                $(document).on('tap', '.order_reset', function () {
+                    if (tp == '01') {
+                        var html = 'dlt_sec.html?rid=' + order_id;
+                        token_check(userid, html);
+                        //window.location.href='dlt_sec.html?rid='+order_id;
+                    } else if (tp == '03') {
+                        var html = 'p3_sec.html?rid=' + order_id;
+                        token_check(userid, html);
+                        //window.location.href='p3_sec.html?rid='+order_id;
+                    } else if (tp == '04') {
+                        var html = 'p5_sec.html?rid=' + order_id;
+                        token_check(userid, html);
+                        //window.location.href='p5_sec.html?rid='+order_id;
+                    } else if (tp == '02') {
+                        var html = 'qxc_sec.html?rid=' + order_id;
+                        token_check(userid, html);
+                        //window.location.href='qxc_sec.html?rid='+order_id;
+                    }
+
+
+                })
+            } else if (data.data[0].status == 6) {
+                $('.w_cpstatus').text('订单已中奖');
+                $('.zj_n').attr('style', 'display:block');
+                $('.zj_detail').attr('style', 'display:block');
+                $('.order_again').show();
+                $('.cp_list_camera').show();
+                //$(".bck").attr("href", "award_record_main.html");
+                
+                $(document).on('tap','.bck',function(){
+                	/*mui.plusReady(function () {
+						var web=plus.webview.getWebviewById('award_record_main.html');
+						
+						if(web){
+							web.show();
+						}else{
+							mui.openWindow({
+							    url: 'award_record_main.html', 
+							    id:'award_record_main',
+							    createNew:true
+							});
+						}
+			        	
+						             
+		        	});*/
+			    	mui.openWindow({
+					    url: 'zx_personal.html', 
+					    id:'zx_personal',
+					    createNew:true
+					});
+			    })
+                
+                var zj_qi = data.data[0].order_qi;
+                var order_id = window.localStorage.getItem('order_id');
+                mui.ajax(config[0].url+'/index.php/show_pic', {
+                    data: {
+                        oid: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'get',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+
+                        for (var i = 0; i < data.length; i++) {
+                            $("#pics").append("<img src=http://test.foodietech.cn/Uploads/photo/" + data[i].p_name + " width='100%' height='400' / >");
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+                mui.ajax(config[0].url+'/index.php/zj_num_home', {
+                    data: {
+                        order_qi: zj_qi, order_id: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+                        if (data[0].types == '01') {
+                            var arr = [];
+                            var crr = [];
+                            var drr = [];
+                            //console.log(data);
+                            arr = data[0].numbers.split('|');
+
+                            crr = arr[0].split(',');
+                            drr = arr[1].split(',');
+
+                            var a = '';
+                            var b = '';
+                            var c = '';
+
+                            for (var j = 1; j <= crr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + crr[j - 1] + "<input class='choose_h1' type='hidden' value=" + crr[j - 1] + "></div>";
+                            }
+
+                            for (var h = 1; h <= drr.length; h++) {
+                                b += "<div class='choose_bball bxq'>" + drr[h - 1] + "<input class='choose_h2' type='hidden' value=" + drr[h - 1] + "></div>";
+                            }
+
+                            c = "<div class='cp_num'>" + a + b + "<div class='clear'></div></div>";
+                            jQuery('.zj_num').append(c);
+                        } else if (data[0].types == '03') {
+                            var arr = [];
+                            //console.log(data);
+                            arr = data[0].numbers.split(',');
+
+                            var a = '';
+                            var c = '';
+
+                            for (var j = 1; j <= arr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + arr[j - 1] + "<input class='choose_h1' type='hidden' value=" + arr[j - 1] + "></div>";
+                            }
+
+
+                            c = "<div class='cp_num'>" + a + "<div class='clear'></div></div>";
+                            jQuery('.zj_num').append(c);
+                        } else if (data[0].types == '04') {
+                            var arr = [];
+                            //console.log(data);
+                            arr = data[0].numbers.split(',');
+
+                            var a = '';
+                            var c = '';
+
+                            for (var j = 1; j <= arr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + arr[j - 1] + "<input class='choose_h1' type='hidden' value=" + arr[j - 1] + "></div>";
+                            }
+
+
+                            c = "<div class='cp_num'>" + a + "<div class='clear'></div></div>";
+                            jQuery('.zj_num').append(c);
+                        } else if (data[0].types == '02') {
+                            var arr = [];
+                            //console.log(data);
+                            arr = data[0].numbers.split(',');
+
+                            var a = '';
+                            var c = '';
+
+                            for (var j = 1; j <= arr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + arr[j - 1] + "<input class='choose_h1' type='hidden' value=" + arr[j - 1] + "></div>";
+                            }
+
+
+                            c = "<div class='cp_num'>" + a + "<div class='clear'></div></div>";
+                            jQuery('.zj_num').append(c);
+                        }
+
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+
+                mui.ajax(config[0].url+'/index.php/zj_detail_home', {
+                    data: {
+                        order_id: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+                        var a = '';
+                        var b = '';
+                        var c = '';
+                        var d = '';
+                        var e = '';
+                        var f = '';
+                        var g = '';
+                        if (data.type == '01') {
+
+
+                            if (parseInt(data.one.money) > 0 && data.one.z > 0) {
+                                a = "<tr><td>一等奖(含追加)</td><td>" + data.one.z + "</td><td>" + data.one.money + "</td></tr>";
+                                jQuery('.zj_tab').append(a);
+
+                            }
+
+                            if (parseInt(data.two.money) > 0 && data.two.z > 0) {
+                                b = "<tr><td>二等奖(含追加)</td><td>" + data.two.z + "</td><td>" + data.two.money + "</td></tr>";
+                                jQuery('.zj_tab').append(b);
+
+                            }
+
+                            if (parseInt(data.three.money) > 0 && data.three.z > 0) {
+                                c = "<tr><td>三等奖(含追加)</td><td>" + data.three.z + "</td><td>" + data.three.money + "</td></tr>";
+                                jQuery('.zj_tab').append(c);
+
+                            }
+
+                            if (parseInt(data.four.money) > 0 && data.four.z > 0) {
+                                d = "<tr><td>四等奖(含追加)</td><td>" + data.four.z + "</td><td>" + data.four.money + "</td></tr>";
+                                jQuery('.zj_tab').append(d);
+
+                            }
+
+                            if (parseInt(data.five.money) > 0 && data.five.z > 0) {
+                                e = "<tr><td>五等奖(含追加)</td><td>" + data.five.z + "</td><td>" + data.five.money + "</td></tr>";
+                                jQuery('.zj_tab').append(e);
+
+                            }
+
+                            if (parseInt(data.six.money) > 0 && data.six.z > 0) {
+                                f = "<tr><td>六等奖(含追加)</td><td>" + data.six.z + "</td><td>" + data.six.money + "</td></tr>";
+                                jQuery('.zj_tab').append(f);
+
+                            }
+
+                            jQuery('.zj_money').text(data.total);
+
+                        } else if (data.type == '03') {
+                            if (parseInt(data.zx.money) > 0 && data.zx.z > 0) {
+                                a = "<tr><td>直选</td><td>" + data.zx.z + "</td><td>" + data.zx.money + "</td></tr>";
+                                jQuery('.zj_tab').append(a);
+
+                            }
+
+                            if (parseInt(data.z3.money) > 0 && data.z3.z > 0) {
+                                b = "<tr><td>组三</td><td>" + data.z3.z + "</td><td>" + data.z3.money + "</td></tr>";
+                                jQuery('.zj_tab').append(b);
+
+                            }
+
+                            if (parseInt(data.z6.money) > 0 && data.z6.z > 0) {
+                                c = "<tr><td>组六</td><td>" + data.z6.z + "</td><td>" + data.z6.money + "</td></tr>";
+                                jQuery('.zj_tab').append(c);
+
+                            }
+
+                            if (parseInt(data.zdan.money) > 0 && data.zdan.z > 0) {
+                                d = "<tr><td>直选复式胆拖</td><td>" + data.zdan.z + "</td><td>" + data.zdan.money + "</td></tr>";
+                                jQuery('.zj_tab').append(d);
+
+                            }
+                            
+                            if (parseInt(data.hz_zx.money) > 0 && data.hz_zx.z > 0) {
+                                e = "<tr><td>和值·直选</td><td>" + data.hz_zx.z + "</td><td>" + data.hz_zx.money + "</td></tr>";
+                                jQuery('.zj_tab').append(e);
+
+                            }
+                            
+                            if (parseInt(data.hz_z3.money) > 0 && data.hz_z3.z > 0) {
+                                f = "<tr><td>和值·组三</td><td>" + data.hz_z3.z + "</td><td>" + data.hz_z3.money + "</td></tr>";
+                                jQuery('.zj_tab').append(f);
+
+                            }
+                            
+                            if (parseInt(data.hz_z6.money) > 0 && data.hz_z6.z > 0) {
+                                g = "<tr><td>和值·组六</td><td>" + data.hz_z6.z + "</td><td>" + data.hz_z6.money + "</td></tr>";
+                                jQuery('.zj_tab').append(g);
+
+                            }
+
+                            jQuery('.zj_money').text(data.total);
+                        } else if (data.type == '04') {
+                            if (parseInt(data.zx.money) > 0 && data.zx.z > 0) {
+                                a = "<tr><td>一等奖</td><td>" + data.zx.z + "</td><td>" + data.zx.money + "</td></tr>";
+                                jQuery('.zj_tab').append(a);
+
+                            }
+
+
+                            jQuery('.zj_money').text(data.total);
+                        } else if (data.type == '02') {
+
+
+                            if (parseInt(data.one.money) > 0 && data.one.z > 0) {
+                                a = "<tr><td>一等奖(含追加)</td><td>" + data.one.z + "</td><td>" + data.one.money + "</td></tr>";
+                                jQuery('.zj_tab').append(a);
+
+                            }
+
+                            if (parseInt(data.two.money) > 0 && data.two.z > 0) {
+                                b = "<tr><td>二等奖(含追加)</td><td>" + data.two.z + "</td><td>" + data.two.money + "</td></tr>";
+                                jQuery('.zj_tab').append(b);
+
+                            }
+
+                            if (parseInt(data.three.money) > 0 && data.three.z > 0) {
+                                c = "<tr><td>三等奖(含追加)</td><td>" + data.three.z + "</td><td>" + data.three.money + "</td></tr>";
+                                jQuery('.zj_tab').append(c);
+
+                            }
+
+                            if (parseInt(data.four.money) > 0 && data.four.z > 0) {
+                                d = "<tr><td>四等奖(含追加)</td><td>" + data.four.z + "</td><td>" + data.four.money + "</td></tr>";
+                                jQuery('.zj_tab').append(d);
+
+                            }
+
+                            if (parseInt(data.five.money) > 0 && data.five.z > 0) {
+                                e = "<tr><td>五等奖(含追加)</td><td>" + data.five.z + "</td><td>" + data.five.money + "</td></tr>";
+                                jQuery('.zj_tab').append(e);
+
+                            }
+
+                            if (parseInt(data.six.money) > 0 && data.six.z > 0) {
+                                f = "<tr><td>六等奖(含追加)</td><td>" + data.six.z + "</td><td>" + data.six.money + "</td></tr>";
+                                jQuery('.zj_tab').append(f);
+
+                            }
+
+                            jQuery('.zj_money').text(data.total);
+
+                        }
+
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+            } else if (data.data[0].status == 7) {
+                $('.w_cpstatus').text('店铺已派奖');
+                $('.zj_n').attr('style', 'display:block');
+                $('.zj_detail').attr('style', 'display:block');
+                $('.order_again').show();
+                $('.cp_list_camera').show();
+                //$(".bck").attr("href", "award_record_main.html");
+                
+                $(document).on('tap','.bck',function(){
+                	/*mui.plusReady(function () {
+						var web=plus.webview.getWebviewById('award_record_main.html');
+			        	if(web){
+							web.show();
+						}else{
+							mui.openWindow({
+							    url: 'award_record_main.html', 
+							    id:'award_record_main',
+							    createNew:true
+							});
+						}
+						             
+		        	});*/
+			    	mui.openWindow({
+					    url: 'zx_personal.html', 
+					    id:'zx_personal',
+					    createNew:true
+					});
+			    })
+                
+                var zj_qi = data.data[0].order_qi;
+                var order_id = window.localStorage.getItem('order_id');
+                mui.ajax(config[0].url+'/index.php/show_pic', {
+                    data: {
+                        oid: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'get',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+
+                        for (var i = 0; i < data.length; i++) {
+                            $("#pics").append("<img src=http://test.foodietech.cn/Uploads/photo/" + data[i].p_name + " width='100%' height='400' / >");
+                        }
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+                mui.ajax(config[0].url+'/index.php/zj_num_home', {
+                    data: {
+                        order_qi: zj_qi, order_id: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+                        if (data[0].types == '01') {
+                            var arr = [];
+                            var crr = [];
+                            var drr = [];
+                            //console.log(data);
+                            arr = data[0].numbers.split('|');
+
+                            crr = arr[0].split(',');
+                            drr = arr[1].split(',');
+
+                            var a = '';
+                            var b = '';
+                            var c = '';
+
+                            for (var j = 1; j <= crr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + crr[j - 1] + "<input class='choose_h1' type='hidden' value=" + crr[j - 1] + "></div>";
+                            }
+
+                            for (var h = 1; h <= drr.length; h++) {
+                                b += "<div class='choose_bball bxq'>" + drr[h - 1] + "<input class='choose_h2' type='hidden' value=" + drr[h - 1] + "></div>";
+                            }
+
+                            c = "<div class='cp_num'>" + a + b + "<div class='clear'></div></div>";
+                            jQuery('.zj_num').append(c);
+                        } else if (data[0].types == '03') {
+                            var arr = [];
+                            //console.log(data);
+                            arr = data[0].numbers.split(',');
+
+                            var a = '';
+                            var c = '';
+
+                            for (var j = 1; j <= arr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + arr[j - 1] + "<input class='choose_h1' type='hidden' value=" + arr[j - 1] + "></div>";
+                            }
+
+
+                            c = "<div class='cp_num'>" + a + "<div class='clear'></div></div>";
+                            jQuery('.zj_num').append(c);
+                        } else if (data[0].types == '04') {
+                            var arr = [];
+                            //console.log(data);
+                            arr = data[0].numbers.split(',');
+
+                            var a = '';
+                            var c = '';
+
+                            for (var j = 1; j <= arr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + arr[j - 1] + "<input class='choose_h1' type='hidden' value=" + arr[j - 1] + "></div>";
+                            }
+
+
+                            c = "<div class='cp_num'>" + a + "<div class='clear'></div></div>";
+                            jQuery('.zj_num').append(c);
+                        } else if (data[0].types == '02') {
+                            var arr = [];
+                            //console.log(data);
+                            arr = data[0].numbers.split(',');
+
+                            var a = '';
+                            var c = '';
+
+                            for (var j = 1; j <= arr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + arr[j - 1] + "<input class='choose_h1' type='hidden' value=" + arr[j - 1] + "></div>";
+                            }
+
+
+                            c = "<div class='cp_num'>" + a + "<div class='clear'></div></div>";
+                            jQuery('.zj_num').append(c);
+                        }
+
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+
+                mui.ajax(config[0].url+'/index.php/zj_detail_home', {
+                    data: {
+                        order_id: order_id,
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+                        console.log(data);
+                        var a = '';
+                        var b = '';
+                        var c = '';
+                        var d = '';
+                        var e = '';
+                        var f = '';
+                        if (data.type == '01') {
+
+
+                            if (parseInt(data.one.money) > 0 && data.one.z > 0) {
+                                a = "<tr><td>一等奖(含追加)</td><td>" + data.one.z + "</td><td>" + data.one.money + "</td></tr>";
+                                jQuery('.zj_tab').append(a);
+
+                            }
+
+                            if (parseInt(data.two.money) > 0 && data.two.z > 0) {
+                                b = "<tr><td>二等奖(含追加)</td><td>" + data.two.z + "</td><td>" + data.two.money + "</td></tr>";
+                                jQuery('.zj_tab').append(b);
+
+                            }
+
+                            if (parseInt(data.three.money) > 0 && data.three.z > 0) {
+                                c = "<tr><td>三等奖(含追加)</td><td>" + data.three.z + "</td><td>" + data.three.money + "</td></tr>";
+                                jQuery('.zj_tab').append(c);
+
+                            }
+
+                            if (parseInt(data.four.money) > 0 && data.four.z > 0) {
+                                d = "<tr><td>四等奖(含追加)</td><td>" + data.four.z + "</td><td>" + data.four.money + "</td></tr>";
+                                jQuery('.zj_tab').append(d);
+
+                            }
+
+                            if (parseInt(data.five.money) > 0 && data.five.z > 0) {
+                                e = "<tr><td>五等奖(含追加)</td><td>" + data.five.z + "</td><td>" + data.five.money + "</td></tr>";
+                                jQuery('.zj_tab').append(e);
+
+                            }
+
+                            if (parseInt(data.six.money) > 0 && data.six.z > 0) {
+                                f = "<tr><td>六等奖(含追加)</td><td>" + data.six.z + "</td><td>" + data.six.money + "</td></tr>";
+                                jQuery('.zj_tab').append(f);
+
+                            }
+
+                            jQuery('.zj_money').text(data.total);
+
+                        } else if (data.type == '03') {
+                            if (parseInt(data.zx.money) > 0 && data.zx.z > 0) {
+                                a = "<tr><td>直选</td><td>" + data.zx.z + "</td><td>" + data.zx.money + "</td></tr>";
+                                jQuery('.zj_tab').append(a);
+
+                            }
+
+                            if (parseInt(data.z3.money) > 0 && data.z3.z > 0) {
+                                b = "<tr><td>组三</td><td>" + data.z3.z + "</td><td>" + data.z3.money + "</td></tr>";
+                                jQuery('.zj_tab').append(b);
+
+                            }
+
+                            if (parseInt(data.z6.money) > 0 && data.z6.z > 0) {
+                                c = "<tr><td>组六</td><td>" + data.z6.z + "</td><td>" + data.z6.money + "</td></tr>";
+                                jQuery('.zj_tab').append(c);
+
+                            }
+
+                            if (parseInt(data.zdan.money) > 0 && data.zdan.z > 0) {
+                                d = "<tr><td>直选复式胆拖</td><td>" + data.zdan.z + "</td><td>" + data.zdan.money + "</td></tr>";
+                                jQuery('.zj_tab').append(d);
+
+                            }
+
+                            jQuery('.zj_money').text(data.total);
+                        } else if (data.type == '04') {
+                            if (parseInt(data.zx.money) > 0 && data.zx.z > 0) {
+                                a = "<tr><td>一等奖</td><td>" + data.zx.z + "</td><td>" + data.zx.money + "</td></tr>";
+                                jQuery('.zj_tab').append(a);
+
+                            }
+
+
+                            jQuery('.zj_money').text(data.total);
+                        } else if (data.type == '02') {
+
+
+                            if (parseInt(data.one.money) > 0 && data.one.z > 0) {
+                                a = "<tr><td>一等奖(含追加)</td><td>" + data.one.z + "</td><td>" + data.one.money + "</td></tr>";
+                                jQuery('.zj_tab').append(a);
+
+                            }
+
+                            if (parseInt(data.two.money) > 0 && data.two.z > 0) {
+                                b = "<tr><td>二等奖(含追加)</td><td>" + data.two.z + "</td><td>" + data.two.money + "</td></tr>";
+                                jQuery('.zj_tab').append(b);
+
+                            }
+
+                            if (parseInt(data.three.money) > 0 && data.three.z > 0) {
+                                c = "<tr><td>三等奖(含追加)</td><td>" + data.three.z + "</td><td>" + data.three.money + "</td></tr>";
+                                jQuery('.zj_tab').append(c);
+
+                            }
+
+                            if (parseInt(data.four.money) > 0 && data.four.z > 0) {
+                                d = "<tr><td>四等奖(含追加)</td><td>" + data.four.z + "</td><td>" + data.four.money + "</td></tr>";
+                                jQuery('.zj_tab').append(d);
+
+                            }
+
+                            if (parseInt(data.five.money) > 0 && data.five.z > 0) {
+                                e = "<tr><td>五等奖(含追加)</td><td>" + data.five.z + "</td><td>" + data.five.money + "</td></tr>";
+                                jQuery('.zj_tab').append(e);
+
+                            }
+
+                            if (parseInt(data.six.money) > 0 && data.six.z > 0) {
+                                f = "<tr><td>六等奖(含追加)</td><td>" + data.six.z + "</td><td>" + data.six.money + "</td></tr>";
+                                jQuery('.zj_tab').append(f);
+
+                            }
+
+                            jQuery('.zj_money').text(data.total);
+
+                        }
+
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+
+
+            }
+
+            $('.w_shopname').text(data.data[0].shop_name);
+            jQuery('.w_order').text(data.data[0].order_num);
+
+//				if(data.data[0].add==1){
+//					jQuery('.zj').text('追加');
+//			}
+            jQuery('.w_date').text(data.data[0].times);
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+            console.log(type);
+        }
+    });
+
+
+    mui.ajax(config[0].url+'/index.php/cp_detail_num', {
+        data: {
+            order_id: order_id,
+        },
+        dataType: 'json',//服务器返回json格式数据
+        type: 'post',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            console.log(data);
+
+            if (data.data[0].type == '01') {
+                var arr = [];
+                var brr = [];
+                for (var i = 0; i < data.data.length; i++) {
+                    var a = '';
+                    var b = '';
+                    var c = '';
+
+                    brr[i] = data.data[i].numbers.split('|');
+                    /*drr=brr[i][0];*/
+                    if (brr[i][0].indexOf(';') == -1 && brr[i][1].indexOf(';') == -1) {
+                        var crr = [];
+                        var drr = [];
+                        /*console.log(brr[i][0]);*/
+                        crr = brr[i][0].split(',');
+                        drr = brr[i][1].split(',');
+
+                        var a = '';
+                        var b = '';
+                        var c = '';
+
+
+                        for (var j = 1; j <= crr.length; j++) {
+                            a += "<div class='choose_rball rxq'>" + crr[j - 1] + "<input class='choose_h1' type='hidden' value=" + crr[j - 1] + "></div>";
+                        }
+
+                        for (var h = 1; h <= drr.length; h++) {
+                            b += "<div class='choose_bball bxq'>" + drr[h - 1] + "<input class='choose_h2' type='hidden' value=" + drr[h - 1] + "></div>";
+                        }
+
+                        c = "<div class='cp_num'>" + a + b + "<div class='clear'></div></div>";
+                        jQuery('.cp_numm').append(c);
+
+                    }
+
+                    if (brr[i][0].indexOf(';') > -1 && brr[i][1].indexOf(';') == -1) {
+                        var crr = [];
+                        var drr = [];
+                        var err = [];
+                        var grr = [];
+                        //console.log(brr[i]);
+                        //console.log(brr[i][0]);
+                        crr = brr[i][0].split(';');
+                        //console.log(crr);
+                        grr = crr.pop().split(',');
+                        //console.log(grr);
+                        //err=crr.split(';');
+                        //console.log(crr);
+                        drr = brr[i][1].split(',');
+
+
+                        var b = '';
+                        var a = '';
+                        var c = '';
+                        var d = '';
+                        var e = '';
+                        var f = '';
+                        var g = '';
+                        for (var j = 0; j < crr.length; j++) {
+                            a += "<div class='choose_rball rxd rd'>" + crr[j] + "<input class='choose_h1' type='hidden' value=" + crr[j] + "></div>";
+                        }
+                        a = "<div style='float:left'>[胆:</div>" + a + "<div style='float:left'>]</div>";
+
+                        for (var h = 0; h < grr.length; h++) {
+                            b += "<div class='choose_rball rxq'>" + grr[h] + "<input class='choose_h1' type='hidden' value=" + grr[h] + "></div>";
+                        }
+
+                        for (var k = 0; k < drr.length; k++) {
+                            d += "<div class='choose_bball bxq'>" + drr[k] + "<input class='choose_h2' type='hidden' value=" + drr[k] + "></div>";
+                        }
+
+                        c = "<div class='cp_num'>" + a + b + d + "<div class='clear'></div></div>";
+                        jQuery('.cp_numm').append(c);
+
+                    }
+
+
+                    if (brr[i][0].indexOf(';') == -1 && brr[i][1].indexOf(';') > -1) {
+                        var crr = [];
+                        var drr = [];
+                        var grr = [];
+                        /*console.log(brr[i][0]);*/
+                        crr = brr[i][0].split(',');
+                        drr = brr[i][1].split(';');
+                        grr = drr.pop().split(',');
+
+                        var a = '';
+                        var b = '';
+                        var c = '';
+                        var d = '';
+
+
+                        for (var j = 0; j < crr.length; j++) {
+                            a += "<div class='choose_rball rxq'>" + crr[j] + "<input class='choose_h1' type='hidden' value=" + crr[j] + "></div>";
+                        }
+
+                        for (var h = 0; h < drr.length; h++) {
+                            b += "<div class='choose_bball bxd bd'>" + drr[h] + "<input class='choose_h2' type='hidden' value=" + drr[h] + "></div>";
+                        }
+                        b = "<div style='float:left'>[胆:</div>" + b + "<div style='float:left'>]</div>";
+
+                        for (var k = 0; k < grr.length; k++) {
+                            d += "<div class='choose_bball bxq'>" + grr[k] + "<input class='choose_h1' type='hidden' value=" + grr[k] + "></div>";
+
+                        }
+
+                        c = "<div class='cp_num'>" + a + b + d + "<div class='clear'></div></div>";
+                        jQuery('.cp_numm').append(c);
+
+                    }
+
+                    if (brr[i][0].indexOf(';') > -1 && brr[i][1].indexOf(';') > -1) {
+                        var crr = [];
+                        var drr = [];
+                        var grr = [];
+                        var err = [];
+                        /*console.log(brr[i][0]);*/
+                        crr = brr[i][0].split(';');
+                        drr = brr[i][1].split(';');
+                        grr = drr.pop().split(',');
+                        err = crr.pop().split(',');
+
+                        var a = '';
+                        var b = '';
+                        var c = '';
+                        var d = '';
+                        var e = '';
+
+                        for (var p = 0; p < crr.length; p++) {
+                            e += "<div class='choose_rball rxd rd' >" + crr[p] + "<input class='choose_h1' type='hidden' value=" + crr[p] + "></div>";
+                        }
+                        e = "<div style='float:left'>[胆:</div>" + e + "<div style='float:left'>]</div>";
+
+
+                        for (var j = 0; j < err.length; j++) {
+                            a += "<div class='choose_rball rxq'>" + err[j] + "<input class='choose_h1' type='hidden' value=" + err[j] + "></div>";
+                        }
+
+                        for (var h = 0; h < drr.length; h++) {
+                            b += "<div class='choose_bball bxd bd'>" + drr[h] + "<input class='choose_h2' type='hidden' value=" + drr[h] + "></div>";
+                        }
+                        b = "<div style='float:left'>[胆:</div>" + b + "<div style='float:left'>]</div>";
+
+                        for (var k = 0; k < grr.length; k++) {
+                            d += "<div class='choose_bball bxq'>" + grr[k] + "<input class='choose_h1' type='hidden' value=" + grr[k] + "></div>";
+
+                        }
+
+                        c = "<div class='cp_num'>" + e + a + b + d + "<div class='clear'></div></div>";
+                        jQuery('.cp_numm').append(c);
+                    }
+
+                }
+            } else if (data.data[0].type == '03') {
+                if (data.data[0].tz_type == 0) {
+                    var a = '';
+                    var b = '';
+                    var c = '';
+                    var d = '';
+                    var e = '';
+                    var f = "<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+                    var arr = [];
+                    for (var i = 0; i < data.data.length; i++) {
+                        arr[i] = data.data[i].numbers.split('|');
+                        console.log(arr);
+                        if (arr[i][0].indexOf(',') > -1) {
+                            var brr = [];
+                            brr = arr[i][0].split(',');
+
+                            for (var j = 1; j <= brr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + brr[j - 1] + "<input class='choose_h1' type='hidden' value=" + brr[j - 1] + "></div>";
+                            }
+                        } else if (arr[i][0].indexOf(',') == -1) {
+                            a = "<div class='choose_rball rxq'>" + arr[i][0] + "<input class='choose_h1' type='hidden' value=" + arr[0] + "></div>";
+
+                        }
+
+                        if (arr[i][1].indexOf(',') > -1) {
+                            var crr = [];
+                            crr = arr[i][1].split(',');
+
+                            for (var k = 1; k <= crr.length; k++) {
+                                b += "<div class='choose_rball rxq'>" + crr[k - 1] + "<input class='choose_h1' type='hidden' value=" + crr[k - 1] + "></div>";
+                            }
+                        } else if (arr[i][1].indexOf(',') == -1) {
+                            b = "<div class='choose_rball rxq'>" + arr[i][1] + "<input class='choose_h1' type='hidden' value=" + arr[1] + "></div>";
+
+                        }
+
+                        if (arr[i][2].indexOf(',') > -1) {
+                            var drr = [];
+                            drr = arr[i][2].split(',');
+
+                            for (var h = 1; h <= drr.length; h++) {
+                                c += "<div class='choose_rball rxq'>" + drr[h - 1] + "<input class='choose_h1' type='hidden' value=" + drr[h - 1] + "></div>";
+                            }
+                        } else if (arr[i][2].indexOf(',') == -1) {
+                            c = "<div class='choose_rball rxq'>" + arr[i][2] + "<input class='choose_h1' type='hidden' value=" + arr[2] + "></div>";
+
+                        }
+
+                        e = "<div class='cp_num'>" + a + f + b + f + c + "<div class='clear'></div></div>";
+                        jQuery('.cp_numm').append(e);
+
+
+                    }
+                } else if (data.data[0].tz_type == 1 || data.data[0].tz_type == 2 || data.data[0].tz_type == 3) {
+
+                    for (var i = 0; i < data.data.length; i++) {
+                        var a = '';
+                        var b = '';
+                        var c = '';
+                        var d = '';
+                        var e = '';
+                        if (data.data[i].numbers.indexOf(';') == -1) {
+                            var brr = [];
+                            brr = data.data[i].numbers.split(',');
+                            console.log(brr);
+                            for (var j = 1; j <= brr.length; j++) {
+                                a += "<div class='choose_rball rxq'>" + brr[j - 1] + "<input class='choose_h1' type='hidden' value=" + brr[j - 1] + "></div>";
+                            }
+                            e = "<div class='cp_num'>" + a + "<div class='clear'></div></div>";
+                            jQuery('.cp_numm').append(e);
+                        }
+
+                        if (data.data[i].numbers.indexOf(';') > -1) {
+                            var drr = [];
+                            var crr = [];
+                            var grr = [];
+                            crr = data.data[i].numbers.split(';');
+                            console.log(crr);
+                            grr = crr.pop().split(',');
+                            console.log(grr);
+                            console.log(crr);
+
+                            for (var p = 0; p < crr.length; p++) {
+                                a += "<div class='choose_rball rxd rd'>" + crr[p] + "<input class='choose_h1' type='hidden' value=" + crr[p] + "></div>";
+                            }
+                            a = "<div style='float:left'>[胆:</div>" + a + "<div style='float:left'>]</div>";
+
+                            for (var h = 0; h < grr.length; h++) {
+                                b += "<div class='choose_rball rxq'>" + grr[h] + "<input class='choose_h1' type='hidden' value=" + grr[h] + "></div>";
+                            }
+
+                            e = "<div class='cp_num'>" + a + b + "<div class='clear'></div></div>";
+                            jQuery('.cp_numm').append(e);
+
+
+                        }
+
+                    }
+                }else if(data.data[0].tz_type == 4 || data.data[0].tz_type == 5 || data.data[0].tz_type == 6){
+                	var a = '';
+                    var b = '';
+                    var c = '';
+                    var d = '';
+                    var e = '';
+                    var f = "<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+                    
+                    for (var i = 0; i < data.data.length; i++) {
+                    	var a = '';
+                    	var arr = [];
+                        arr = data.data[i].numbers.split(',');
+                        for(var zz=0;zz<arr.length;zz++){
+                        	a += "<div class='choose_rball rxq'>" + arr[zz] + "<input class='choose_h1' type='hidden' value=" + arr[zz] + "></div>";
+                        
+                        	
+	                    }
+                        
+                         e = "<div class='cp_num'>" + a +"<div class='clear'></div></div>";
+	                     jQuery('.cp_numm').append(e);
+                        
+               		 }
+                    console.log(arr.length);
+                   
+				}
+            } else if (data.data[0].type == '04') {
+
+                var a = '';
+                var b = '';
+                var c = '';
+                var d = '';
+                var e = '';
+                var g = '';
+                var m = '';
+                var f = "<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+                var arr = [];
+                for (var i = 0; i < data.data.length; i++) {
+                    arr[i] = data.data[i].numbers.split('|');
+                    console.log(arr);
+                    if (arr[i][0].indexOf(',') > -1) {
+                        var brr = [];
+                        brr = arr[i][0].split(',');
+
+                        for (var j = 1; j <= brr.length; j++) {
+                            a += "<div class='choose_rball rxq'>" + brr[j - 1] + "<input class='choose_h1' type='hidden' value=" + brr[j - 1] + "></div>";
+                        }
+                    } else if (arr[i][0].indexOf(',') == -1) {
+                        a = "<div class='choose_rball rxq'>" + arr[i][0] + "<input class='choose_h1' type='hidden' value=" + arr[0] + "></div>";
+
+                    }
+
+                    if (arr[i][1].indexOf(',') > -1) {
+                        var crr = [];
+                        crr = arr[i][1].split(',');
+
+                        for (var k = 1; k <= crr.length; k++) {
+                            b += "<div class='choose_rball rxq'>" + crr[k - 1] + "<input class='choose_h1' type='hidden' value=" + crr[k - 1] + "></div>";
+                        }
+                    } else if (arr[i][1].indexOf(',') == -1) {
+                        b = "<div class='choose_rball rxq'>" + arr[i][1] + "<input class='choose_h1' type='hidden' value=" + arr[1] + "></div>";
+
+                    }
+
+                    if (arr[i][2].indexOf(',') > -1) {
+                        var drr = [];
+                        drr = arr[i][2].split(',');
+
+                        for (var h = 1; h <= drr.length; h++) {
+                            c += "<div class='choose_rball rxq'>" + drr[h - 1] + "<input class='choose_h1' type='hidden' value=" + drr[h - 1] + "></div>";
+                        }
+                    } else if (arr[i][2].indexOf(',') == -1) {
+                        c = "<div class='choose_rball rxq'>" + arr[i][2] + "<input class='choose_h1' type='hidden' value=" + arr[2] + "></div>";
+
+                    }
+
+                    if (arr[i][3].indexOf(',') > -1) {
+                        var err = [];
+                        err = arr[i][3].split(',');
+
+                        for (var p = 1; p <= err.length; p++) {
+                            g += "<div class='choose_rball rxq'>" + err[p - 1] + "<input class='choose_h1' type='hidden' value=" + err[p - 1] + "></div>";
+                        }
+                    } else if (arr[i][3].indexOf(',') == -1) {
+                        g = "<div class='choose_rball rxq'>" + arr[i][3] + "<input class='choose_h1' type='hidden' value=" + arr[3] + "></div>";
+
+                    }
+
+                    if (arr[i][4].indexOf(',') > -1) {
+                        var grr = [];
+                        grr = arr[i][4].split(',');
+
+                        for (var u = 1; u <= grr.length; u++) {
+                            m += "<div class='choose_rball rxq'>" + grr[u - 1] + "<input class='choose_h1' type='hidden' value=" + grr[u - 1] + "></div>";
+                        }
+                    } else if (arr[i][4].indexOf(',') == -1) {
+                        m = "<div class='choose_rball rxq'>" + arr[i][4] + "<input class='choose_h1' type='hidden' value=" + arr[4] + "></div>";
+
+                    }
+
+                    e = "<div class='cp_num'>" + a + f + b + f + c + f + g + f + m + "<div class='clear'></div></div>";
+                    jQuery('.cp_numm').append(e);
+
+
+                }
+            } else if (data.data[0].type == '02') {
+
+                var a = '';
+                var b = '';
+                var c = '';
+                var d = '';
+                var e = '';
+                var g = '';
+                var m = '';
+                var n = '';
+                var f = "<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+                var arr = [];
+                for (var i = 0; i < data.data.length; i++) {
+                    arr[i] = data.data[i].numbers.split('|');
+                    console.log(arr);
+                    if (arr[i][0].indexOf(',') > -1) {
+                        var brr = [];
+                        brr = arr[i][0].split(',');
+
+                        for (var j = 1; j <= brr.length; j++) {
+                            a += "<div class='choose_rball rxq'>" + brr[j - 1] + "<input class='choose_h1' type='hidden' value=" + brr[j - 1] + "></div>";
+                        }
+                    } else if (arr[i][0].indexOf(',') == -1) {
+                        a = "<div class='choose_rball rxq'>" + arr[i][0] + "<input class='choose_h1' type='hidden' value=" + arr[0] + "></div>";
+
+                    }
+
+                    if (arr[i][1].indexOf(',') > -1) {
+                        var crr = [];
+                        crr = arr[i][1].split(',');
+
+                        for (var k = 1; k <= crr.length; k++) {
+                            b += "<div class='choose_rball rxq'>" + crr[k - 1] + "<input class='choose_h1' type='hidden' value=" + crr[k - 1] + "></div>";
+                        }
+                    } else if (arr[i][1].indexOf(',') == -1) {
+                        b = "<div class='choose_rball rxq'>" + arr[i][1] + "<input class='choose_h1' type='hidden' value=" + arr[1] + "></div>";
+
+                    }
+
+                    if (arr[i][2].indexOf(',') > -1) {
+                        var drr = [];
+                        drr = arr[i][2].split(',');
+
+                        for (var h = 1; h <= drr.length; h++) {
+                            c += "<div class='choose_rball rxq'>" + drr[h - 1] + "<input class='choose_h1' type='hidden' value=" + drr[h - 1] + "></div>";
+                        }
+                    } else if (arr[i][2].indexOf(',') == -1) {
+                        c = "<div class='choose_rball rxq'>" + arr[i][2] + "<input class='choose_h1' type='hidden' value=" + arr[2] + "></div>";
+
+                    }
+
+                    if (arr[i][3].indexOf(',') > -1) {
+                        var err = [];
+                        err = arr[i][3].split(',');
+
+                        for (var p = 1; p <= err.length; p++) {
+                            g += "<div class='choose_rball rxq'>" + err[p - 1] + "<input class='choose_h1' type='hidden' value=" + err[p - 1] + "></div>";
+                        }
+                    } else if (arr[i][3].indexOf(',') == -1) {
+                        g = "<div class='choose_rball rxq'>" + arr[i][3] + "<input class='choose_h1' type='hidden' value=" + arr[3] + "></div>";
+
+                    }
+
+                    if (arr[i][4].indexOf(',') > -1) {
+                        var grr = [];
+                        grr = arr[i][4].split(',');
+
+                        for (var u = 1; u <= grr.length; u++) {
+                            m += "<div class='choose_rball rxq'>" + grr[u - 1] + "<input class='choose_h1' type='hidden' value=" + grr[u - 1] + "></div>";
+                        }
+                    } else if (arr[i][4].indexOf(',') == -1) {
+                        m = "<div class='choose_rball rxq'>" + arr[i][4] + "<input class='choose_h1' type='hidden' value=" + arr[4] + "></div>";
+
+                    }
+
+                    if (arr[i][5].indexOf(',') > -1) {
+                        var hrr = [];
+                        hrr = arr[i][5].split(',');
+
+                        for (var x = 1; x <= hrr.length; x++) {
+                            d += "<div class='choose_rball rxq'>" + hrr[x - 1] + "<input class='choose_h1' type='hidden' value=" + hrr[x - 1] + "></div>";
+                        }
+                    } else if (arr[i][5].indexOf(',') == -1) {
+                        d = "<div class='choose_rball rxq'>" + arr[i][5] + "<input class='choose_h1' type='hidden' value=" + arr[5] + "></div>";
+
+                    }
+
+                    if (arr[i][6].indexOf(',') > -1) {
+                        var trr = [];
+                        trr = arr[i][6].split(',');
+
+                        for (var z = 1; z <= trr.length; z++) {
+                            n += "<div class='choose_rball rxq'>" + trr[z - 1] + "<input class='choose_h1' type='hidden' value=" + trr[z - 1] + "></div>";
+                        }
+                    } else if (arr[i][6].indexOf(',') == -1) {
+                        n = "<div class='choose_rball rxq'>" + arr[i][6] + "<input class='choose_h1' type='hidden' value=" + arr[6] + "></div>";
+
+                    }
+
+                    e = "<div class='cp_num'>" + a + f + b + f + c + f + g + f + m + f + d + f + n + "<div class='clear'></div></div>";
+                    jQuery('.cp_numm').append(e);
+
+
+                }
+            }
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+            console.log(type);
+        }
+    });
+</script>
+<script type="text/javascript">
+    var order_id = window.localStorage.getItem('order_id');
+    var userid = window.localStorage.getItem('token');
+    $(document).on('click', '.w_cpok', function () {
+        var d_monet = $('.w_y').text();
+        mui.ajax(config[0].url+'/index.php/cp_rk', {
+            data: {
+                order_id: order_id, userid: userid,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                console.log(data);
+                if (data == false) {
+                    mui.toast('异常错误');
+                    return;
+                }
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                console.log(type);
+            }
+        });
+
+        mui.ajax(config[0].url+'/index.php/cp_status', {
+            data: {
+                order_id: order_id, status: '04', biaoshi: 2, d_money: d_monet,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                //$('.mui-bar').remove();
+                $('.w_cpstatus').text('已确认出票');
+                $('.order_again').show();
+               
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                console.log(type);
+            }
+        });
+
+        mui.ajax(config[0].url+'/index.php/cp_nums', {//出票次数
+            data: {
+                order_id: order_id,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                console.log(type);
+            }
+        });
+
+        mui.ajax(config[0].url+'/index.php/orderlog', {
+            data: {
+                order_id: order_id, order_status: '04', value: '您已确认出票，请耐心等待开奖结果',
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                console.log(type);
+            }
+        });
+    })
+
+</script>
+</html>

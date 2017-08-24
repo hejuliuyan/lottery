@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport"
+    content="width=device-width, 		initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <script type="text/javascript" charset="UTF-8">
+        mui.init();
+    </script>
+    <style>
+        .header_d > .mui-btn {
+            border-color: #FFFFFF;
+            margin: 15px 15px 0 0;
+        }
+
+        .mui-bar {
+            background-color: #EEEEEE;
+        }
+        .tit{
+            float: left;
+            width: 49%;
+            background-color: #56ABE4;
+            text-align: center;
+            color: #FFFFFF;
+            font-size: large;
+            height: 45px;
+            line-height: 45px;
+        }
+        .lists{
+            width: 100%;
+
+        }
+        .list_left{
+            width: 50%;
+            text-align: center;
+            margin-top: 0px;
+            padding-top:0px;
+            line-height: 60px;
+        }
+        .list_right{
+            margin-top: 0px;
+            padding-top: 0px;
+            width: 50%;
+            /*text-align: center;*/
+        }
+        .div_left{
+            /*width: 25%;*/
+            margin-top: 20px;
+        }
+        .a_img{
+            /*width: 25%;*/
+            margin-top: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--<header class="mui-bar mui-bar-nav"><h1 class="mui-title">我的钱包</h1></header>-->
+    <header class="mui-bar mui-bar-nav">
+        <a href="shop_zx.html"
+        class=" mui-icon mui-icon-left-nav mui-pull-left bck"></a>
+        <h1 class="mui-title">我的用户</h1>
+    </header>
+<!--<section class="ord1_top">
+    <div class="head_div head_col">
+        <div class="header_d">
+            <p class="head_col">账户余额（元）</p>
+            <p class="head_col head_money">0</p>
+        </div>
+        <div class="header_d head_col">
+            <button type="button"
+                    class="mui-btn mui-btn-outlined head_col withdrawal">提现
+            </button>
+            <button type="button"
+                    class="mui-btn mui-btn-outlined head_col money_up">充值
+            </button>
+        </div>
+    </div>
+</section>-->
+<section style="margin-top: 46px;">
+    <!--<p class="p_color">额度限制</p>
+    <div class="balance_div div_color">
+        每日单笔提现限<span class="yu_e">1000元</span>
+    </div>
+    <p class="p_color">最近交易记录</p>-->
+    <div class="div_color">
+        <!-- <button type="button"
+                class="a_action but_ccl mui-btn  mui-btn-outlined search_b" data-id="1">最近一周
+        </button>
+        <button type="button"
+                class="but_ccl mui-btn  mui-btn-outlined search_b"
+                data-id="2">最近一月
+            </button> -->
+            <div class="tit" style="border-right: 1px solid #fff">用户手机号</div>
+            <div class="tit">记账金额</div>
+        <!-- <button type="button"
+                class="but_ccl mui-btn  mui-btn-outlined search_b" data-id="3">最近三月
+            </button> -->
+        </div>
+    </section>
+    <div class="oldd" style="padding-top: 30px;">
+        
+    </div>
+
+
+</body>
+<script>
+ var shopid = window.localStorage.getItem('shopid');
+ /**
+  * [success description]
+  * @param  {[type]} data) {                           if (typeof data [description]
+  * @return {[type]}       [description]
+  * 获取店铺对应用户
+  */
+ mui.ajax(config[0].url+'/index.php/my_customer', {
+    data: {
+        shopid: shopid,
+    },
+    dataType: 'json',//服务器返回json格式数据
+    type: 'post',//HTTP请求类型
+    timeout: 10000,//超时时间设置为10秒；
+    success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                // console.log(data);
+                var html='';
+                if(data!=false){
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        html+='<section class="money_list" data-id="'+ data[i].id
+                        +'" data-phone="'+data[i].mobile+'" data-money="'+data[i].balance+'"><div class="lists"><div class="list_left">'+
+                            data[i].mobile
+                        +'</div><div class="list_right"><div class="div_left">'+data[i].balance+'</div><div class="a_img"><button type="button" class="go_info" ><img src="http://test.foodietech.cn/mui/wimages/aaa_ok.png"></button></div></div></div></section>';
+                    }
+                    $('.oldd').html(html);
+                }
+            }
+        })
+  /*$('.go_info').on('tap', function () {debugger;
+    mui.openWindow({
+            url: 'zjia.html?id='+$(this).data('id')+'&phone='+$(this).data('phone'),
+            id: 'zjia'
+        });
+  })*/
+  $(document).on('tap', '.money_list', function(){
+    mui.openWindow({
+            url: 'zjia.html?uid='+$(this).data('id')+'&phone='+$(this).data('phone')+'&money='+$(this).data('money'),
+            id: 'zjia.html',
+            createNew:true
+            /*extras:{
+                uid:$(this).data('id'),
+                phone:$(this).data('phone'),
+                money:$(this).data('money')
+            }*/
+        });
+  })
+ 
+</script>
+</html>

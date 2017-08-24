@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>订单状态</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no" />
+<!--标准mui.css-->
+<link rel="stylesheet" href="css/mui.min.css">
+<link rel="stylesheet" href="css/css.css">
+<style>
+	body{background-color: #fff;}
+	.mui-bar{background-color: #f7f7f7;-webkit-box-shadow: 0 1px 6px #ccc;box-shadow: 0 1px 6px #ccc;}
+	.mui-bar dt{line-height: 30px;height: 30px;text-align: center;border-radius: 6px; margin-top: 10px;font-size: 14px; width: 98px; margin: 0 auto; margin-top: 10px;}
+	section{ width: 96%; margin: 0 auto; margin-top: 44px;}
+</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+			<a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+			<h1 class="mui-title">订单状态</h1>
+	</header>
+
+	<section>
+		<div class="ord_stal">
+			<!--<dt class="w_orderd_01"><span><img src="wimages/dj.png"></span></dt>
+			<dt class="w_orderd_1"><div></div></dt>
+			<dt class="w_orderd_02"><span><img src="wimages/jiang.png"></span></dt>
+			<dt class="w_orderd_2"><div></div></dt>
+			<dt class="w_orderd_03"><span><img src="wimages/gou.png"></span></dt>
+			<dt class="w_orderd_3"><div></div></dt>
+			<dt class="w_orderd_04"><span><img src="wimages/piao.png"></span></dt>
+			<dt class="w_orderd_4"><div></div></dt>
+			<dt class="w_orderd_05"><span><img src="wimages/dian.png"></span></dt>
+			<dt class="w_orderd_5"><div></div></dt>
+			<dt class="w_orderd_06"><span><img src="wimages/dan.png"></span></dt>-->
+		</div>
+		<div class="ord_star">
+			<!--<dt class='w_06'>
+				
+			</dt>
+			<dt class='w_05'>
+				
+			</dt>
+			<dt class='w_04'>
+				
+			</dt>
+			<dt class='w_03'>
+				
+			</dt>
+			<dt class='w_02'>
+				
+			</dt>
+			<dt class='w_01'>
+				
+			</dt>-->
+		</div>
+		
+		<div style="clear: both;"></div>
+	</section>
+	
+<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+<script src="js/jquery-latest.js"></script>
+<script>
+//order_id = window.localStorage.getItem("order_id");
+//mui.alert(order_id);
+var order_id= window.location.search.substr(1);
+
+var url='order_ok.html?'+order_id;
+$('.bk').attr('href',url);
+//mui.alert(order_id);
+mui.ajax(config[0].url+'/index.php/odetail_log',{
+	data:{
+		order_id:order_id,
+	},
+	dataType:'json',//服务器返回json格式数据
+	type:'post',//HTTP请求类型
+	timeout:10000,//超时时间设置为10秒；
+	success:function(data){
+	    if(typeof data == "string") {var data = eval('('+data+')');}
+	    //console.log(data);
+	    //var data = data.data;
+	    //var aaa = $('.w_0'+data.length).find("div").first().html('12222');
+	    //alert(aaa);return;
+	    
+	   //$('.w_0'+data.length).children().first().css("margin-top","0");
+	   //var aaa= $('''+'.w_0'+data.length+''').html();
+	  
+	   //alert('.w_0'+data.length+' div')
+	    for(var i=0;i<data.data.length;i++){
+	    	if(data.data[i].order_status == '00'){
+	    		var a = "<dt class='w_01'><div><div class='ord_stafont'><span>订单已提交</span><span>"+data.data[i].time+"</span><div style='clear:both'></div></div><p style='padding-left:6px;'>"+data.data[i].d_value+"</p><div></dt>";
+	    		
+	    		var t1 = "<dt class='w_orderd_06'><span><img src='wimages/dan.png'></span></dt>";
+	    		$('.ord_stal').prepend(t1);
+	    		$('.ord_star').prepend(a);
+	    		$('.w_01').css("background","#F3F1F1");
+	    		//$('.w_01 div').show();
+	    		//$('.w_orderd_01').show();
+	    	}
+	    	
+	    	if(data.data[i].order_status == '01'){
+	    		var b = "<dt class='w_02'><div><div class='ord_stafont'><span>用户已支付</span><span>"+data.data[i].time+"</span><div style='clear:both'></div></div><p style='padding-left:6px;'>"+data.data[i].d_value+"</p><div></dt>";
+	    		
+	    		var t2 = "<dt class='w_orderd_06'><span><img src='wimages/user_pay.png' width='22' height='22'></span></dt>";
+	    		var d2 = "<dt class='w_orderd_5'><div></div></dt>";
+	    		$('.ord_stal').prepend(d2);
+	    		$('.ord_stal').prepend(t2);
+	    		$('.ord_star').prepend(b);
+	    		$('.w_02').css("background","#F3F1F1");
+	    		//$('.w_01 div').show();
+	    		//$('.w_orderd_01').show();
+	    	}
+	    	
+	    	if(data.data[i].order_status == '02'){
+	    		var h = "<dt class='w_03'><div><div class='ord_stafont'><span>店铺已接单</span><span>"+data.data[i].time+"</span><div style='clear:both'></div></div><p style='padding-left:6px;'>"+data.data[i].d_value+"</p><div></dt>";
+	    		
+	    		var t3 = "<dt class='w_orderd_06'><span><img src='wimages/dian.png' width='22' height='22'></span></dt>";
+	    		var d3 = "<dt class='w_orderd_5'><div></div></dt>";
+	    		$('.ord_stal').prepend(d3);
+	    		$('.ord_stal').prepend(t3);
+	    		$('.ord_star').prepend(h);
+	    		$('.w_03').css("background","#F3F1F1");
+	    		//$('.w_01 div').show();
+	    		//$('.w_orderd_01').show();
+	    	}
+	    	
+	    	if(data.data[i].order_status == '03'){
+	    		var c = "<dt class='w_04'><div><div class='ord_stafont'><span>店主已出票</span><span>"+data.data[i].time+"</span><div style='clear:both'></div></div><p style='padding-left:6px;'>"+data.data[i].d_value+"</p><div></dt>";
+	    		
+	    		var t4 = "<dt class='w_orderd_06'><span><img src='wimages/piao.png'></span></dt>";
+	    		var d4 = "<dt class='w_orderd_5'><div></div></dt>";
+	    		$('.ord_stal').prepend(d4);
+	    		$('.ord_stal').prepend(t4);
+	    		$('.ord_star').prepend(c);
+	    		$('.w_04').css("background","#F3F1F1");
+	    		//$('.w_01 div').show();
+	    		//$('.w_orderd_01').show();
+	    	}
+	    	
+	    	if(data.data[i].order_status == '04'){
+	    		var d = "<dt class='w_05'><div><div class='ord_stafont'><span>彩票已确认</span><span>"+data.data[i].time+"</span><div style='clear:both'></div></div><p style='padding-left:6px;'>"+data.data[i].d_value+"</p><div></dt>";
+	    		
+	    		var t5 = "<dt class='w_orderd_06'><span><img src='wimages/gou.png'></span></dt>";
+	    		var d5 = "<dt class='w_orderd_5'><div></div></dt>";
+	    		$('.ord_stal').prepend(d5);
+	    		$('.ord_stal').prepend(t5);
+	    		$('.ord_star').prepend(d);
+	    		$('.w_05').css("background","#F3F1F1");
+	    		//$('.w_01 div').show();
+	    		//$('.w_orderd_01').show();
+	    	}
+	    	
+	    	if(data.data[i].order_status == '05'){
+	    		var e = "<dt class='out'><div><div class='ord_stafont'><span>用户已退单</span><span>"+data.data[i].time+"</span><div style='clear:both'></div></div><p style='padding-left:6px;'>"+data.data[i].d_value+"</p><div></dt>";
+	    		
+	    		var t6 = "<dt class='w_orderd_06'><span><img src='wimages/order_out.png' width='22' height='22'></span></dt>";
+	    		var d6 = "<dt class='w_orderd_5'><div></div></dt>";
+	    		$('.ord_stal').prepend(d6);
+	    		$('.ord_stal').prepend(t6);
+	    		$('.ord_star').prepend(e);
+	    		$('.out').css("background","#F3F1F1");
+	    		//$('.w_01 div').show();
+	    		//$('.w_orderd_01').show();
+	    	}
+	    	
+	    	if(data.data[i].order_status == '06'){
+	    		var f = "<dt class='w_07'><div><div class='ord_stafont'><span>彩票已中奖</span><span>"+data.data[i].time+"</span><div style='clear:both'></div></div><p style='padding-left:6px;'>"+data.data[i].d_value+"</p><div></dt>";
+	    		
+	    		var t7 = "<dt class='w_orderd_06'><span><img src='wimages/jiang.png'></span></dt>";
+	    		var d7 = "<dt class='w_orderd_5'><div></div></dt>";
+	    		$('.ord_stal').prepend(d7);
+	    		$('.ord_stal').prepend(t7);
+	    		$('.ord_star').prepend(f);
+	    		$('.w_07').css("background","#F3F1F1");
+	    		//$('.w_01 div').show();
+	    		//$('.w_orderd_01').show();
+	    	}
+	    	
+	    	if(data.data[i].order_status == '07'){
+	    		var g = "<dt class='w_08'><div id='mm' style='margin-top:14px;'><div class='ord_stafont'><span>彩票已兑奖</span><span>"+data.data[i].time+"</span><div style='clear:both'></div></div><p style='padding-left:6px;'>"+data.data[i].d_value+"</p><div></dt>";
+	    		
+	    		var t8 = "<dt class='w_orderd_06'><span><img src='wimages/dj.png'></span></dt>";
+	    		var d8 = "<dt class='w_orderd_5'><div></div></dt>";
+	    		$('.ord_stal').prepend(d8);
+	    		$('.ord_stal').prepend(t8);
+	    		$('.ord_star').prepend(g);
+	    		$('.w_08').css("background","#F3F1F1");
+	    		//$('#mm').css('style','margin-top:14px;');
+	    		//$('.w_01 div').show();
+	    		//$('.w_orderd_01').show();
+	    	}
+	
+	    }
+	    
+	    var out=$('.out').html();
+	    console.log(data.data.length);
+	    if(out=='' || out==null || out==undefined){
+	    	if(data.data.length>5){
+	    		var len=data.data.length+1;
+	    	}else{
+	    		var len=data.data.length;
+	    	}
+	    	var cl = '.w_0'+len;
+	   		var aaa= $(cl).children().css('margin-top','0');
+	    }else{
+	    	$('.out').children().css('margin-top','0');
+	    }
+	     
+//	    if(data.openid){
+//	    	window.localStorage.setItem('openid', data.openid);
+//	    }else{
+//	    
+//	    }
+	},
+	error:function(xhr,type,errorThrown){
+	//异常处理；
+		//console.log(type);
+		switch (type) {
+			case "timeout":
+				mui.toast('连接超时，请重试');
+				break;
+			default:
+				mui.toast('请重试或重新登录');
+		}
+	}
+});
+
+//setTimeout(function(){window.location.reload();},5000);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+/**
+ * lotto_chart.html样式
+ */
+
+#chartsTable {
+    border: 1px solid #FAFBFF;
+}
+tr, td {
+    border: 1px solid #FAFBFF;
+    background-color: #EFEFEF;
+}
+.t1, .t2 {
+    background-color: #EFEFEF;
+    color: #787878;
+}
+
+/* .Issue {
+ 	background-color: #F3F2F2;
+ }*/
+
+.M_1, .M_2, .M_3, .M_4, .M_5, .M_6, .M_7, .M_8, .M_9 {
+    background-color: #F6F6F6;
+    color: #ECDADD;
+}
+.B_3, .B_4, .B_5, .B_6, .B_7, .B_8, .B_9 {
+    background-color: #FFE2BC;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 13px;
+}
+.B_3 {
+    background: url(../wimages/ball_bg.gif) no-repeat center 0px;
+}
+.B_4 {
+    background: url(../wimages/ball_bg.gif) no-repeat center -54px;
+}
+.B_5 {
+    background: url(../wimages/ball_bg.gif) no-repeat center -72px;
+}
+.B_6 {
+    background: url(../wimages/ball_bg.gif) no-repeat center -90px;
+}
+.B_7 {
+    background: url(../wimages/ball_bg.gif) no-repeat center -108px;
+}
+.B_8 {
+    background: url(../wimages/ball_bg.gif) no-repeat center -126px;
+}
+.B_9 {
+    background: url(../wimages/ball_bg.gif) no-repeat center -144px;
+}
+.B_1 {
+    background: url(../wimages/ball_bg.gif) no-repeat center -36px;
+    background-color: #FFE2BC;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 13px;
+}
+.B_5 {
+    background: url(../wimages/ball_bg.gif) no-repeat center -72px;
+    background-color: #D0E7E7;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 13px;
+}
+td {
+    height: 20px;
+    line-height: 20px;
+}
+.td_sj div {
+    width: 100px;
+}
+.tb_1> tr> td {
+    float: left;
+    background-color: #EFEFEF;
+    border: 1px solid #FFFFFF;
+}
+div {
+    float: left;
+    height: 645px;
+}
+.div1 {
+    /*width:100px;*/
+    margin-right: 0px;
+    position: absolute;
+    position: fixed;
+}
+.div2 {
+    width: 900px;
+    /*margin-left: 85px;*/
+}
+.box {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+.div1 {
+    background-color: #BEC6D0;
+}
+.Issue {
+    background-color: #F6F6F6;
+    color: #787878;
+}
+#reportTable_tableData{
+    overflow: hidden;
+}

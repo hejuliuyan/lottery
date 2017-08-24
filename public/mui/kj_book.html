@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/kj_book.css" rel="stylesheet"/>
+    <script src="js/jquery-latest.js"></script>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a href='shop_order.html' class=" bkk mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">开奖订阅</h1>
+	</header>
+	<div class="mui-content">
+	    <div class='list'>
+	    	<div class='list_font'>
+	    		打开关注的彩种右边的开关，即可第一时间获得开奖结果通知。
+	    	</div>
+	    </div>
+	    <div class='list'>
+	    	<div class="list_left">
+	    		<dt class='list_title'>大乐透</dt>
+	    		<dt class='list_content'>每周一、三、六，20:30左右通知</dt>
+	    	</div>
+	    	<div class='list_rigth'>
+	    		<li class="mui-table-view-cell">
+	    			<input type="hidden" class='dlt' value='' />
+					<div class="mui-switch mui-active">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+	    	</div>
+	    </div>
+	    <div class='list'>
+	    	<div class="list_left">
+	    		<dt class='list_title'>七星彩</dt>
+	    		<dt class='list_content'>每周二、五、日，20:30左右通知</dt>
+	    	</div>
+	    	<div class='list_rigth'>
+	    		<li class="mui-table-view-cell">
+	    			<input type="hidden" class='qxc' value=''/>
+					<div class="mui-switch mui-active">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+	    	</div>
+	    </div>
+	    <div class='list'>
+	    	<div class="list_left">
+	    		<dt class='list_title'>排列三</dt>
+	    		<dt class='list_content'>每天20:30左右通知</dt>
+	    	</div>
+	    	<div class='list_rigth'>
+	    		<li class="mui-table-view-cell">
+	    			<input type="hidden" class='p3' value='' />
+					<div class="mui-switch mui-active">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+	    	</div>
+	    </div>
+	    <div class='list'>
+	    	<div class="list_left">
+	    		<dt class='list_title'>排列五</dt>
+	    		<dt class='list_content'>每天20:30左右通知</dt>
+	    	</div>
+	    	<div class='list_rigth'>
+	    		<li class="mui-table-view-cell">
+	    			<input type="hidden" class='p5' value=''/>
+					<div class="mui-switch mui-active">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+	    	</div>
+	    </div>
+	</div>
+</body>
+<script>
+			mui('.mui-content .mui-switch').each(function() { //循环所有toggle
+				//toggle.classList.contains('mui-active') //可识别该toggle的开关状态	
+				var a=this.classList.contains("mui-active");
+				//console.log(this.previousSibling.previousSibling.value);
+				if(a){
+					  this.previousSibling.previousSibling.value='true';
+					}else{
+					  this.previousSibling.previousSibling.value='false';  
+				}
+				/**
+				 * toggle 事件监听
+				 */
+				//console.log(this.classList.contains('mui-active'));
+				this.addEventListener('toggle', function(event) {
+					//event.detail.isActive 可直接获取当前状态
+					//this.parentNode.querySelector('input').value = (event.detail.isActive ? 'true' : 'false');			
+					this.previousSibling.previousSibling.value=event.detail.isActive ? 'true' : 'false';
+					//console.log(event.detail.isActive);
+					//console.log(toggle.classList.contains('mui-active'));
+				});
+			});
+			
+			//console.log(jQuery('.p5').val());
+		</script>
+</html>

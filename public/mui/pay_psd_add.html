@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet" />
+    <link href="css/reg.css" rel="stylesheet" />
+    <script type="text/javascript" charset="UTF-8">
+        mui.init();
+    </script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">支付密码设置</h1>
+    </header>
+    <div class="mui-content">
+        <div class='reg'>
+            <div class="mui-input-row">
+                <label class='l_font'>手机号：</label>
+                <input id='phone' type="text" class="mui-input-clear inp" placeholder="请输入手机号码" value=''>
+            </div>
+            <!-- <div class="mui-input-row c_yzm">
+            <label class='l_font'>验证码：</label>
+            <div class='yzm'><input id='yzmm' type="text" class="mui-input-clear inp" placeholder="请输入短信验证码" value=''><button type="button" class="mui-btn mui-btn-danger h_yzm"
+onclick="settime(this)">获取验证码</button></div>
+        </div>-->
+            <div class="mui-input-row paw">
+                <label class='l_font'>密码：</label>
+                <div class='pass'><input id='pas' type="password" class=" mui-input-password  inp" placeholder="英文或数字，6-20个字符" value=''></div>
+            </div>
+        </div>
+        <div class="xy">
+            <input type="checkbox" checked="checked" disabled="disabled" /><span class='xy_font'>同意《希迈尔服务协议》</span>
+        </div>
+        <div class='sub_btn'>
+            <button type="button" class="mui-btn mui-btn-danger sub ">提交</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var url = window.location.search;
+    var loc = url.substring(url.lastIndexOf('=') + 1, url.length);
+
+    var shopid = window.localStorage.getItem('shopid');
+    var nickname = window.localStorage.getItem("nickname");
+    var userid = window.localStorage.getItem("token");
+    jQuery('.sub').on('tap', function() {
+        var phone = jQuery('#phone').val();
+        /*var yzm=jQuery('#yzmm').val();*/
+        var pass = jQuery('#pas').val();
+        var yzm = $('#yzmm').val();
+        var msg_num = window.localStorage.getItem('msg_num');
+        /*	if(yzm!=msg_num){
+         mui.toast('验证码错误，请重新输入');
+         return;
+         }else if(yzm=='' || yzm==null || yzm==undefined){
+         mui.toast('验证码不能为空');
+         return;
+         }*/
+
+
+        if (iphone(phone) && passwd(pass)) {
+            if (loc == 1) {
+
+                mui.ajax(config[0].url+'/index.php/pay_psd_add', {
+                    data: {
+                        mobile: phone,
+                        password: pass,
+                        token: userid,
+                        nickname: nickname,
+                        type: 'mem',
+                    },
+                    dataType: 'json', //服务器返回json格式数据
+                    type: 'post', //HTTP请求类型
+                    timeout: 10000, //超时时间设置为10秒；
+                    success: function(data) {
+                        //					    if(typeof data == "string") {var data = eval('('+data+')');}
+                        /*console.log(JSON.stringify(data));*/
+                        if (data == false) {
+                            mui.toast('支付密码已存在');
+                        } else if (data) {
+
+                            mui.openWindow({
+                                url: 'zx_personal.html',
+                                id: 'personal',
+                                createNew: true
+                            });
+                        }
+
+                    },
+                    error: function(xhr, type, errorThrown) {
+                        //异常处理；
+                        // console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+            } else if (loc == 2) {
+                mui.ajax(config[0].url+'/index.php/pay_psd_add', {
+                    data: {
+                        mobile: phone,
+                        password: pass,
+                        token: shopid,
+                        nickname: nickname,
+                        type: 'shop',
+                    },
+                    dataType: 'json', //服务器返回json格式数据
+                    type: 'post', //HTTP请求类型
+                    timeout: 10000, //超时时间设置为10秒；
+                    success: function(data) {
+                        //					    if(typeof data == "string") {var data = eval('('+data+')');}
+                        /*console.log(JSON.stringify(data));*/
+                        if (data == false) {
+                            mui.toast('支付密码已存在');
+                        } else if (data) {
+
+
+                            if (loc == 1) {
+                                mui.openWindow({
+                                    url: 'zx_personal.html',
+                                    id: 'personal',
+                                    createNew: true
+                                });
+                            } else {
+                                mui.openWindow({
+                                    url: 'shop_zx.html',
+                                    id: 'shop_zx',
+                                    createNew: true
+                                });
+                            }
+
+                        }
+
+                    },
+                    error: function(xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+            }
+        } else {
+            mui.toast('请填写正确格式的手机号或密码');
+            /*	mui.alert('请填写正确格式的手机号或密码');*/
+        }
+    })
+
+    var countdown = 60;
+    var send = 1;
+
+    function settime(obj) {
+        var phone = jQuery('#phone').val();
+        if (!phone) {
+            mui.toast('请输入手机号');
+        } else {
+            obj.setAttribute("disabled", true);
+            obj.innerHTML = "重新发送(" + countdown + ")";
+            countdown--;
+            if (send == 1) {
+                mui.ajax('api/api.php', {
+                    data: {
+                        phone: phone
+                    },
+                    dataType: 'json', //服务器返回json格式数据
+                    type: 'post', //HTTP请求类型
+                    timeout: 10000, //超时时间设置为10秒；
+                    success: function(data) {
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+                        //console.log(data);
+                        window.localStorage.setItem('msg_num', data);
+
+                    },
+                    error: function(xhr, type, errorThrown) {
+                        //异常处理；
+                        /*console.log(type);*/
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+            }
+
+            send = 0;
+            if (countdown == 0) {
+                obj.removeAttribute("disabled");
+                obj.innerHTML = "获取验证码";
+                countdown = 60;
+                send = 1;
+                return;
+            }
+            setTimeout(function() {
+                settime(obj)
+            }, 1000)
+        }
+
+    }
+
+    //手机号匹配
+    function iphone(obj) {
+
+        reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //密码匹配
+    function passwd(obj) {
+
+        reg = /^\w{6,20}$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+
+</html>

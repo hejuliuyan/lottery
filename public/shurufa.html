@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<style>
+		body{padding: 0; margin: 0;}
+		.shurufa_num{ width: 70px; height: 30px; border: 1px solid #ccc; font-size: 20px; display: block;}
+		.shurufa{ width: 100%; position: fixed; top: 60%; bottom: 0; background-color:rgba(247, 246, 246, 0.71)}
+		.shurufa div{ text-align: center; color: #ccc; height: 25px; line-height: 25px;font-size: 14px;}
+		.shurufa>dt:first-child{ margin-top: 25px;}
+		.shurufa dt{display:-moz-box;display:-webkit-box;display:box;}
+		.shurufa dt span{width: 100%;-moz-box-flex:1.0;-webkit-box-flex:1.0;box-flex:1.0;    border-left: 1px solid #ccc;border-top: 1px solid #ccc;display: block;text-align: center;    font-size: 18px;font-weight: 500;}
+		.shurufa dt span:first-child{border-left:none;}
+		.shurufa dt span:active{background-color: #ccc; color: #fff;}
+	</style>
+	</head>
+	<body>
+		<section><span class="shurufa_num">1</span></section>
+		<section>
+			<div class="shurufa">
+				<div>彩票支付安全键</div>
+				<dt><span data-num="1">1</span><span data-num="2">2</span><span data-num="3">3</span></dt>
+				<dt><span data-num="4">4</span><span data-num="5">5</span><span data-num="6">6</span></dt>
+				<dt><span data-num="7">7</span><span data-num="8">8</span><span data-num="9">9</span></dt>
+				<dt><span data-num="kong">清空</span><span data-num="0">0</span><span data-num="del">删除</span></dt>
+			</div>
+		</section>
+		<script>
+			var shurufa = $(".shurufa").outerHeight(true);//获取输入法高度
+			var dt_height = (shurufa-25)/4;
+			$('.shurufa dt').css("height",dt_height+'px');
+			$('.shurufa dt span').css("line-height",dt_height+'px');
+			$('.shurufa dt span').on('click',function(){
+				var num = $(this).attr('data-num');
+				if(num=='kong'){
+					$(".shurufa_num").empty();
+					$(".shurufa_num").text(1);//清空后默认是1
+				}else if(num=='del'){
+					var shurufa_con = $(".shurufa_num").text();
+					var shurufa_len = $(".shurufa_num").text().length;					
+					$(".shurufa_num").text(shurufa_con.substr(0,shurufa_len-1));
+					$(".shurufa_num").text(1);//删除后默认是1
+					
+				}else{
+					$(".shurufa_num").append(num);
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/personal.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+     <script src="js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">完善信息</h1>
+	    <div class='mui-icon mui-icon-right-nav mui-pull-right save'><img src="wimages/gou.png" width='15' heigth='15'/></div>
+	</header>
+	<div class="mui-content">
+	    <div class='header'>
+	    	<img class='headimgurl' src="wimages/head2.png" width='80' height='80'/>
+	    </div>
+	    
+	        <div class="person">
+		    	 <div class="mui-input-row us">
+			       	<div class='head'><img src="wimages/head.png" width='15' height="15"/></div>
+			        <input id='user' type="text" class="mui-input-clear inp" placeholder="请输入用户名">
+			    </div>
+			     <div class="mui-input-row phone">
+			       	<div class='head'><img src="wimages/phone.png" width='15' height="15"/></div>
+			        <input id='phone' type="text" class="inp" disabled="disabled" value=''>
+			    </div>
+			      <div class="mui-input-row pass">
+			       	<div class='head'><img src="wimages/lock.png" width='15' height="15"/></div>
+			        <input id='pass' type="password" disabled="disabled"  class=" inp" placeholder="******">
+			    </div>
+			      <div class="mui-input-row realname">
+			       	<div class='head'><img src="wimages/realname.png" width='15' height="15"/></div>
+			        <input id='realname' type="text" class="inp" placeholder="请输入真实姓名">
+			    </div>
+			      <div class="mui-input-row idcard">
+			       	<div class='head'><img src="wimages/idcard.png" width='15' height="15"/></div>
+			        <input id='idcard' type="text" class=" inp" placeholder="请输入身份证号">
+			    </div>
+		    
+	    </div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	var userid=window.localStorage.getItem("token");
+	var headimgurl=window.localStorage.getItem('headimgurl');
+	
+	
+	mui.ajax(config[0].url+'/index.php/personaluser',{
+	  	data:{
+	  		tokenid:userid,
+	  	},
+		dataType:'json',//服务器返回json格式数据
+		type:'post',//HTTP请求类型
+		timeout:10000,//超时时间设置为10秒；
+		success:function(data){
+		    if(typeof data == "string") {var data = eval('('+data+')');}
+			/*console.log(JSON.stringify(data));*/
+			console.log(data);
+			jQuery('#user').val(data[0].account);
+			jQuery('#phone').val(data[0].mobile);
+			jQuery('#realname').val(data[0].real_name);
+			jQuery('#idcard').val(data[0].idcard_numer);
+			
+			var r_name=$('#realname').val();
+			var id_card=$('#idcard').val();
+			if(r_name!='' && id_card!=''){
+				$('#realname').attr('disabled',true);
+				$('#idcard').attr('disabled',true);
+				
+			}
+			
+			if(headimgurl){
+				$('.headimgurl').attr('src',headimgurl).css('border-radius','40px');
+				
+			}
+		  
+		},
+		error:function(xhr,type,errorThrown){
+		    //异常处理；
+			console.log(type);
+		}
+	});
+	
+	
+
+	jQuery('.save').on('tap',function(){
+		var name=jQuery('#realname').val();
+		var idcard=jQuery('#idcard').val();
+		var user=jQuery('#user').val();
+		var phone=jQuery('#phone').val();
+		
+		if(username(user)==false){
+			mui.toast('请输入正确的用户名')
+		}else if(name==''){
+			mui.toast('真实姓名不能为空')
+		}else if(rname(name)==false){
+			mui.toast('请填写真实的姓名')
+		}else if(idcard==''){
+			mui.toast('身份证号不能为空')
+		}else if(card(idcard)==false){
+			mui.toast('请填写正确的身份证号')
+		}else{
+			
+			
+			 mui.ajax(config[0].url+'/index.php/personal',{
+					  data:{mobile:phone,real_name:name,account:user,idcard_numer:idcard,
+					  },
+					  dataType:'json',//服务器返回json格式数据
+					  type:'post',//HTTP请求类型
+					  timeout:10000,//超时时间设置为10秒；
+					  success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					    /*console.log(JSON.stringify(data));*/
+					   if(data==false){
+					   		mui.toast('请修改后再进行保存或填写不正确')
+					   }else if(data==true){
+					   	mui.openWindow({
+						    url: 'zx_personal.html', 
+						    id:'zx_personal',
+						    createNew:true
+						});
+					   }else{
+						   /*for (var i in data) {
+							   mui.toast(data[i][0])
+						   }*/
+						   mui.toast('你输入的格式不正确，请检查信息')
+					   }
+					  
+					  },
+					  error:function(xhr,type,errorThrown){
+					    //异常处理；
+					    //console.log(type);
+						  switch (type) {
+							  case "timeout":
+								  mui.toast('连接超时，请重试');
+								  break;
+							  default:
+								  mui.toast('请重试或重新登录');
+						  }
+				}
+			});
+		}
+			
+		
+	})
+	
+	//身份证匹配
+	function card(obj){   
+           
+        reg=/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;    
+        if(!reg.test(obj)){   
+           return false;
+        }else{   
+           return true;
+        }
+}
+	
+	
+		//真实姓名匹配
+	function rname(obj){   
+           
+        reg=/^[\u4e00-\u9fa5]{0,4}$/;    
+        if(!reg.test(obj)){   
+           return false;
+        }else{   
+           return true;
+        }
+}
+	
+	//账号名匹配
+	function username(obj){   
+           
+        reg=/^[\w\u4E00-\u9FA5\uF900-\uFA2D]{1,10}$/;    
+        if(!reg.test(obj)){   
+           return false;
+        }else{   
+           return true;
+        }
+}
+</script>
+</html>

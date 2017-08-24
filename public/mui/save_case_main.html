@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/save_case.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+    <script src="js/jquery-latest.js"></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav f_record">
+	    <a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+	    <h1 class="mui-title">方案记录</h1>
+	</header>
+	<div class="mui-content">
+	    
+	</div>
+	<script type="text/javascript">
+		//启用双击监听
+		mui.init({
+			gestureConfig:{
+				doubletap:true
+			},
+			subpages:[{ 
+				url:'save_case.html',
+				id:'save_case.html',
+				styles:{
+					top: '45px',
+					bottom: '0px', 
+				}
+			}] 
+		});
+	
+		var contentWebview = null;
+		document.querySelector('header').addEventListener('doubletap',function () {
+			if(contentWebview==null){
+				contentWebview = plus.webview.currentWebview().children()[0];
+			}
+			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,150)");
+		});
+		
+		$('.bk').on('tap',function(){
+			mui.openWindow({
+				url: 'zx_personal.html', 
+				id:'zx_personal',
+				createNew:true
+			});
+			
+		})
+	</script>
+</body>
+<script>
+	
+</script>
+</html>

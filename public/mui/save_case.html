@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/save_case.css" rel="stylesheet"/>
+    <script src="js/jquery-latest.js"></script>
+    <style type="text/css">
+    	/*.mui-backdrop {
+    		position: inherit;
+		    background-color: rgba(0,0,0,-0.7); 
+		}*/
+		/*.mui-table-view-cell { 
+    		padding: 0;
+
+		}*/
+		.mui-content {
+    		background-color: #fff;
+    
+		}
+		
+		
+		
+		/*.index {
+		    background-image: url(./wimages/index.png);
+		    background-size: 100%;
+		    background-repeat: no-repeat;
+		    width: 24px;
+		    height: 22px;
+		    background-position: center;
+		    display: block;
+		    margin: 0 auto;
+		    margin-top: 3px;
+		}
+		.index_font,.wd_font {
+		    font-size: 11px;
+		    color: #56abe4;
+		}
+		
+		.wd {
+		    background-image: url(./wimages/gr.png);
+		    background-size: 100%;
+		    background-repeat: no-repeat;
+		    width: 24px;
+		    height: 22px;
+		    background-position: center;
+		    display: block;
+		    margin: 0 auto;
+		    margin-top: 3px;
+		}
+		
+		.mui-grid-view.mui-grid-9 .mui-table-view-cell { 
+		    padding: 11px 9px;
+		}
+		.bottom_nav {
+			display: table-cell;
+			overflow: hidden;
+			width: 1%;
+			height: 52px;
+			text-align: center;
+			vertical-align: middle;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			color: #929292;
+		}*/
+    </style>
+</head>
+<body>
+	<!--<nav class="mui-bar mui-bar-tab">
+		<a class="bottom_nav mui-active w_index" href="javascript:void(0)"> 
+			<span class="index"></span> 
+			<span class="mui-tab-label index_font">首页</span>
+		</a> 
+		
+		<a href="javascript:void(0)" class="bottom_nav w_info"> 
+			<span class="wd"></span> 
+			<span class="mui-tab-label wd_font">我的</span>
+		</a>
+
+	</nav>-->
+	<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div class='top'>
+		    	<a href="#popover" id="openPopover" ><div class='top_list_left kj_wait'>全部彩种</div></a>
+		    	<div id="popover" class="mui-popover">
+				  <ul class="mui-table-view">
+				    <li class="mui-table-view-cell ti">
+				    	<a href="#">大乐透</a>
+				    	<input type="hidden" value='01' />
+				    </li>
+				    <li class="mui-table-view-cell ti">
+				    	<a href="#">七星彩</a>
+				    	<input type="hidden" value='02' />
+				    </li>
+				    <li class="mui-table-view-cell ti">
+				    	<a href="#">排三</a>
+				    	<input type="hidden" value='03' />
+				    </li>
+				    <li class="mui-table-view-cell ti">
+				    	<a href="#">排五</a>
+				    	<input type="hidden" value='04' />
+				    </li>
+				  </ul>
+				  <input type="hidden" value='00' id='cp_type'/>
+				  <input type="hidden" value='0' id='skip' />
+				</div>
+		    	<div class='top_list_right all save_time'>日期</div>
+		    	<input type="hidden" value='desc' id='s_time'/>
+		    	<input type='hidden' value='0' id='count'/>
+		    	<div class='clear'></div>
+	    	</div>
+		
+		<div class="mui-scroll">
+		  	
+		    <div class='mids'>
+		    	<ul id="OA_task_1" class="mui-table-view mid">
+					<!--<li class="mui-table-view-cell">
+						<div class="mui-slider-right mui-disabled">
+							<a class="mui-btn mui-btn-red">删除</a>
+						</div>
+						<div class="mui-slider-handle mid">
+							
+						</div>
+					</li>-->
+				
+				</ul>
+		    	
+		    </div>
+	    </div>
+	</div>
+</body>
+<script src="js/tk_check.js"></script>
+<script type="text/javascript" charset="UTF-8">
+      	mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				up: {
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh,
+				}
+			}
+		});
+		
+	var userid=window.localStorage.getItem('token');
+	//var openid=window.localStorage.getItem('openid');
+	
+//	if(!userid){
+//		mui.openWindow({
+//			url:'login.html',
+//			id:'login',
+//			createNew:true
+//		})
+//	}
+	
+	$(document).on('tap', '.w_info', function() {
+			//alert(123);
+			var html='zx_personal.html';
+    		token_check(userid,html);
+		});
+		
+	$(document).on('tap', '.w_index', function() {
+			//alert(123);
+			var html='index.html';
+    		token_check(userid,html);
+		});
+	
+	$(document).on('tap','.mui-table-view-cell.ti',function(){
+		var a=$(this).children().last().val();
+			$('#skip').val(0);
+			$('#count').val(0);
+			$('#cp_type').val(a);
+			mui('#pullrefresh').pullRefresh().refresh(true);
+			pullupRefresh();
+			$('#popover').show();
+			$('.mid').html('');
+		//mui.alert(a);
+	})
+	
+	$(document).on('tap','.save_time',function(){
+			var s_time=$('#s_time').val();
+			if(s_time=='desc'){
+				$('#s_time').val('asc');
+				$('#skip').val(0);
+				$('#count').val(0);
+				mui('#pullrefresh').pullRefresh().refresh(true);
+				pullupRefresh();
+				$('#popover').hide();
+				$('.mid').html('');
+				
+			}else if(s_time=='asc'){
+				$('#s_time').val('desc');
+				$('#skip').val(0);
+				$('#count').val(0);
+				mui('#pullrefresh').pullRefresh().refresh(true);
+				pullupRefresh();
+				$('#popover').hide();
+				$('.mid').html('');
+				
+			}
+			
+	})
+	
+	$(document).on('tap','.list_2',function(){
+		var id=$(this).next().val();
+		var type=$(this).next().next().val();
+
+		
+		//window.location.href='save_detail.html?id='+id;
+		window.localStorage.setItem('save_id',id);
+		window.localStorage.setItem('save_types',type);
+		var html='save_detail.html';
+    	token_check(userid,html);
+		/*mui.openWindow({
+			url: "save_detail.html", 
+			id:'save_detail.html'						 
+		});*/
+	})
+	
+		//var skip=0;
+		//var count=0;
+			 //count=$('#count').val();
+		/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				var cp_type=$('#cp_type').val();
+				var count=$('#count').val();
+				
+				var skip=parseInt($('#skip').val());
+				var s_time=$('#s_time').val();
+
+				console.log(cp_type);
+				console.log(count);
+				mui.ajax(config[0].url+'/index.php/save_total',{
+				 	data:{
+				  		userid:userid,type:'save',cp_type:cp_type,
+				  	},
+				  	dataType:'json',//服务器返回json格式数据
+				  	type:'post',//HTTP请求类型
+				  	timeout:10000,//超时时间设置为10秒；
+				  	success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					 	console.log(data);
+					 mui('#pullrefresh').pullRefresh().endPullupToRefresh((count>data));
+						/*setTimeout(function() {*/
+							var cp_type=$('#cp_type').val();
+							mui.ajax(config[0].url+'/index.php/save_search',{
+							 	data:{
+							  		userid:userid,skip:skip,cp_type:cp_type,s_time:s_time,
+							  	},
+							  	dataType:'json',//服务器返回json格式数据
+							  	type:'post',//HTTP请求类型
+							  	timeout:10000,//超时时间设置为10秒；
+							  	success:function(data){
+								    if(typeof data == "string") {var data = eval('('+data+')');}
+								    if(data==false){
+								    	return;
+								    }
+								 	var b='';
+								 	var brr=[];
+								 	var brr=['大乐透','七星彩','排三·直选','排三·组三','排三·组六','排三·直选复式胆拖','排五','排三·和值·直选','排三·和值·组三','排三·和值·组六'];
+								 	for(var i=0;i<data.length;i++){
+								 		b="<li class='mui-table-view-cell' style='padding:0'><div class='mui-slider-right mui-disabled'><a class='mui-btn mui-btn-red'>删除</a></div><div class='mui-slider-handle'><div class='list'><div class='list_1'><div class='left_1'>"+data[i].new_time+"</div></div><div class='list_2'><div class='left_2'><div class='save_type'>"+brr[data[i].new_type]+"</div><div class='save_z'><span class='f_red'>"+data[i].save_z+"</span>注</div><div class='clear'></div></div><div class='right_2'><div class='s_left'><div class='s_mon'><span class='f_red save_money'>"+data[i].save_money+"</span>元</div><div class='save_qi'>"+data[i].save_qi+"期</div><div class='clear'></div></div><div class='s_right'><img src='wimages/personal/jt_rr.png' width='20' height='20' style='margin-left:3px'/></div></div></div><input class='oid' type='hidden' value='"+data[i].id+"'><input type='hidden' value='"+data[i].save_type+"'></div></div></li>";
+								 		$('.mid').append(b);
+								 	}
+							  	},
+							  	error:function(xhr,type,errorThrown){
+								  	//异常处理；
+//								    console.log(type);
+									switch (type) {
+										case "timeout":
+											mui.toast('连接超时，请重试');
+											break;
+										default:
+											mui.toast('请重试或重新登录');
+									}
+								}
+							});
+							
+						
+								skip+=7;
+								count++;
+								
+							
+							$('#count').val(count);
+							$('#skip').val(skip);
+							
+							
+						/*}, 1500);*/
+		
+		  			},
+				  	error:function(xhr,type,errorThrown){
+					  	//异常处理；
+//					    console.log(type);
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+				
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			
+			(function($) {
+				
+				$('#OA_task_1').on('tap', '.mui-btn', function(event) {
+					var elem = this;
+					var li = elem.parentNode.parentNode;
+					var id = elem.parentNode.nextSibling.childNodes[0].childNodes[2].value;
+					console.log(id);
+					mui.confirm('确认删除该条记录？', '', btnArray, function(e) {
+						if (e.index == 0) {
+							li.parentNode.removeChild(li);
+							mui.ajax(config[0].url+'/index.php/save_del', {
+								data : {
+									id:id,
+								},
+								dataType : 'json',//服务器返回json格式数据
+								type : 'post',//HTTP请求类型
+								timeout : 10000,//超时时间设置为10秒；
+								success : function(data) {
+									if (typeof data == "string") {
+										var data = eval('(' + data + ')');
+									}
+									if(data==true){
+										mui.toast('删除成功');
+									}else if(data==false){
+										mui.toast('删除失败');
+									}
+	
+
+								},
+								error : function(xhr, type, errorThrown) {
+									//异常处理；
+//									console.log(type);
+									switch (type) {
+										case "timeout":
+											mui.toast('连接超时，请重试');
+											break;
+										default:
+											mui.toast('请重试或重新登录');
+									}
+								}
+							});
+						} else {
+							setTimeout(function() {
+								$.swipeoutClose(li);
+							}, 0);
+						}
+					});
+				});
+				var btnArray = ['确认', '取消'];
+				
+				})(mui);
+			
+			
+    </script>
+</html>

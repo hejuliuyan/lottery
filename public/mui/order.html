@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>订单跳转</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+<script src="js/jquery-latest.js"></script>
+<script>
+function GetRequest() {
+    var url = location.search; //获取url中"?"符后的字串
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i ++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+    return theRequest;
+}
+var Request = new Object();
+Request = GetRequest();
+userid = Request['userid'];
+order_id = Request['order_id'];
+if(userid==undefined || order_id==undefined){
+	mui.openWindow({
+	    url: 'index.html', 
+	    id:'index',
+	    createNew:true
+	});
+}
+//window.localStorage.setItem('userid',userid);
+window.localStorage.setItem('order_id',order_id);
+mui.openWindow({
+    url: 'order_ok.html', 
+    id:'order_ok',
+    createNew:true
+});
+</script>
+
+	
+</head>
+<body>	
+
+</body>
+</html>

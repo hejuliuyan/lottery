@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/test.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init({
+      		
+      	});
+    </script>
+     <script src="js/jquery-1.7.2.min.js"></script>
+     <style>
+     	.mui-bar .mui-btn {
+    		padding: 4px 10px 5px;
+    	}
+    	.rxd{ background: red;}
+    	.bxd{background: dodgerblue;}
+    	.bw,.sw,.gw{width:20%;height:100px;float:left;text-align: center;}
+    	.bw_ball,.sw_ball;.gw_ball{width:80%;height: 100px;float: left;}
+    	.sj_font{display: block;float: right;color: gray;font-size: 12px;padding-right: 10px;padding-top: 4px;}
+    	.choose_rball{margin-left: 6px;}
+    	.add_tb li{list-style-type: none;}
+    	.mui-switch:before { top: -5px;}
+    	.mui-switch.mui-active {
+		    border-color: #007aff;
+		    background-color: #007aff;
+		}
+     </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav"> 
+	    <div class="head_ready">
+	    	 <a class=" bk mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">确认选单</h1>
+	    </div>
+	</header>
+	<!--顶部右边菜单-->
+	<div id="popover_right" class="mui-popover">
+	  <ul class="mui-table-view">
+	    <li class="mui-table-view-cell"><a href="#">玩法说明</a></li>
+	    <li class="mui-table-view-cell"><a href="#">历史开奖</a></li>
+	    <!--<li class="mui-table-view-cell"><a href="#">Item3</a></li>
+	    <li class="mui-table-view-cell"><a href="#">Item4</a></li>
+	    <li class="mui-table-view-cell"><a href="#">Item5</a></li>-->
+	  </ul>
+	</div>
+	<!--顶部中部菜单-->
+	<div id="popover_mid" class="mui-popover">
+		<ul class="mui-table-view mui-table-view-radio">
+			<li class="mui-table-view-cell mui-selected zx">
+				<a class="mui-navigate-right ">直选</a>
+			</li>
+			<li class="mui-table-view-cell z3">
+				<a class="mui-navigate-right">组三</a>
+			</li>
+			<li class="mui-table-view-cell z6">
+				<a class="mui-navigate-right">组六</a>
+			</li>
+			<li class="mui-table-view-cell zx_dan">
+				<a class="mui-navigate-right ">直选复式胆拖</a>
+			</li>
+		</ul>
+	</div>
+	<input type="hidden" id='tz_bj' value='0' />
+	<input type="hidden" id='c_type' value='0' />
+	
+	<!--底部固定栏-->
+	<nav id="footerBar" class="mui-bar mui-bar-tab">
+		
+		<div class="foot_ready">
+			<!--<div id="bs" style="height: 44px;">
+				<button type="button" id='jia' class="mui-btn mui-btn-primary">+</button>
+				<div class='bb'><div class='bs_num'>1</div><div class='bs_font'>倍</div></div>
+				<button type="button" class="mui-btn mui-btn-primary jian">-</button><div class="clear"></div>
+			</div>
+			<div class='clear'></div>
+			<div id='total_money'>
+				金额:<span class='total_mon'></span>元 
+			</div>
+			<div class='bs_btn'>
+				<button type="button" id='sub' class="mui-btn mui-btn-danger">提交彩店</button><button type="button" id='save' class="mui-btn">保存</button>
+				
+			</div>
+			<div class='bs_buttom_font'>
+				<p class='p2'><input type="checkbox" checked="checked"  disabled="disabled"/>同意《希迈尔代购协议》并已经认可投注详情</p>
+			</div>-->
+			<div class='foot_list'>
+				<div class='bs_buttom_font'>
+					<p class='p2'><input type="checkbox" checked="checked"  disabled="disabled"/>同意《希迈尔代购协议》并已经认可投注详情</p>
+				</div>
+			</div>
+			<div class='foot_list'>
+				<div class='bs_fonts'>倍数：<span class='bs_nn'>1</span></div>
+				<div class='bs_tb'>
+					<button type="button" id='jia' class="mui-btn mui-btn-primary">+</button>
+					<div class='bb'><div class='bs_num'>1</div></div>
+					<button type="button" class="mui-btn mui-btn-primary jian">-</button>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<!--<div class='foot_list'>
+				<div class='add_font'>
+					追加(每注3元)：<span class='add_bj'>是</span>
+				</div>
+				<div class='add_tb' style='width:38%'>
+		    		<li class="mui-table-view-cell" style='padding: 20px 15px;'>
+		    			<input type="hidden" class='add_zj' value=''/>
+						<div class="mui-switch mui-active">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</div>
+			</div>-->
+			<div class='foot_list'>
+				<div class='zs_font'>
+					注数：<span class='zs_num'></span>
+				</div>
+				<div class='mon_font' style='text-align: center;'>
+					金额：&nbsp;&nbsp;&nbsp;<span class='total_mon' style='color:red'></span>&nbsp;&nbsp;元
+				</div>
+			</div>
+			<div class='foot_list' style='height: 50px'>
+				<button id='sub' type="button" class="mui-btn mui-btn-red" style='margin-left: 5%;width: 40%;height: 34px;margin-top: 8px;'>提交彩店</button>
+				<button id='save' type="button" class="mui-btn mui-btn-blue" style='margin-left: 8%;width: 40%;height: 34px;margin-top: 8px;'>保存方案</button>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="mui-content">
+		
+	<div class="yes"></div>
+	<div class='saj' style='display: none'></div>
+	
+	<div class="ready">
+		   <div class='end_time'>
+	    	<span><span class='now_qi'></span>&nbsp;&nbsp;<span class='e_time'>05-14 20:00</span>停售</span>	    
+	    </div>
+	    <div class="re_btn">
+	    	<button type="button" id='hand' class="mui-btn mui-btn-primary mui-btn-outlined">手选号码</button>
+	    	<button type="button" id='robot' class="mui-btn mui-btn-primary mui-btn-outlined">机选一注</button>
+	    	<div class="clear"></div>
+	    </div>
+	    <div class='preview'></div>
+	    
+	</div>
+	
+</div>
+	
+</body>
+<script src="js/tk_check.js"></script>
+<script type="text/javascript">
+jQuery('.head_ready,.ready,.foot_ready').attr('style','display:block');
+reset();//进页面重置一下
+
+	var url = window.location.search;
+    var loc = url.substring(url.lastIndexOf('=')+1, url.length);
+    var s_id=url.substring(url.lastIndexOf('?')+1,3);
+    var r_id=url.substring(url.lastIndexOf('?')+1,4);
+   	//console.log(save_id);
+    	
+    	if(s_id=='id'){
+    		var save_id=url.substring(url.lastIndexOf('=')+1, url.length);
+    		//console.log(save_id);
+    		mui.ajax(config[0].url+'/index.php/save_detail',{
+			 	data:{
+			  		id:save_id,
+			  	},
+			  	dataType:'json',//服务器返回json格式数据
+			  	type:'post',//HTTP请求类型
+			  	timeout:10000,//超时时间设置为10秒；
+			  	success:function(data){
+				    if(typeof data == "string") {var data = eval('('+data+')');}
+				 	console.log(data);
+				 	 var nb=[];
+				 	for(var i=0;i<data.length;i++){
+				 		
+				 		var add = {'num':data[i].num,'z':data[i].zs_num,'types':data[i].c_types};
+				 		nb.push(add);
+				 	}
+				 	
+			window.localStorage.setItem('nb',JSON.stringify(nb));
+			window.localStorage.setItem('nb_type',data[0].c_types);
+
+				 	$('#to_tz').val(data[0].order_z);
+				 	$('.zs_num').text(data[0].order_z);
+				 	$('.total_mon').text(data[0].order_money);
+				 	$('.bs_num').text(data[0].order_b);
+				 	$('.bs_nn').text(data[0].order_b);
+				 	
+				 	
+				 	//$('.preview').html(data[0].save_style);
+				 	
+				 	var tz_type=data[0].c_types;
+				 	if(tz_type==0 || tz_type==4 || tz_type==5 || tz_type==6){
+				 		var tz_bj=0;
+				 	}else{
+				 		var tz_bj=1;
+				 	}
+				 	$('#tz_bj').val(tz_bj);
+					$('#c_type').val(tz_type);
+					if(tz_bj==0){
+						
+						$('.zx_choose').show();
+						$('.z3_choose').hide();
+						$('.z6_choose').hide();
+						$('.zx_dan_choose').hide();
+						$('.sj_font').html("至少每位选1个，奖金<span style='color:red'>1040元</span>");
+						$('#ttz').text('排列三·直选');
+					}else if(tz_bj==1){
+						if(tz_type==1){
+							$('.zx_choose').hide();
+							$('.z3_choose').show();
+							$('.z6_choose').hide();
+							$('.zx_dan_choose').hide();
+							$('.sj_font').html("猜中开奖号，顺序不限，奖金<span style='color:red'>346元</span>");
+							$('#ttz').text('排列三·组三');
+						}else if(tz_type==2){
+							$('.zx_choose').hide();
+							$('.z3_choose').hide();
+							$('.z6_choose').show();
+							$('.zx_dan_choose').hide();
+							$('.sj_font').html("猜中开奖号，顺序不限，奖金<span style='color:red'>173元</span>");
+							$('#ttz').text('排列三·组六');
+						}else if(tz_type==3){
+							$('.zx_choose').hide();
+							$('.z3_choose').hide();
+							$('.z6_choose').hide();
+							$('.zx_dan_choose').show();
+							$('.sj_font').html("至少选3个，奖金<span style='color:red'>1040元</span>");
+							$('#ttz').text('排列三·直选复式胆拖');
+						}
+					}
+					show();
+					money_show();
+				 	
+			  	},
+			  	error:function(xhr,type,errorThrown){
+				  	//异常处理；
+				    //console.log(type);
+					switch (type) {
+						case "timeout":
+							mui.toast('连接超时，请重试');
+							break;
+						default:
+							mui.toast('请重试或重新登录');
+					}
+				}
+			});
+    	}else if(r_id=='rid'){
+    		var oid=url.substring(url.lastIndexOf('=')+1, url.length);
+    		//console.log(save_id);
+			mui.ajax(config[0].url+'/index.php/order_reset', {
+	            data: {
+	                order_id: oid,
+	            },
+	            dataType: 'json',//服务器返回json格式数据
+	            type: 'post',//HTTP请求类型
+	            timeout: 10000,//超时时间设置为10秒；
+	            success: function (data) {
+	                if (typeof data == "string") {
+	                    var data = eval('(' + data + ')');
+	                }
+	                console.log(data);
+	                var nb=[];
+				 	for(var i=0;i<data.length;i++){
+				 		
+				 		var add = {'num':data[i].numbers,'z':data[i].num_z,'types':data[i].c_types};
+				 		nb.push(add);
+				 	}
+				 	
+				 	window.localStorage.setItem('nb',JSON.stringify(nb));
+					window.localStorage.setItem('nb_type',data[0].c_types);
+					show();
+					money_show();
+				
+				 	
+	                
+				 	$('#to_tz').val(data[0].order_z);
+				 	$('.zs_num').text(data[0].order_z);
+				 	$('.total_mon').text(data[0].order_money);
+				 	$('.bs_num').text(data[0].order_b);
+				 	$('.bs_nn').text(data[0].order_b);
+				 	
+				 	//$('.preview').html(data[0].save_style);
+				 	
+				 	var tz_type=data[0].c_types;
+				 	if(tz_type==0 || tz_type==4 || tz_type==5 || tz_type==6){
+				 		var tz_bj=0;
+				 	}else{
+				 		var tz_bj=1;
+				 	}
+				 	$('#tz_bj').val(tz_bj);
+					$('#c_type').val(tz_type);
+					
+	            },
+	            error: function (xhr, type, errorThrown) {
+	                //异常处理；
+	                //console.log(type);
+					switch (type) {
+						case "timeout":
+							mui.toast('连接超时，请重试');
+							break;
+						default:
+							mui.toast('请重试或重新登录');
+					}
+	            }
+	        });
+    	}else{
+    		show();
+    		
+    	}
+    	
+    	
+    	
+    	mui.ajax(config[0].url+'/index.php/cp_qi',{
+			 	data:{
+			  		types:'03',
+			  	},
+			  	dataType:'json',//服务器返回json格式数据
+			  	type:'post',//HTTP请求类型
+			  	timeout:10000,//超时时间设置为10秒；
+			  	success:function(data){
+				    if(typeof data == "string") {var data = eval('('+data+')');}
+				    /*console.log(JSON.stringify(data));*/
+				 	//console.log(data);
+				 	$('.now_qi').text('排三'+data+'期');
+			  	},
+			  	error:function(xhr,type,errorThrown){
+				  	//异常处理；
+				    //console.log(type);
+					switch (type) {
+						case "timeout":
+							mui.toast('连接超时，请重试');
+							break;
+						default:
+							mui.toast('请重试或重新登录');
+					}
+				}
+			});
+    
+    
+    jQuery('.jt_back').on('tap',function(){
+    	mui.openWindow({
+		    url: 'index.html', 
+		    id:'index',
+		    createNew:true
+		});
+    })
+    
+
+/*提交彩店*/
+jQuery('#sub').one('tap',function(){
+	var cp_hm=window.localStorage.getItem('nb');
+	var userid = window.localStorage.getItem("token");
+	var order_money=jQuery('.total_mon').text();
+	var total_tz=jQuery('.t_dz');
+	var trr=[];
+	jQuery.each(total_tz, function(i,val){
+		/*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+		console.log(i); //输出索引为0，1，2，3
+		
+		console.log(val.value); //输出value的值*/
+		trr[i]=parseInt(val.value);
+	
+	}); 
+	var to=eval(trr.join('+'));
+	var order_z=to;
+	var order_b=jQuery('.bs_num').text();
+	var user_mobile=window.localStorage.getItem("phone");
+	//var order_content=jQuery('.yes').text();
+	var zjj='';
+	//var xhy=jQuery('.preview').html();
+	var tz_type=window.localStorage.getItem('nb_type');
+	var tz_bj=$('#tz_bj').val();
+	window.localStorage.setItem('cp_hm',cp_hm);
+	window.localStorage.setItem('to_money',order_money);
+	window.localStorage.setItem('to_z',order_z);
+	window.localStorage.setItem('to_b',order_b);
+	//window.localStorage.setItem('xhy',xhy);
+	//window.localStorage.setItem('order','yes');
+	//window.localStorage.setItem('order_content',order_content);
+	window.localStorage.setItem('cp_types','03');
+	window.localStorage.setItem('zjj','0');
+	window.localStorage.setItem('tz_type',tz_type);
+	window.localStorage.setItem('tz_bj',tz_bj);
+	
+	
+	
+	
+			/*console.log(order_content);*/
+	if(!userid){
+		token_check(userid);
+	}else{       
+        if(jQuery('.xh').length>5){
+        		mui.toast('最多只能选5注');
+       		}else{
+        	  	if(order_b<0 || order_b==0 ){
+			   		mui.toast('订单倍数不得小于1倍');
+			   		return;
+			   	}else if(order_money<1){
+			   		mui.toast('订单金额不得小于1元');
+			   		return;
+			   	}else if(order_money>20000){
+			   		mui.toast('订单金额不得大于20000元');
+			   		return;
+			   	}
+			   	mui.ajax(config[0].url+'/index.php/cp_qi',{
+				 	data:{
+				  		types:'03',
+				  	},
+				  	dataType:'json',//服务器返回json格式数据
+				  	type:'post',//HTTP请求类型
+				  	timeout:10000,//超时时间设置为10秒；
+				  	success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					    /*console.log(JSON.stringify(data));*/
+					 	//console.log(data);
+					 	window.localStorage.setItem('order_qi',data);
+					 	mui.openWindow({
+							url: 'order_1.html', 
+							id:'order_1',
+							createNew:true
+						});
+				  	},
+				  	error:function(xhr,type,errorThrown){
+					  	//异常处理；
+					    //console.log(type);
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+			   	
+	        	
+      		
+        }
+	
+		
+	}
+	
+	
+
+	 
+})
+//userid判断
+ function numbers_check(obj){    
+        reg=/^[0-9]+.?[0-9]*$/;;    
+        if(!reg.test(obj)){   
+           return false;
+        }else{   
+           return true;
+        }
+}
+
+	/*投注标记*/
+	var tz_bj=0;	
+	var list = document.querySelector('.mui-table-view.mui-table-view-radio');
+	var title=document.getElementById('ttz');
+	list.addEventListener('selected',function(e){
+		
+		title.innerText ='排列三·'+e.detail.el.innerText;
+		jQuery('#ttz').children('br').remove();
+		var a = e.detail.el.className;
+		if(a == 'mui-table-view-cell z3 mui-selected'){
+			jQuery('#tz_bj').val(1);
+			$('#c_type').val(1);
+			$('.zx_choose').hide();
+			$('.z3_choose').show();
+			$('.z6_choose').hide();
+			$('.zx_dan_choose').hide();
+			$('.sj_font').html("猜中开奖号，顺序不限，奖金<span style='color:red'>346元</span>");
+		}else if(a == 'mui-table-view-cell zx mui-selected'){
+			jQuery('#tz_bj').val(0);
+			$('#c_type').val(0);
+			$('.zx_choose').show();
+			$('.z3_choose').hide();
+			$('.z6_choose').hide();
+			$('.zx_dan_choose').hide();
+			$('.sj_font').html("每位最少选1个，奖金<span style='color:red'>1040元</span>");			
+		}else if(a == 'mui-table-view-cell z6 mui-selected'){
+			jQuery('#tz_bj').val(1);
+			$('#c_type').val(2);
+			$('.zx_choose').hide();
+			$('.z3_choose').hide();
+			$('.z6_choose').show();
+			$('.zx_dan_choose').hide();
+			$('.sj_font').html("猜中开奖号，顺序不限，奖金<span style='color:red'>173元</span>");		
+		}else if(a == 'mui-table-view-cell zx_dan mui-selected'){
+			jQuery('#tz_bj').val(1);
+			$('#c_type').val(3);
+			$('.zx_choose').hide();
+			$('.z3_choose').hide();
+			$('.z6_choose').hide();
+			$('.zx_dan_choose').show();
+			$('.sj_font').html("至少选3个,奖金<span style='color:red'>1040元</span>");		
+		}
+		
+					
+	});
+	
+	//判断数组是否相等
+	function isContained(a, b){
+	   var astr=a.sort().toString();
+	   var bstr=b.sort().toString();
+	   if(astr==bstr){
+	   		return true;
+	   }else{
+	   		return false;
+	   }
+	}
+	
+	
+	
+	
+	
+	/*保存号码*/
+	jQuery('#save').on('tap',function(){
+
+		var save_bj=$('.preview').children('.xh').children('.save_bj');
+		var arr=[];
+		for(var i=0;i<save_bj.length;i++){
+			arr[i]=save_bj[i].value;
+		}
+		
+		if(arr.length>1){
+			var saj_now=arr.join(',');
+		}else if(arr.length==1){
+			var saj_now=arr[0];
+		}
+		
+				
+		var saj_old=$('.saj').text();
+		
+		if(saj_old=='' || saj_old==null || saj_old==undefined){
+			//var cp_hm=jQuery('.yes').html();
+			var cp_hm=window.localStorage.getItem('nb');
+			var userid = window.localStorage.getItem("token");
+			//var openid = window.localStorage.getItem("openid");
+			var order_money=jQuery('.total_mon').text();
+			//var order_z=jQuery('#to_tz').val();
+			var total_tz=jQuery('.t_dz');
+			var trr=[];
+			jQuery.each(total_tz, function(i,val){
+				/*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+				console.log(i); //输出索引为0，1，2，3
+				
+				console.log(val.value); //输出value的值*/
+				trr[i]=parseInt(val.value);
+			
+			}); 
+			var to=eval(trr.join('+'));	
+			var order_z=to;
+			var order_b=jQuery('.bs_num').text();
+			//var order_content=jQuery('.yes').text();
+			var zjj=0;
+			//var num_style=$('.preview').html();
+			var tz_type=window.localStorage.getItem('nb_type');
+			
+			if(num_style==''){
+				mui.toast('没有可以保存的号码!');
+				return;
+			}
+	        	
+	        mui.ajax(config[0].url+'/index.php/cp_qi',{
+			 	data:{
+			  		types:'03',
+			  	},
+			  	dataType:'json',//服务器返回json格式数据
+			  	type:'post',//HTTP请求类型
+			  	timeout:10000,//超时时间设置为10秒；
+			  	success:function(data){
+				    if(typeof data == "string") {var data = eval('('+data+')');}
+				    /*console.log(JSON.stringify(data));*/
+				 	//console.log(data);
+				 	var order_qi=data;
+				 	mui.ajax(config[0].url+'/index.php/save_case',{
+						data:{
+							userid:userid,order_money:order_money,order_z:order_z,order_b:order_b,add:zjj,order_qi:order_qi,cp_types:'03',tz_type:tz_type,cp_hm:cp_hm
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(data){
+							if(typeof data == "string") {
+								var data = eval('('+data+')');
+							}
+							
+							//console.log(data);
+							$('.saj').text(saj_now);
+							mui.toast('保存成功，可在个人中心查看记录');
+							
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+						}
+					});
+				 	
+			  	},
+			  	error:function(xhr,type,errorThrown){
+				  	//异常处理；
+				    console.log(type);
+				}
+			});
+		}else{
+			var brr=[];
+			if(saj_old.indexOf(',')==-1){
+				brr[0]=saj_old;
+			}else if(saj_old.indexOf(',')>-1){
+				brr=saj_old.split(',');
+			}
+			
+			var a=isContained(brr,arr);
+			if(a==true){
+				mui.toast('方案已保存，请勿重复保存');
+			}else{
+				var cp_hm=window.localStorage.getItem('nb');
+				var userid = window.localStorage.getItem("token");
+				//var openid = window.localStorage.getItem("openid");
+				var order_money=jQuery('.total_mon').text();
+				var total_tz=jQuery('.t_dz');
+				var trr=[];
+				jQuery.each(total_tz, function(i,val){
+					/*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+					console.log(i); //输出索引为0，1，2，3
+					
+					console.log(val.value); //输出value的值*/
+					trr[i]=parseInt(val.value);
+				
+				}); 
+				var to=eval(trr.join('+'));	
+				var order_z=to;
+				var order_b=jQuery('.bs_num').text();
+				var zjj=0;
+				var num_style=$('.preview').html();
+				var tz_type=window.localStorage.getItem('nb_type');
+				
+				if(num_style==''){
+					mui.toast('没有可以保存的号码!');
+					return;
+				}
+		        	
+		        mui.ajax(config[0].url+'/index.php/cp_qi',{
+				 	data:{
+				  		types:'03',
+				  	},
+				  	dataType:'json',//服务器返回json格式数据
+				  	type:'post',//HTTP请求类型
+				  	timeout:10000,//超时时间设置为10秒；
+				  	success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					    /*console.log(JSON.stringify(data));*/
+					 	//console.log(data);
+					 	var order_qi=data;
+					 	mui.ajax(config[0].url+'/index.php/save_case',{
+							data:{
+								userid:userid,order_money:order_money,order_z:order_z,order_b:order_b,add:zjj,order_qi:order_qi,cp_types:'03',tz_type:tz_type,cp_hm:cp_hm
+							},
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success:function(data){
+								if(typeof data == "string") {
+									var data = eval('('+data+')');
+								}
+								
+								//console.log(data);
+								$('.saj').text(saj_now);
+								mui.toast('保存成功，可在个人中心查看记录');
+								
+							},
+							error:function(xhr,type,errorThrown){
+								//异常处理；
+								console.log(type);
+							}
+						});
+					 	
+				  	},
+				  	error:function(xhr,type,errorThrown){
+					  	//异常处理；
+					    console.log(type);
+					}
+				});
+			}
+		}
+		
+		
+		
+		
+		
+		//console.log(saj);
+		//console.log(save_bj);return;
+		
+        	
+		
+		
+	})
+
+/*var isnum = window.localStorage.getItem("num");
+
+if(isnum){
+	$('.preview').html(window.localStorage.getItem("num"));
+}*/
+
+	
+	
+	
+	//window.localStorage.setItem('nb','');
+	//JSON.stringify(nb)
+	//alert(nb);
+	//console.log(JSON.parse(nb));
+	function show(){
+		var nb=window.localStorage.getItem('nb');
+		var nb_type=window.localStorage.getItem('nb_type');
+		var order_b = window.localStorage.getItem('to_b');
+		if(order_b){
+			$('.bs_nn').text(order_b);
+			$('.bs_num').text(order_b);
+		}
+		var num=JSON.parse(nb);
+		console.log(num);
+		var timestamp=new Date().getTime();
+			if(nb_type!=''){
+				if(nb_type==0){
+					for(var i=0;i<num.length;i++){
+						var b='';
+						var a='';
+						var c='';
+						var d='';
+						var e='';
+						var arr=[];
+						var arr=num[i].num.split('|');
+						
+						if(arr[0].indexOf(',') > -1){
+				  			var brr=[];
+				  			brr=arr[0].split(',');
+				  			
+				  			for(var j=1;j<=brr.length;j++){
+								a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+							}
+				  		}else if(arr[0].indexOf(',') == -1){							  			
+								a="<div class='choose_rball rxq'>"+arr[0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";																							
+							
+				  		}
+				  		
+				  		if(arr[1].indexOf(',') > -1){
+				  			var crr=[];
+				  			crr=arr[1].split(',');
+				  			
+				  			for(var k=1;k<=crr.length;k++){
+								b+="<div class='choose_rball rxq'>"+crr[k-1]+"<input class='choose_h1' type='hidden' value="+crr[k-1]+"></div>";																							
+							}
+				  		}else if(arr[1].indexOf(',') == -1){							  			
+								b="<div class='choose_rball rxq'>"+arr[1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";																							
+							
+				  		}
+				  		
+				  		if(arr[2].indexOf(',') > -1){
+				  			var drr=[];
+				  			drr=arr[2].split(',');
+				  			
+				  			for(var h=1;h<=drr.length;h++){
+								c+="<div class='choose_rball rxq'>"+drr[h-1]+"<input class='choose_h1' type='hidden' value="+drr[h-1]+"></div>";																							
+							}
+				  		}else if(arr[2].indexOf(',') == -1){							  			
+								c="<div class='choose_rball rxq'>"+arr[2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";																							
+							
+				  		}
+				  		
+				  		c=c+"<div class='clear'></div>";
+						d=a+"<div class='one' style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;margin-bottom: 12px;'>|</div>"+b+"<div class='two' style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;margin-bottom: 12px;'>|</div>"+c;
+						e="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+d+"</div><input class='t_dz' type='hidden' value='"+num[i].z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+						jQuery('.preview').append(e);
+				  		
+				  		
+					}
+					console.log(num);
+				}else if(nb_type==1){
+					console.log(num)
+					for(var i=0;i<num.length;i++){
+						var b='';
+						var a='';
+						var c='';
+						var d='';
+						var e='';
+						var arr=[];
+						var z=num[i].z;
+						if(num[i].num.indexOf(';')==-1){
+							arr=num[i].num.split(',');
+							for(var p=0;p<arr.length;p++){
+								a+="<div class='choose_rball rxq'>"+arr[p]+"<input class='choose_h1' type='hidden' value="+arr[p]+"></div>";
+							}
+							a=a+"<div class='clear'></div>";
+							b="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+a+"</div><input class='t_dz' type='hidden' value='"+z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+							jQuery('.preview').append(b);
+						}
+						
+						if(num[i].num.indexOf(';')>-1){
+							var b='';
+							var a='';
+							var c='';
+							var d='';
+							var e='';
+							var f='';
+							var brr=num[i].num.split(';');
+							var crr=brr.pop();
+							for( var j=0;j<brr.length;j++){
+								a+="<div class='choose_rball rxd rd'>"+brr[j]+"<input class='choose_h1' type='hidden' value="+brr[j]+"></div>";
+							}
+							a="<div style='float:left'>[胆:</div>"+a+"<div style='float:left'>]</div>";
+							if(crr.indexOf(',') > -1){
+					  			var drr=[];
+					  			drr=crr.split(',');
+					  			
+					  			for( var k=0;k<drr.length;k++){
+									b+="<div class='choose_rball rxq'>"+drr[k]+"<input class='choose_h1' type='hidden' value="+drr[k]+"></div>";
+								}
+					  		}else if(crr.indexOf(',') == -1){							  			
+									b="<div class='choose_rball rxq'>"+crr[0]+"<input class='choose_h1' type='hidden' value="+crr[0]+"></div>";																							
+								
+					  		}
+
+							c=a+b;
+							e=c+"<div class='clear'></div>";
+							f="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+e+"</div><input class='t_dz' type='hidden' value='"+z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+					
+							jQuery('.preview').append(f);
+						}
+						
+					}
+				}else if(nb_type==2){
+					for(var i=0;i<num.length;i++){
+						var b='';
+						var a='';
+						var c='';
+						var d='';
+						var e='';
+						var arr=[];
+						var z=num[i].z;
+						if(num[i].num.indexOf(';')==-1){
+							arr=num[i].num.split(',');
+							for(var p=0;p<arr.length;p++){
+								a+="<div class='choose_rball rxq'>"+arr[p]+"<input class='choose_h1' type='hidden' value="+arr[p]+"></div>";
+							}
+							a=a+"<div class='clear'></div>";
+							b="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+a+"</div><input class='t_dz' type='hidden' value='"+z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+							jQuery('.preview').append(b);
+						}
+						
+						if(num[i].num.indexOf(';')>-1){
+							var b='';
+							var a='';
+							var c='';
+							var d='';
+							var e='';
+							var f='';
+							var brr=num[i].num.split(';');
+							var crr=brr.pop();
+							for( var j=0;j<brr.length;j++){
+								a+="<div class='choose_rball rxd rd'>"+brr[j]+"<input class='choose_h1' type='hidden' value="+brr[j]+"></div>";
+							}
+							a="<div style='float:left'>[胆:</div>"+a+"<div style='float:left'>]</div>";
+							if(crr.indexOf(',') > -1){
+					  			var drr=[];
+					  			drr=crr.split(',');
+					  			
+					  			for( var k=0;k<drr.length;k++){
+									b+="<div class='choose_rball rxq'>"+drr[k]+"<input class='choose_h1' type='hidden' value="+drr[k]+"></div>";
+								}
+					  		}else if(crr.indexOf(',') == -1){							  			
+									b="<div class='choose_rball rxq'>"+crr[0]+"<input class='choose_h1' type='hidden' value="+crr[0]+"></div>";																							
+								
+					  		}
+
+							c=a+b;
+							e=c+"<div class='clear'></div>";
+							f="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+e+"</div><input class='t_dz' type='hidden' value='"+z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+					
+							jQuery('.preview').append(f);
+						}
+						
+					}
+				}else if(nb_type==3){
+					for(var i=0;i<num.length;i++){
+						var b='';
+						var a='';
+						var c='';
+						var d='';
+						var e='';
+						var arr=[];
+						var z=num[i].z;
+						if(num[i].num.indexOf(';')==-1){
+							arr=num[i].num.split(',');
+							for(var p=0;p<arr.length;p++){
+								a+="<div class='choose_rball rxq'>"+arr[p]+"<input class='choose_h1' type='hidden' value="+arr[p]+"></div>";
+							}
+							a=a+"<div class='clear'></div>";
+							b="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+a+"</div><input class='t_dz' type='hidden' value='"+z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+							jQuery('.preview').append(b);
+						}
+						
+						if(num[i].num.indexOf(';')>-1){
+							var b='';
+							var a='';
+							var c='';
+							var d='';
+							var e='';
+							var f='';
+							var brr=num[i].num.split(';');
+							var crr=brr.pop();
+							for( var j=0;j<brr.length;j++){
+								a+="<div class='choose_rball rxd rd'>"+brr[j]+"<input class='choose_h1' type='hidden' value="+brr[j]+"></div>";
+							}
+							a="<div style='float:left'>[胆:</div>"+a+"<div style='float:left'>]</div>";
+							if(crr.indexOf(',') > -1){
+					  			var drr=[];
+					  			drr=crr.split(',');
+					  			
+					  			for( var k=0;k<drr.length;k++){
+									b+="<div class='choose_rball rxq'>"+drr[k]+"<input class='choose_h1' type='hidden' value="+drr[k]+"></div>";
+								}
+					  		}else if(crr.indexOf(',') == -1){							  			
+									b="<div class='choose_rball rxq'>"+crr[0]+"<input class='choose_h1' type='hidden' value="+crr[0]+"></div>";																							
+								
+					  		}
+
+							c=a+b;
+							e=c+"<div class='clear'></div>";
+							f="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+e+"</div><input class='t_dz' type='hidden' value='"+z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+					
+							jQuery('.preview').append(f);
+						}
+						
+					}
+				}else if(nb_type==4){
+					for(var i=0;i<num.length;i++){
+						var b='';
+						var a='';
+						var c='';
+						var d='';
+						var e='';
+						var arr=[];
+						var arr=num[i].num.split(',');
+						console.log(arr);
+					 	for(var j=0;j<arr.length;j++){							  			
+							a+="<div class='choose_rball rxq'>"+arr[j]+"<input class='choose_h1' type='hidden' value="+arr[j]+"></div>";																							
+							
+				  		}
+				  		console.log(a);
+				  		
+				  		a=a+"<div class='clear'></div>";
+						e="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+a+"</div><input class='t_dz' type='hidden' value='"+num[i].z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+						jQuery('.preview').append(e);
+				  		
+				  		
+					}
+					console.log(num);
+				}else if(nb_type==5){
+					for(var i=0;i<num.length;i++){
+						var b='';
+						var a='';
+						var c='';
+						var d='';
+						var e='';
+						var arr=[];
+						var arr=num[i].num.split(',');
+						console.log(arr);
+					 	for(var j=0;j<arr.length;j++){							  			
+							a+="<div class='choose_rball rxq'>"+arr[j]+"<input class='choose_h1' type='hidden' value="+arr[j]+"></div>";																							
+							
+				  		}
+				  		console.log(a);
+				  		
+				  		a=a+"<div class='clear'></div>";
+						e="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+a+"</div><input class='t_dz' type='hidden' value='"+num[i].z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+						jQuery('.preview').append(e);
+				  		
+				  		
+					}
+					console.log(num);
+				}else if(nb_type==6){
+					for(var i=0;i<num.length;i++){
+						var b='';
+						var a='';
+						var c='';
+						var d='';
+						var e='';
+						var arr=[];
+						var arr=num[i].num.split(',');
+						console.log(arr);
+					 	for(var j=0;j<arr.length;j++){							  			
+							a+="<div class='choose_rball rxq'>"+arr[j]+"<input class='choose_h1' type='hidden' value="+arr[j]+"></div>";																							
+							
+				  		}
+				  		console.log(a);
+				  		
+				  		a=a+"<div class='clear'></div>";
+						e="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+a+"</div><input class='t_dz' type='hidden' value='"+num[i].z+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+						jQuery('.preview').append(e);
+				  		
+				  		
+					}
+					console.log(num);
+				}
+				
+			}
+			
+			
+			
+		
+		
+	}
+	
+	
+	
+	
+	
+//求两个数组差集
+function minus(arr1,arr2){
+    var arr3 = [];
+    for (var i = 0; i < arr1.length; i++) {
+                        var flag = true;
+                        for (var j = 0; j < arr2.length; j++) {
+                            if (arr2[j] == arr1[i]) {
+                                flag = false;
+                            }
+                        }
+                        if (flag) {
+                            arr3.push(arr1[i]);
+                        }
+                    }
+return arr3;
+}
+
+	
+	/*机选一注*/
+	jQuery('#robot').on('tap',function(){
+			var total_num=$('.preview').children().length;
+			//alert(total_num);
+			if(total_num==5){
+				mui.toast('最多只能选五注');return;
+			}
+			var t_num=1;
+			var b='';
+			var a='';
+			var c='';
+			var d='';
+			var e='';
+			var arr=[];
+			var c_type=window.localStorage.getItem('nb_type');
+			var timestamp=new Date().getTime();
+			
+			if(c_type==0){
+				for(var n=0;n<3;n++){
+					arr[n]= Math.floor(Math.random()*10);
+				}
+			
+				a = "<div class='choose_rball rxq'>"+arr[0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";
+				
+				b = "<div class='choose_rball rxq'>"+arr[1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";
+				
+				c = "<div class='choose_rball rxq'>"+arr[2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>"; 
+				
+				a = a+"<div class='one' style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+				b = b+"<div class='two' style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+				
+				cp_num = arr[0]+'|'+arr[1]+'|'+arr[2];
+				var nb=window.localStorage.getItem('nb');
+				//console.log(nb);
+				if(nb!=''){
+					var num=JSON.parse(nb);
+					var add = {'num':cp_num,'z':t_num,'types':c_type};
+					num.push(add);
+					window.localStorage.setItem('nb',JSON.stringify(num));
+				}else{
+					var nb=[];
+					var add = {'num':cp_num,'z':t_num,'types':c_type};
+					nb.push(add);
+					
+					window.localStorage.setItem('nb',JSON.stringify(nb));
+				}
+				
+				
+			d=a+b+c+"<div class='clear'></div>";
+			e="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+d+"</div><input class='t_dz' type='hidden' value='"+t_num+"'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+			}else if(c_type==1){
+				arr=creatball('z3');
+				a = "<div class='choose_rball rxq'>"+arr[0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";
+				
+				b = "<div class='choose_rball rxq'>"+arr[1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";
+					
+				cp_num = arr;
+				cp_num = cp_num.join(',');
+				var nb=window.localStorage.getItem('nb');
+				//console.log(nb);
+				if(nb!=''){
+					var num=JSON.parse(nb);
+					var add = {'num':cp_num,'z':t_num,'types':c_type};
+					num.push(add);
+					window.localStorage.setItem('nb',JSON.stringify(num));
+				}else{
+					var nb=[];
+					var add = {'num':cp_num,'z':t_num,'types':c_type};
+					nb.push(add);
+					
+					window.localStorage.setItem('nb',JSON.stringify(nb));
+				}
+				
+				d=a+b+"<div class='clear'></div>";
+				e="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+d+"</div><input class='t_dz' type='hidden' value='2'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+			}else if(c_type==2){
+				arr=creatball('z6');
+				a = "<div class='choose_rball rxq'>"+arr[0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";
+				
+				b = "<div class='choose_rball rxq'>"+arr[1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";
+				
+				c = "<div class='choose_rball rxq'>"+arr[2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";
+				cp_num = arr;
+				cp_num = cp_num.join(',');
+				var nb=window.localStorage.getItem('nb');
+				//console.log(nb);
+				if(nb!=''){
+					var num=JSON.parse(nb);
+					var add = {'num':cp_num,'z':t_num,'types':c_type};
+					num.push(add);
+					window.localStorage.setItem('nb',JSON.stringify(num));
+				}else{
+					var nb=[];
+					var add = {'num':cp_num,'z':t_num,'types':c_type};
+					nb.push(add);
+					
+					window.localStorage.setItem('nb',JSON.stringify(nb));
+				}
+				
+				d=a+b+c+"<div class='clear'></div>";
+				e="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+d+"</div><input class='t_dz' type='hidden' value='1'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+			}else if(c_type==3){
+				arr=creatball('z6');
+				a = "<div class='choose_rball rxq'>"+arr[0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";
+				
+				b = "<div class='choose_rball rxq'>"+arr[1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";
+				
+				c = "<div class='choose_rball rxq'>"+arr[2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";
+				cp_num = arr;
+				cp_num = cp_num.join(',');
+				var nb=window.localStorage.getItem('nb');
+				//console.log(nb);
+				if(nb!=''){
+					var num=JSON.parse(nb);
+					var add = {'num':cp_num,'z':t_num,'types':c_type};
+					num.push(add);
+					window.localStorage.setItem('nb',JSON.stringify(num));
+				}else{
+					var nb=[];
+					var add = {'num':cp_num,'z':t_num,'types':c_type};
+					nb.push(add);
+					
+					window.localStorage.setItem('nb',JSON.stringify(nb));
+				}
+				
+				d=a+b+c+"<div class='clear'></div>";
+				e="<div class='xh'><div class='xh_close'>x</div><div class='xhm'>"+d+"</div><input class='t_dz' type='hidden' value='6'><div class='rjt'>></div><input class='save_bj' type='hidden' value='"+timestamp+"'><div class='clear'></div></div>";
+			}else if(c_type==4 || c_type==5 || c_type==6){
+				$('#robot').attr('disabled',true);
+			}
+			
+			
+		
+		
+		jQuery('.preview').append(e);
+	})
+	
+	/*初始化选号页面*/
+	function reset(){
+			var red=jQuery('.r_ball');
+			var blue=jQuery('.b_ball');
+			red.removeClass('rxq').removeClass('rr_dan').removeClass('rd');
+			blue.removeClass('bxq').removeClass('dd_dan').removeClass('bd');
+			jQuery('.font_rdan').remove();
+			jQuery('.r_ball').children('span').removeClass('font_num');
+			jQuery('.font_bdan').remove();
+			jQuery('.b_ball').children('span').removeClass('font_num');
+			jQuery('.footer_font').html('共0元');
+			jQuery('#red_num').val(0);
+			jQuery('#blue_num').val(0);
+			jQuery('#money').val(0);
+			jQuery('#rr_dan').val(0);
+			jQuery('#bb_dan').val(0);
+			jQuery('#tz').val(0);
+			jQuery('.r_dan').val(0);
+			jQuery('.b_dan').val(0);
+			$('.saj').text();
+			
+	}
+	
+	
+	
+	/*返回选号画面*/
+	jQuery('#hand,.bk').on('tap',function(){
+		mui.openWindow({
+			url:'p3.html',
+			id:'p3',
+			createNew:true
+		})
+	})
+	
+				//倍数
+				jQuery('#jia').on('tap',function(){
+										
+						var numm=parseInt(jQuery('.bs_num').text());											
+						numm++;
+						if(numm>99){
+							numm=99;
+						}
+						jQuery('.bs_num').text(numm);
+						jQuery('.bs_nn').text(numm);
+								
+				})
+				
+				jQuery('.jian').on('tap',function(){
+										
+						var numm=parseInt(jQuery('.bs_num').text());											
+						numm--;
+						if(numm<1){
+							numm=1;	
+						}
+						jQuery('.bs_num').text(numm);
+						jQuery('.bs_nn').text(numm);
+								
+				})
+				
+				/*删除选中号*/
+				jQuery(document).on('tap','.xh_close',function(){
+	
+					var nn=window.localStorage.getItem('nb');
+					var space=$(this).parent().prevUntil().length;
+					var nnm=JSON.parse(nn);
+					nnm.splice(space,1);
+					window.localStorage.setItem('nb',JSON.stringify(nnm));
+					//console.log(nnm);
+					
+					jQuery(this).parent().remove();
+
+				})
+				
+				/*修改选中号*/
+				jQuery(document).on('tap','.rjt',function(){
+					var nn=window.localStorage.getItem('nb');
+					var space=$(this).parent().prevUntil().length;
+					var nnm=JSON.parse(nn);
+					nnm[space].sp=space;
+					//console.log(nnm[space]);
+					var up_num=nnm[space];
+					//console.log(up_num)
+					window.localStorage.setItem('update_num',JSON.stringify(up_num));
+					window.location.href='p3.html?up=update';
+				})
+				
+					
+				function money_show(){
+						/*预览页面金额计算*/
+					var total_tz=jQuery('.t_dz');
+					console.log(total_tz)
+					var trr=[];
+					jQuery.each(total_tz, function(i,val){
+						/*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+						console.log(i); //输出索引为0，1，2，3
+						
+						console.log(val.value); //输出value的值*/
+						trr[i]=parseInt(val.value);
+					
+					}); 
+					
+					var to=eval(trr.join('+'));
+					console.log(to);
+					var numm=jQuery('.bs_num').text();
+					var t_money=to*2*numm;
+					console.log(t_money)
+					jQuery('.total_mon').text(t_money);
+					$('.zs_num').text(to);
+				}
+				money_show();
+				
+				
+		jQuery(document).on('tap',function(){
+				 tz_bj=jQuery('#tz_bj').val();
+				var bw_n=jQuery('.bw_ball .rxq').length;
+				var sw_n=jQuery('.sw_ball .rxq').length;
+				var gw_n=jQuery('.gw_ball .rxq').length;
+				var mo=jQuery('#money').val();
+				var rdan_num=parseInt(jQuery('#rr_dan').val()); 
+				var bdan_num=parseInt(jQuery('#bb_dan').val()); 
+				/*var re=parseInt(red_n-rdan_num);
+				var blu=parseInt(blue_n-bdan_num);*/
+				
+				
+				/*预览页面金额计算*/
+				var total_tz=jQuery('.t_dz');
+				var trr=[];
+				jQuery.each(total_tz, function(i,val){
+				/*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+				console.log(i); //输出索引为0，1，2，3
+				
+				console.log(val.value); //输出value的值*/
+				trr[i]=parseInt(val.value);
+				
+			}); 
+				 var to=eval(trr.join('+'));
+				 var numm=jQuery('.bs_num').text();
+				 jQuery('#to_tz').val(to);
+				 $('.zs_num').text(to);
+				 //alert(to)
+				 if(to==undefined || to==''){
+				 	to = 0;
+				 }
+				 	
+					var t_money=to*2*numm;
+					jQuery('.total_mon').text(t_money);
+							
+						
+						
+				
+				
+				if( tz_bj ==0){
+					//随时计算金额数
+				if(bw_n<1 || sw_n<1 || gw_n<1){
+					jQuery('.footer_font').html('共0元');
+				}else{
+
+						var money=parseInt(bw_n*sw_n*gw_n*2);
+						var num= parseInt(money/2);
+						jQuery('#money').val(money);
+						jQuery('#tz').val(num);
+
+					jQuery('.footer_font').html(function(){
+						return "共"+money+"元";
+					});
+				}
+				
+			}else if( tz_bj ==1 ){
+				var c_ty=$('#c_type').val();
+
+				if(c_ty==1){
+					var z3_red = $('.z3_choose .bw_ball .rxq').length;
+					console.log(z3_red);
+					var z3_dan_red=$('.z3_choose .bw_ball .rr_dan').length;
+					if(z3_dan_red==0){
+						if(z3_red<2){
+							jQuery('.footer_font').html('共0元');
+						}else{
+							var money=parseInt(z3_red*(z3_red-1)*2);
+							var num =parseInt(money/2);
+							console.log(money);
+							jQuery('#money').val(money);
+							jQuery('#tz').val(num);
+							
+							jQuery('.footer_font').html(function(){
+								return "共"+money+"元";
+							});
+						}
+					}else if(z3_dan_red==1){
+						if(z3_red<2){
+							jQuery('.footer_font').html('共0元');
+						}else{
+							var money=parseInt((z3_red-z3_dan_red)*4);
+							var num =parseInt(money/2);
+							jQuery('#money').val(money);
+							jQuery('#tz').val(num);
+							jQuery('.footer_font').html(function(){
+								return "共"+money+"元";
+							});
+						}
+					}else if(z3_dan_red==2){
+						if(z3_red<2){
+							jQuery('.footer_font').html('共0元');
+						}else{
+							var money=4;
+							var num =2;
+							jQuery('#money').val(money);
+							jQuery('#tz').val(num);
+							jQuery('.footer_font').html(function(){
+								return "共"+money+"元";
+							});
+						}
+					}
+					
+				}else if(c_ty==2){
+					var z6_red = $('.z6_choose .bw_ball .rxq').length;
+					var z6_dan_red=$('.z6_choose .bw_ball .rr_dan').length;
+					if(z6_dan_red==0){
+						if(z6_red<3){
+							jQuery('.footer_font').html('共0元');
+						}else{
+							var money=parseInt(p3_z6(z6_red)*2);
+							var num =parseInt(money/2);
+							jQuery('#money').val(money);
+							jQuery('#tz').val(num);
+							jQuery('.footer_font').html(function(){
+								return "共"+money+"元";
+							});
+						}
+					}else if(z6_dan_red>0){
+						if(z6_red<3){
+							jQuery('.footer_font').html('共0元');
+						}else{
+							var money=parseInt(p3_z6_d(z6_dan_red,(z6_red-z6_dan_red))*2);
+							var num =parseInt(money/2);
+							jQuery('#money').val(money);
+							jQuery('#tz').val(num);
+							jQuery('.footer_font').html(function(){
+								return "共"+money+"元";
+							});
+						}
+					}
+					
+				}else if(c_ty==3){
+					var zx_re = $('.zx_dan_choose .bw_ball .rxq').length;
+					var zx_dan_red=$('.zx_dan_choose .bw_ball .rr_dan').length;
+					
+					if(zx_dan_red==0){
+						if(zx_re<3){
+							jQuery('.footer_font').html('共0元');
+						}else{
+							var money=parseInt(p3_zx(zx_re)*2);
+							var num =parseInt(money/2);
+							jQuery('#money').val(money);
+							jQuery('#tz').val(num);
+							jQuery('.footer_font').html(function(){
+								return "共"+money+"元";
+							});
+						}
+					}else if(zx_dan_red>0){
+						if(zx_re<3){
+							jQuery('.footer_font').html('共0元');
+						}else{
+							var money=parseInt(p3_z6_d(zx_dan_red,(zx_re-zx_dan_red))*2*6);
+							var num =parseInt(money/2);
+							jQuery('#money').val(money);
+							jQuery('#tz').val(num);
+							jQuery('.footer_font').html(function(){
+								return "共"+money+"元";
+							});
+						}
+					}
+					
+					
+					
+				}
+				
+		}
+				
+
+	})
+		
+	
+		
+		//投注模式选择刷新
+		jQuery('.mui-navigate-right').on('tap',function(){
+			var red=jQuery('.r_ball');
+			var blue=jQuery('.b_ball');
+			red.removeClass('rxq');
+			blue.removeClass('bxq');
+			jQuery('.font_rdan').remove();
+			jQuery('.r_ball').children('span').removeClass('font_num');
+			jQuery('.font_bdan').remove();
+			jQuery('.b_ball').children('span').removeClass('font_num');
+			jQuery('.footer_font').html('共0元');
+			jQuery('#red_num').val(0);
+			jQuery('#blue_num').val(0);
+			jQuery('#money').val(0);
+			jQuery('#rr_dan').val(0);
+			jQuery('#bb_dan').val(0);
+		})
+		
+
+	
+	
+	
+	
+	//颜色进制转换
+	function rgb2hex(rgb) {
+		  rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+		  function hex(x) {
+		    return ("0" + parseInt(x).toString(16)).slice(-2);
+		  }
+		  return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+		}
+	
+
+	//绑定红球点击事件
+				mui('#index_main1,#index_main2,#index_main3').on('tap','.r_ball',function(){
+					var b=this.nextSibling.value;
+					var c=jQuery(this).css('color');
+					var a=rgb2hex(c);
+					
+					
+					if( tz_bj == 0 ){
+						if(a=='#ff0000'){				
+							jQuery(this).addClass('rxq').next().next().val(1);
+							
+						}else{
+							jQuery(this).removeClass('rxq').next().next().val(0);
+						}
+									
+						 var red_xq=jQuery('.r_ball.rxq').length;
+			
+						 jQuery('#red_num').val(red_xq);
+						 
+					}else if( tz_bj == 1 ){
+						var r_dan=this.nextSibling.nextSibling.value;
+						if( r_dan == 0){
+							jQuery(this).addClass('rxq');
+							jQuery(this).next().next().val(1);
+							
+							}else if( r_dan == 1 ){
+							
+								
+								var rdan_num=jQuery('#rr_dan').val();
+								if( rdan_num == '' || rdan_num == 0 || rdan_num < 2  ){
+									var d=jQuery(this).next().val();
+									jQuery(this).addClass('rr_dan');
+									jQuery(this).html("<span class='font_num'>"+d+"</span><span class='font_rdan'></span>");
+									jQuery(this).next().next().val(2);
+								}else if( rdan_num == 2 ){
+									var d=jQuery(this).next().val();
+									jQuery(this).removeClass('rxq');
+									jQuery(this).removeClass('rr_dan');
+									jQuery(this).next().next().val(0);
+									jQuery(this).html("<span>"+d+"</span>");
+								}
+								
+							
+							}else if( r_dan == 2 ){
+							
+								var d=jQuery(this).next().val();
+								jQuery(this).removeClass('rxq');
+								jQuery(this).removeClass('rr_dan');
+								jQuery(this).next().next().val(0);
+								jQuery(this).html("<span>"+d+"</span>");
+							}
+					}
+						 var red_x=jQuery('.r_ball.rxq').length;
+			
+						 jQuery('#red_num').val(red_x);
+						var red_dan=jQuery('.rr_dan').length;			
+						 	jQuery('#rr_dan').val(red_dan);
+					
+				})
+				
+			//绑定蓝球点击事件
+				mui('#index_main2').on('tap','.b_ball',function(){
+					var b=this.nextSibling.value;
+					var c=jQuery(this).css('color');
+					var a=rgb2hex(c);
+					
+					if( tz_bj == 0){
+						if(a == '#1e90ff'){				
+								jQuery(this).addClass('bxq');
+			
+						}else{					
+								jQuery(this).removeClass('bxq');
+						}				
+							var blue_xq=jQuery('.b_ball.bxq').length;
+							jQuery('#blue_num').val(blue_xq);
+					}else if( tz_bj == 1){
+							var b_dan=this.nextSibling.nextSibling.value;
+						if( b_dan == 0){
+							jQuery(this).addClass('bxq');
+							jQuery(this).next().next().val(1);
+							
+						}else if( b_dan == 1 ){
+							
+							var bdan_num=jQuery('#bb_dan').val();
+							if( bdan_num == '' || bdan_num == 0  ){
+								var d=jQuery(this).next().val();
+								jQuery(this).addClass('bb_dan');
+								jQuery(this).html("<span class='font_num'>"+d+"</span><span class='font_bdan'>胆</span>");
+								jQuery(this).next().next().val(2);
+							}else if( bdan_num == 1){
+								var d=jQuery(this).next().val();
+								jQuery(this).removeClass('bxq');
+								jQuery(this).next().next().val(0);
+								jQuery(this).html("<span>"+d+"</span>");
+							}
+						
+							
+						}else if( b_dan == 2 ){
+							var d=jQuery(this).next().val();
+							jQuery(this).removeClass('bxq');
+							jQuery(this).removeClass('bb_dan');
+							jQuery(this).next().next().val(0);
+							jQuery(this).html("<span>"+d+"</span>");
+						}
+					}
+						var blue_dan=jQuery('.bb_dan').length;			
+						 	jQuery('#bb_dan').val(blue_dan);
+						var blue_x=jQuery('.b_ball.bxq').length;			
+						 	jQuery('#blue_num').val(blue_x);
+					
+				})
+				
+		//排列三组6复试计算公式
+		function p3_z6(n){
+			var a=1;
+			var b=1;
+			if(n==3){
+				return 1;
+			}else{
+				for(var i=n;i>0;i--){
+					 a*=i;
+				}
+				
+				for(var j=n-3;j>0;j--){
+					b*=j;
+				}
+				
+				var num=(a/6)/b;
+				return num;
+			}
+		}
+		
+		//排列三直选复试计算公式
+		function p3_zx(n){
+			var a=1;	
+			for(var i=n;i>0;i--){
+				 a*=i;
+			}
+			
+			return a;
+			
+		}
+				
+	
+		//无胆拖排列组合计算
+		/*红色球，m=5,n代表选红球个数*/
+		/*蓝色球，m=2,n代表选蓝球个数*/
+		function su(m,n){
+			var a=1;
+			var b=1;
+			var c=1;
+			if(m==n){
+				return 1;
+			}else{
+				for(var i=m;i>0;i--){
+					 a*=i;
+				}
+
+				for(var j=n;j>0;j--){
+					b*=j;
+				}
+
+				for(var k=n-m;k>0;k--){
+					c*=k;
+				}
+
+				var su=b/(a*c);
+				return su;
+			}
+											
+		}
+		
+		function p3_z6_d(m,n){
+			var a=1;
+			var b=1;
+			var c=1;
+			
+			for(var i=3-m;i>0;i--){
+				a*=i;
+			}
+			
+			for(var j=n;j>0;j--){
+				b*=j;
+			}
+			
+			for(var k=n-3+m;k>0;k--){
+				c*=k;
+			}
+			
+			var dan=b/(a*c);
+			return dan;
+						
+		}
+		
+
+	
+		
+	
+		//机选
+		jQuery('.sj').on('tap',function(){
+			var c_type=$('#c_type').val();
+			var bw_red=jQuery('.bw_ball .r_ball');
+			var sw_red=jQuery('.sw_ball .r_ball');
+			var gw_red=jQuery('.gw_ball .r_ball');
+			var arr=[];
+			bw_red.removeClass('rxq');
+			sw_red.removeClass('rxq');
+			gw_red.removeClass('rxq');
+			bw_red.removeClass('rr_dan');
+			sw_red.removeClass('rr_dan');
+			gw_red.removeClass('rr_dan');
+			jQuery('#rr_dan').val(0);
+			jQuery('.r_dan').val(0);
+			jQuery('.font_rdan').remove();
+			jQuery('.r_ball').children('span').removeClass('font_num');
+			
+			
+			//console.log(arr);
+			if(c_type==1){
+				//console.log(arr);
+				arr=creatball('z3');
+				//console.log(arr);return;
+				var z3_red = $('.z3_choose .bw_ball .r_ball');
+				z3_red.eq(arr[0]).addClass("rxq").next().next().val(1);
+				z3_red.eq(arr[1]).addClass("rxq").next().next().val(1);
+			}else if(c_type==0){
+				for(var n=0;n<3;n++){
+				arr[n]= Math.floor(Math.random()*10);
+			}
+				bw_red.eq(arr[0]).addClass("rxq").next().next().val(1);
+				sw_red.eq(arr[1]).addClass("rxq").next().next().val(1);	
+				gw_red.eq(arr[2]).addClass("rxq").next().next().val(1);
+			}else if(c_type==2){
+				arr=creatball('z6');
+				var z6_red = $('.z6_choose .bw_ball .r_ball');
+				z6_red.eq(arr[0]).addClass("rxq").next().next().val(1);
+				z6_red.eq(arr[1]).addClass("rxq").next().next().val(1);
+				z6_red.eq(arr[2]).addClass("rxq").next().next().val(1);
+			}else if(c_type==3){
+				arr=creatball('z6');
+				var zx_dan_red = $('.zx_dan_choose .bw_ball .r_ball');
+				zx_dan_red.eq(arr[0]).addClass("rxq").next().next().val(1);
+				zx_dan_red.eq(arr[1]).addClass("rxq").next().next().val(1);
+				zx_dan_red.eq(arr[2]).addClass("rxq").next().next().val(1);
+			}
+			
+
+
+			 var red_xq=jQuery('.r_ball.rxq').length;
+			 jQuery('#red_num').val(red_xq);
+
+		})
+		
+		
+		
+		//随机产生球
+		function creatball(type){
+			if(type=='z3'){
+					 var num = new Array();
+		        for(var i = 1; i <=2; i++){
+		            var val =  Math.floor(Math.random()*10);
+		            var isEqu = false;
+		            for(var idx in num){
+		                if(num[idx] == val){isEqu = true; break;}
+		            }
+		            if(isEqu){
+		                i--;
+		            }else{
+		                num[num.length] = val;
+		        }
+	       			
+	    	}
+	    			return num;
+		}else if(type=='z6'){
+					 var num = new Array();
+		        for(var i = 1; i <=3; i++){
+		            var val =  Math.floor(Math.random()*10);
+		            var isEqu = false;
+		            for(var idx in num){
+		                if(num[idx] == val){isEqu = true; break;}
+		            }
+		            if(isEqu){
+		                i--;
+		            }else{
+		                num[num.length] = val;
+		        }
+	       			
+	    	}
+	    			return num;
+		}
+	}
+		
+		//冒泡排序
+	function px(arr,len){
+	for( var i=0;i<len;i++ ){
+			for( var j=i+1;j<len;j++ ){
+				var a = arr[i];
+				if( arr[i]>arr[j] ){
+					arr[i] = arr[j];
+					arr[j] = a;
+					
+				}
+			}
+		}
+	       
+	}
+	
+</script>
+
+<script type="text/javascript">
+	jQuery('.jt_round').on('tap',function(){
+		var v=jQuery('.jt_v').val();
+		if(v == 0){
+			jQuery('.jt_change').attr('src','wimages/jt_round_up.png');
+			jQuery('.jt_v').val(1);
+			jQuery('.history').attr('style','display:block');
+		}else{
+			jQuery('.jt_change').attr('src','wimages/jt_round_down.png');
+			jQuery('.jt_v').val(0);
+			jQuery('.history').attr('style','display:none');
+		}
+	})
+</script>
+
+
+<script>
+
+	
+
+
+
+
+/*获取开奖停售时间*/
+mui.ajax(config[0].url+'/index.php/cpdlt_endtime',{
+  data:{
+  	type:'03',
+  },
+  dataType:'json',//服务器返回json格式数据
+  type:'get',//HTTP请求类型
+  timeout:10000,//超时时间设置为10秒；
+  success:function(data){
+    if(typeof data == "string") {var data = eval('('+data+')');}
+   /*console.log(JSON.stringify(data));*/
+    /*console.log(arr[data]);*/ 
+	var mydate = new Date(data);
+	M = (mydate.getMonth()+1 < 10 ? '0'+(mydate.getMonth()+1) : mydate.getMonth()+1) + '-';
+	D = mydate.getDate() ;
+  jQuery('.e_time').html(M+D+"&nbsp;&nbsp;20:00");
+  
+  
+  }, 
+  error:function(xhr,type,errorThrown){
+    //异常处理；
+    console.log(type);
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+</html>

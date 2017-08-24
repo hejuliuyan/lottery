@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>店铺首页</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no" />
+
+		 <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    	<link href="css/mui.min.css" rel="stylesheet"/>
+    	<link href="css/shop_order.css" rel="stylesheet"/>
+    	  <script src="js/jquery-1.7.2.min.js"></script>
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			.mui-table-view-cell.mui-collapse .mui-collapse-content {
+				padding: 8px 8px;
+				}
+			.mui-card { margin: 0;}
+			.mui-table-view-cell.mui-collapse .mui-collapse-content {
+    			padding: 8px 2%;
+			}
+			.od_qi{width:46%}
+			
+			.wd{
+				background-image: url(./wimages/shop2.png);
+			    background-size: 100%;
+			    background-repeat: no-repeat;
+			    width: 24px;
+			    height: 22px;
+			    background-position: center;
+			    display: block;
+			    margin: 0 auto;
+			    margin-top: 3px;
+			}
+			
+			.wd_font {
+			    font-size: 11px;
+			    color: lightgray;
+			}
+			
+			.bottom_nav {
+				display: table-cell;
+				overflow: hidden;
+				width: 1%;
+				height: 50px;
+				text-align: center;
+				vertical-align: middle;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				color: #929292;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div class='nav_top_left'><div class='s_jd'>离线打烊</div></div>
+			<div class='wte'><input type='text' class='wt' placeholder="请输入订单号"></input></div>
+			<div class='search'><div class='s_img'><img src="wimages/search.png" width='25' height='25'/></div></div>
+		</header>
+		<!--<nav class="mui-bar mui-bar-tab">
+			<a class="bottom_nav  w_index" href="javascript:void(0)">
+				<span class="index"></span>
+				<span class="mui-tab-label index_font">首页</span>
+			</a>
+			
+			<a class="bottom_nav my_shop" href="shop_zx.html">
+				<span class="wd"></span>
+				<span class="mui-tab-label wd_font">我的</span>
+			</a>
+			
+		</nav>-->
+	<nav class="mui-bar mui-bar-tab">
+		<a class="bottom_nav mui-active w_index" href="#tabbar"> 
+			<span class="index"></span> 
+			<span class="mui-tab-label index_font">首页</span>
+		</a> 
+		<!--<a class="bottom_nav" href="#tabbar-with-chat">
+			<span class="mui-icon mui-icon-email"></span> 
+			<span class="mui-tab-label">搜店</span>
+		</a> -->
+		<a class="bottom_nav my_shop"> 
+			<span class="wd"></span> 
+			<span class="mui-tab-label wd_font">我的</span>
+		</a>
+
+	</nav>
+		<div class="mui-content">
+			<div class="mui-card">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right od_font" href="#">未处理订单(&nbsp;<span class='od_num dont_num'>0</span>&nbsp;)</a>
+						<div class="mui-collapse-content dont_order">
+							
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-collapse dj_order">
+						<a class="mui-navigate-right" href="#">待接订单(&nbsp;<span class='od_num wait_num'>0</span>&nbsp;)</a>
+						<div class="mui-collapse-content wait_order">
+						
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">已处理订单(&nbsp;<span class='od_num end_num'>0</span>&nbsp;)</a>
+						<div class="mui-collapse-content end_order">
+						
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">待派奖订单(&nbsp;<span class='od_num pj_num'>0</span>&nbsp;)</a>
+						<div class="mui-collapse-content pj_order">
+						
+						</div>
+					</li>
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">已派奖订单(&nbsp;<span class='od_num epj_num'>0</span>&nbsp;)</a>
+						<div class="mui-collapse-content epj_order">
+						
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/shop_check.js"></script>
+		<script>
+			mui.init();
+			
+			var first=null;  
+			mui.back=function(){  
+			  if(!first){  
+			    first=new Date().getTime();  
+			    mui.toast('再按一次退出应用!');  
+			  
+			    setTimeout(function(){  
+			      first=null;  
+			    },2000);  
+			  }else{  
+			    if(new Date().getTime()-first<2000){  
+			      plus.runtime.quit();  
+			   }  
+			 }  
+			};  
+		
+		</script>
+		
+		
+		<script type="text/javascript">
+			//window.localStorage.setItem('cp_id','');
+			var shopid=window.localStorage.getItem('shopid');
+			
+			if(!shopid){
+				mui.openWindow({
+					url : 'shop_login.html',
+					createNew:true
+				});
+			}else{
+				mui.ajax(config[0].url+'/index.php/pd_shop_status',{
+					  data:{shopid:shopid,
+					  },
+					  dataType:'json',//服务器返回json格式数据
+					  type:'post',//HTTP请求类型
+					  timeout:10000,//超时时间设置为10秒；
+					  success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					    /*console.log(JSON.stringify(data));*/
+					/* console.log(data);*/
+							if(data.data[0].shop_status==1){
+								 jQuery('.s_jd').attr('style','background-color:#56abe4');
+								 jQuery('.s_jd').text('下线打烊');
+								 window.localStorage.setItem('shop_status',1);
+								 window.localStorage.setItem('shop_rz',data.data[0].verified);
+								 
+								 jQuery('.dj_order').show();
+							}else{
+								jQuery('.s_jd').attr('style','background-color:gray');
+								jQuery('.s_jd').text('上线接单');
+								window.localStorage.setItem('shop_status',0);
+								window.localStorage.setItem('shop_rz',data.data[0].verified);
+								jQuery('.dj_order').hide();
+							}
+					},						
+					  error:function(xhr,type,errorThrown){
+					    //异常处理；
+	//							    console.log(type);
+						  switch (type) {
+							  case "timeout":
+								  mui.toast('连接超时，请重试');
+								  break;
+							  default:
+								  mui.toast('请重试或重新登录');
+						  }
+					}
+				});
+				
+			}
+			
+				$(document).on('tap','.my_shop',function(){
+					//alert(13)
+					var html='shop_zx.html';
+					shop_check(shopid,html);
+					
+				})
+					
+				$(document).on('tap', '.w_index', function(){
+						//alert(123);
+						var html='shop_order.html';
+						shop_check(shopid,html);
+						/*mui.openWindow({
+							url : 'shop_order.html',
+							id : 'shop'
+						});*/
+					});
+				
+			//mui.alert(shopid)
+			
+			 
+			
+				order();
+								
+				//改变店铺状态
+			function shop_sta(status,shopid){
+				 mui.ajax(config[0].url+'/index.php/shop_status',{
+							  data:{shop_status:status,shopid:shopid,
+							  },
+							  dataType:'json',//服务器返回json格式数据
+							  type:'post',//HTTP请求类型
+							  timeout:10000,//超时时间设置为10秒；
+							  success:function(data){
+							    if(typeof data == "string") {var data = eval('('+data+')');}
+							    /*console.log(JSON.stringify(data));*/
+							 //console.log(data);
+										
+							},						
+							  error:function(xhr,type,errorThrown){
+							    //异常处理；
+//							    console.log(type);
+								  switch (type) {
+									  case "timeout":
+										  mui.toast('连接超时，请重试');
+										  break;
+									  default:
+										  mui.toast('请重试或重新登录');
+								  }
+					}
+				});
+			}
+				
+				
+				
+				function order(){
+					jQuery('.dont_order').children().remove();
+					jQuery('.wait_order').children().remove();
+					jQuery('.end_order').children().remove();
+					var shopid=window.localStorage.getItem('shopid');
+					mui.ajax(config[0].url+'/index.php/order_wait',{
+				        data:{
+				           shopid:shopid,
+				        },
+				        dataType:'json',//服务器返回json格式数据
+				        type:'post',//HTTP请求类型
+				        timeout:10000,//超时时间设置为10秒；
+				        success:function(data){
+				        if(typeof data == "string") {
+				              var data = eval('('+data+')');
+				          }
+				        	//alert(data.data)
+				        	if(data.data!=false){
+				        		var dlen=data.data.length;
+							 	for(var i=0;i<dlen;i++){
+							 		if(data.data[i].read_status==1){							 			
+							 			var a='';
+							 			var b='';
+							 			var c='';
+							 			var d='';
+							 			var x='';
+							 			a=data.data[i].order_z;
+							 			c=data.data[i].order_b;
+							 			d=data.data[i].order_money;
+							 			if(data.data[i].order_type==1){
+							 				x='自行取票';
+							 			}else if(data.data[i].order_type==2){
+							 				x='代管代兑';
+							 			}
+							 			/*console.log(data.data[i].length);*/
+							 			//console.log(arr);
+							 			
+							 			b+="<div class='od_a wait_n'><div class='od_b'><div class='od_c'><div class='od_list1'><dt style='height:20px;line-height:20px;'><span class='od_qi'>"+data.data[i].new_type+data.data[i]['order_qi']+"期</span><span><span class='od_num'>"+a+"</span>注<span class='od_num'>"+d+"</span>元<span class='od_num'>"+c+"</span>倍</span><div class='clear'></div></dt><dt style='height:30px;line-height:30px;'><span></span><span>"+data.data[i]['user_mobile']+"</span><span style='padding:0px 6px;'>"+x+"</span><div class='clear'></div></dt></div><div class='od_listr'><dt class='choose jd'>接单</dt></div><input type='hidden' value='"+data.data[i]['id']+"'></div></div></div>";
+							 			
+							 			jQuery('.wait_order').append(b);
+							 			jQuery('.wait_num').text(jQuery('.wait_n').length);
+							 			
+							 		}
+							 		
+							 	}
+				        		
+				        	}
+				        	
+				        
+				        
+				        
+				        },
+				        error:function(xhr,type,errorThrown){
+				        //异常处理；
+//				        console.log(type);
+							switch (type) {
+								case "timeout":
+									mui.toast('连接超时，请重试');
+									break;
+								default:
+									mui.toast('请重试或重新登录');
+							}
+				        }
+				    });
+				    
+				    mui.ajax(config[0].url+'/index.php/pj_wait',{
+				        data:{
+				           shopid:shopid,
+				        },
+				        dataType:'json',//服务器返回json格式数据
+				        type:'post',//HTTP请求类型
+				        timeout:10000,//超时时间设置为10秒；
+				        success:function(data){
+				        if(typeof data == "string") {
+				              var data = eval('('+data+')');
+				          }
+				        	if(data.data!=false){
+				        		var dlen=data.data.length;
+							 	for(var i=0;i<dlen;i++){
+							 		if(data.data[i].status==6){							 			
+							 			var a='';
+							 			var b='';
+							 			var c='';
+							 			var d='';
+							 			var x='';
+							 			a=data.data[i].order_z;
+							 			c=data.data[i].order_b;
+							 			d=data.data[i].order_money;
+							 			if(data.data[i].order_type==1){
+							 				x='自行取票';
+							 			}else if(data.data[i].order_type==2){
+							 				x='代管代兑';
+							 			}
+							 			/*console.log(data.data[i].length);*/
+							 			//console.log(arr);
+							 			
+							 			b+="<div class='od_a pj_n'><div class='od_b'><div class='od_c'><div class='od_list1'><dt style='height:20px;line-height:20px;'><span class='od_qi'>"+data.data[i].new_type+data.data[i]['order_qi']+"期</span><span><span class='od_num'>"+a+"</span>注<span class='od_num'>"+d+"</span>元<span class='od_num'>"+c+"</span>倍</span><div class='clear'></div></dt><dt style='height:30px;line-height:30px;'><span></span><span>"+data.data[i]['user_mobile']+"</span><span style='padding:0px 6px;'>"+x+"</span><div class='clear'></div></dt></div><div class='od_listr'><dt class='choose pj'>派奖</dt></div><input type='hidden' value='"+data.data[i]['id']+"'></div></div></div>";
+							 			
+							 			jQuery('.pj_order').append(b);
+							 			jQuery('.pj_num').text(jQuery('.pj_n').length);
+							 			
+							 		}
+							 		
+							 	}
+				        		
+				        	}
+				        	
+				        
+				        
+				        
+				        },
+				        error:function(xhr,type,errorThrown){
+				        //异常处理；
+//				        console.log(type);
+							switch (type) {
+								case "timeout":
+									mui.toast('连接超时，请重试');
+									break;
+								default:
+									mui.toast('请重试或重新登录');
+							}
+				        }
+				    });
+					
+				
+					 mui.ajax(config[0].url+'/index.php/shop_order',{
+							  data:{shopid:shopid,
+							  },
+							  dataType:'json',//服务器返回json格式数据
+							  type:'post',//HTTP请求类型
+							  timeout:10000,//超时时间设置为10秒；
+							  success:function(data){
+							    if(typeof data == "string") {var data = eval('('+data+')');}
+							    /*console.log(JSON.stringify(data));*/
+							 console.log(data);
+							
+							
+								 	//店铺状态
+				jQuery(document).on('tap','.s_jd',function(){
+					var shop_s=window.localStorage.getItem('shop_status');
+					var shopid=window.localStorage.getItem('shopid');
+					var shop_rz=window.localStorage.getItem('shop_rz');
+					if(shop_rz=='N'){
+						//alert(1);
+						return false;
+					}else{
+						var shop_num=parseInt(jQuery('.wait_num').text());
+					
+						if(shop_s==0){
+							 shop_status=window.localStorage.setItem('shop_status',1);
+							 jQuery('.s_jd').attr('style','background-color:#56abe4');
+							 jQuery('.s_jd').text('下线打烊');
+							 jQuery('.dj_order').show();
+							 shop_sta(1,shopid);
+							 
+						}else if(shop_s==1){
+							if(shop_num>0){
+								mui.toast('您还有待接订单，必须全部接单完成，方可下线');
+								}else if(shop_num==0){
+								 shop_status=window.localStorage.setItem('shop_status',0);
+								 jQuery('.s_jd').attr('style','background-color:gray');
+								 jQuery('.s_jd').text('上线接单');
+								 jQuery('.dj_order').hide();
+								 shop_sta(0,shopid);
+							}
+							
+						}
+					}
+					
+					
+				})
+							 	
+							 	var dlen=data.data.length;
+							 	for(var i=0;i<dlen;i++){
+							 		if(data.data[i].read_status==0){							 			
+							 			var a='';
+							 			var b='';
+							 			var c='';
+							 			var d='';
+							 			var x='';
+							 			a=data.data[i].order_z;
+							 			c=data.data[i].order_b;
+							 			d=data.data[i].order_money;
+							 			
+							 			if(data.data[i].order_type==1){
+							 				x='自行取票';
+							 			}else if(data.data[i].order_type==2){
+							 				x='代管代兑';
+							 			}
+							 		
+							 			/*console.log(data.data[i].length);*/
+							 			//console.log(arr);
+							 			
+							 			b+="<div class='od_a dont_n'><div class='od_b'><div class='od_c'><div class='od_list1'><dt style='height:20px;line-height:20px;'><span class='od_qi'>"+data.data[i].new_type+data.data[i]['order_qi']+"期</span><span ><span class='od_num'>"+a+"</span>注<span class='od_num'>"+d+"</span>元<span class='od_num'>"+c+"</span>倍</span><div class='clear'></div></dt><dt style='height:30px;line-height:30px;'><span></span><span>"+data.data[i]['user_mobile']+"</span><span style='padding:0px 6px;'>"+x+"</span><div class='clear'></div></dt></div><div class='od_listr'><dt class='choose cp'>出票</dt></div><input type='hidden' value='"+data.data[i]['id']+"'></div></div></div>";
+							 			
+							 			jQuery('.dont_order').append(b);
+							 			jQuery('.dont_num').text(jQuery('.dont_n').length);
+							 			
+							 		}
+							 		
+							 		
+							 		
+							 		if(data.data[i].read_status==2){							 			
+							 			var a='';
+							 			var b='';
+							 			var c='';
+							 			var d='';
+							 			var x='';
+							 			a=data.data[i].order_z;
+							 			c=data.data[i].order_b;
+							 			d=data.data[i].order_money;
+							 			if(data.data[i].order_type==1){
+							 				x='自行取票';
+							 			}else if(data.data[i].order_type==2){
+							 				x='代管代兑';
+							 			}
+							 			/*console.log(data.data[i].length);*/
+							 			//console.log(arr);
+							 			
+							 			b+="<div class='od_a end_n'><div class='od_b'><div class='od_c'><div class='od_list1'><dt style='height:20px;line-height:20px;'><span class='od_qi'>"+data.data[i].new_type+data.data[i]['order_qi']+"期</span><span ><span class='od_num'>"+a+"</span>注<span class='od_num'>"+d+"</span>元<span class='od_num'>"+c+"</span>倍</span><div class='clear'></div></dt><dt style='height:30px;line-height:30px;'><span></span><span>"+data.data[i]['user_mobile']+"</span><span style='padding:0px 6px;'>"+x+"</span><div class='clear'></div></dt></div><div class='od_listr'><dt class=' end_cp'>已出票</dt></div><input type='hidden' value='"+data.data[i]['id']+"'></div></div></div>";
+							 			
+							 			jQuery('.end_order').append(b);
+							 			jQuery('.end_num').text(jQuery('.end_n').length);
+							 			
+							 		}
+							 		
+							 		
+							 		
+							 		if(data.data[i].status==7){							 			
+							 			var a='';
+							 			var b='';
+							 			var c='';
+							 			var d='';
+							 			var x='';
+							 			a=data.data[i].order_z;
+							 			c=data.data[i].order_b;
+							 			d=data.data[i].order_money;
+							 			if(data.data[i].order_type==1){
+							 				x='自行取票';
+							 			}else if(data.data[i].order_type==2){
+							 				x='代管代兑';
+							 			}
+							 			/*console.log(data.data[i].length);*/
+							 			//console.log(arr);
+							 			
+							 			b+="<div class='od_a epj_n'><div class='od_b'><div class='od_c'><div class='od_list1'><dt style='height:20px;line-height:20px;'><span class='od_qi'>"+data.data[i].new_type+data.data[i]['order_qi']+"期</span><span ><span class='od_num'>"+a+"</span>注<span class='od_num'>"+d+"</span>元<span class='od_num'>"+c+"</span>倍</span><div class='clear'></div></dt><dt style='height:30px;line-height:30px;'><span></span><span>"+data.data[i]['user_mobile']+"</span><span style='padding:0px 6px;'>"+x+"</span><div class='clear'></div></dt></div><div class='od_listr'><dt class='end_cp'>已派奖</dt></div><input type='hidden' value='"+data.data[i]['id']+"'></div></div></div>";
+							 			
+							 			jQuery('.epj_order').append(b);
+							 			jQuery('.epj_num').text(jQuery('.epj_n').length);
+							 			
+							 		}
+							 	}
+							 	//去掉最后一个横线
+							jQuery('.dont_order').children().last().css('border','none');
+							jQuery('.wait_order').children().last().css('border','none');
+							jQuery('.end_order').children().last().css('border','none');
+							jQuery('.pj_order').children().last().css('border','none');
+							 	
+							},
+							 
+		
+						
+							  error:function(xhr,type,errorThrown){
+							    //异常处理；
+//							    console.log(type);
+								  switch (type) {
+									  case "timeout":
+										  mui.toast('连接超时，请重试');
+										  break;
+									  default:
+										  mui.toast('请重试或重新登录');
+								  }
+					}
+							  
+					
+			});
+			
+			
+			
+				}
+				//接单处理
+				jQuery(document).on('tap','.jd',function(){
+					var shopid=window.localStorage.getItem('shopid');
+					shop_check(shopid);
+					var order_id=jQuery(this).parent().next().val();
+					
+					var dont_num=parseInt(jQuery('.dont_num').text());
+					var wait_num=parseInt(jQuery('.wait_num').text());
+					jQuery(this).parent().parent().parent().parent().remove();
+					jQuery('.dont_num').text(dont_num+1);
+					jQuery('.wait_num').text(wait_num-1);
+					 mui.ajax(config[0].url+'/index.php/jd_order',{
+							  data:{order_id:order_id,
+							  },
+							  dataType:'json',//服务器返回json格式数据
+							  type:'post',//HTTP请求类型
+							  timeout:10000,//超时时间设置为10秒；
+							  success:function(data){
+							    if(typeof data == "string") {var data = eval('('+data+')');}
+								
+							  	/*console.log(data);*/
+										var a='';
+							 			var b='';
+							 			var c='';
+							 			var d='';
+							 			a=data.data[0].order_z;
+							 			c=data.data[0].order_b;
+							 			d=data.data[0].order_money;
+							 			
+							 			
+							 			b="<div class='od_a dont_n'><div class='od_b'><div class='od_c'><div class='od_list1'><dt style='height:20px;line-height:20px;'><span class='od_qi'>"+data.data[0].new_type+data.data[0]['order_qi']+"期</span><span ><span class='od_num'>"+a+"</span>注<span class='od_num'>"+d+"</span>元<span class='od_num'>"+c+"</span>倍</span><div class='clear'></div></dt><dt style='height:30px;line-height:30px;'><span></span><span>"+data.data[0]['user_mobile']+"</span><span style='padding:0px 6px;'>代管代兑</span><div class='clear'></div></dt></div><div class='od_listr'><dt class='choose cp'>出票</dt></div><input type='hidden' value='"+data.data[0]['id']+"'></div></div></div>";
+							 			
+							 			jQuery('.dont_order').prepend(b);
+							 			
+							 			
+		
+						},
+							  error:function(xhr,type,errorThrown){
+							    //异常处理；
+//							    console.log(type);
+								  switch (type) {
+									  case "timeout":
+										  mui.toast('连接超时，请重试');
+										  break;
+									  default:
+										  mui.toast('请重试或重新登录');
+								  }
+					}
+
+			});
+			
+				
+				  mui.ajax(config[0].url+'/index.php/orderlog',{
+				    data:{
+				      order_id:order_id,order_status:'02',value:'15分钟不出票可催单',
+				    },
+				    dataType:'json',//服务器返回json格式数据
+				    type:'post',//HTTP请求类型
+				    timeout:10000,//超时时间设置为10秒；
+				    success:function(data){
+				      if(typeof data == "string") {
+				        var data = eval('('+data+')');
+				      }
+				    },
+				    error:function(xhr,type,errorThrown){
+				      //异常处理；
+				     // console.log(type);
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+				    }
+				  });
+				  
+				  
+					mui.ajax(config[0].url+'/index.php/cp_status',{
+					    data:{
+					      order_id:order_id,status:'02',biaoshi:'1',
+					    },
+					    dataType:'json',//服务器返回json格式数据
+					    type:'post',//HTTP请求类型
+					    timeout:10000,//超时时间设置为10秒；
+					    success:function(data){
+					     
+					    },
+					    error:function(xhr,type,errorThrown){
+					      //异常处理；
+//					      console.log(type);
+							switch (type) {
+								case "timeout":
+									mui.toast('连接超时，请重试');
+									break;
+								default:
+									mui.toast('请重试或重新登录');
+							}
+					    }
+					  });
+				  
+				  
+				})
+
+
+			//出票跳转传值
+		jQuery(document).on('tap','.cp',function(){
+			var shopid=window.localStorage.getItem('shopid');
+			shop_check(shopid);
+			var order_id=jQuery(this).parent().next().val();
+			window.localStorage.setItem('cp_id',order_id);
+			window.localStorage.setItem('cp_sta',1);
+			mui.openWindow({
+			    url: 'cp_upload.html', 
+			    id:'cp_upload',
+			    createNew:true
+			});
+				  
+						
+		})
+		
+		 //数字匹配
+		    function numm(obj){   
+		           
+		        reg=/^([0-9])+$/;    
+		        if(!reg.test(obj)){   
+		           return false;
+		        }else{   
+		           return true;   
+		        }   
+		    }   
+		
+		//检索订单号
+		$(document).on('tap','.search',function(){
+			var order_num=$('.wt').val();
+			var shopid=window.localStorage.getItem('shopid');
+			if(numm(order_num)){
+				mui.ajax(config[0].url+'/index.php/serach_orderid',{
+				    data:{
+				      order_num:order_num,shopid:shopid,
+				    },
+				    dataType:'json',//服务器返回json格式数据
+				    type:'post',//HTTP请求类型
+				    timeout:10000,//超时时间设置为10秒；
+				    success:function(data){
+				     	if(data){
+				     		window.localStorage.setItem('cp_id',data);		
+							mui.openWindow({
+							    url: 'order_detail.html', 
+							    id:'order_detail',
+							    createNew:true
+							});
+				     	}else{
+				     		mui.toast('该订单不存在');
+				     	}
+				    },
+				    error:function(xhr,type,errorThrown){
+				      //异常处理；
+				      console.log(type);
+				    }
+				});
+			}else{
+				mui.toast('请输入正确的订单号');
+			}
+			
+		})
+
+
+
+
+		//查看订单详情
+		jQuery(document).on('tap','.od_list1',function(){
+			var shopid=window.localStorage.getItem('shopid');
+			var oid=jQuery(this).next().next().val();
+			//window.localStorage.setItem('cp_id','');
+			window.localStorage.setItem('cp_id',oid);
+			//var html='order_detail.html';
+			//mui.alert(oid)
+			//shop_check(shopid,html);
+			
+			//window.location.href='order_detail.html?oid='.oid;
+					
+					mui.openWindow({
+					    url: 'order_detail.html', 
+					    id:'order_detail',
+					    createNew:true
+					});
+		})
+		
+		//派奖跳转
+		jQuery(document).on('tap','.pj',function(){
+			var shopid=window.localStorage.getItem('shopid');
+			shop_check(shopid);
+			var order_id=jQuery(this).parent().next().val();
+			window.localStorage.setItem('cp_id',order_id);
+			window.localStorage.setItem('cp_sta',1);
+			mui.openWindow({
+			    url: 'pj_detail.html', 
+			    id:'pj_detail',
+			    createNew:true
+			});
+		})
+		
+		
+		
+		
+			
+			
+				
+			function timedCount()
+				{
+					new_order();
+					t=setTimeout("timedCount()",5000);
+				}
+				timedCount();
+				//setTimeout("timedCount()",5000);
+				//setInterval("new_order()",5000);
+				//setTimeout("timedCount()",5000);
+				//查找新的订单
+				//new_order();
+				function new_order(){
+					//mui.alert(1212);
+					var shopid=window.localStorage.getItem('shopid');
+					mui.ajax(config[0].url+'/index.php/new_order',{
+					    data:{
+					     shopid:shopid,
+					    },
+					    dataType:'json',//服务器返回json格式数据
+					    type:'post',//HTTP请求类型
+					    timeout:10000,//超时时间设置为10秒；
+					    success:function(data){
+					      if(typeof data == "string"){var data = eval('('+data+')');}
+					     console.log(data);
+					     //alert(data)
+					      	if(data.data!=false){
+					      		var dlen=data.data.length;
+					      		
+							 	for(var i=0;i<dlen;i++){
+							 		if(data.data[i].type=='01'){
+							 			var c_type='大乐透';
+							 		}else if(data.data[i].type=='02'){
+							 			var c_type='七星彩';
+							 		}else if(data.data[i].type=='03'){
+							 			var c_type='排三';
+							 		}else if(data.data[i].type=='04'){
+							 			var c_type='排五';
+							 		}
+							 		if(data.data[i].read_status==1){							 			
+							 			var a='';
+							 			var b='';
+							 			var c='';
+							 			var d='';
+							 			a=data.data[i].order_z;
+							 			c=data.data[i].order_b;
+							 			d=data.data[i].order_money;
+							 			/*console.log(data.data[i].length);*/
+							 			//console.log(arr);
+							 			
+							 			b+="<div class='od_a wait_n'><div class='od_b'><div class='od_c'><div class='od_list1'><dt style='height:20px;line-height:20px;'><span class='od_qi'>"+c_type+data.data[i]['order_qi']+"期</span><span ><span class='od_num'>"+a+"</span>注<span class='od_num'>"+d+"</span>元<span class='od_num'>"+c+"</span>倍</span><div class='clear'></div></dt><dt style='height:30px;line-height:30px;'><span></span><span>"+data.data[i]['user_mobile']+"</span><span style='padding:0px 6px;'>代管代兑</span><div class='clear'></div></dt></div><div class='od_listr'><dt class='choose jd'>接单</dt></div><input type='hidden' value='"+data.data[i]['id']+"'></div></div></div>";
+							 			/*console.log(b);*/
+							 			
+							 			
+							 		}
+							 			jQuery('.wait_order').append(b);
+							 			//alert(333)
+							 			jQuery('.wait_num').text(jQuery('.wait_n').length);
+							 	}
+					      				
+					      				
+					      	}
+
+					       				
+					 		
+					    },
+					    error:function(xhr,type,errorThrown){
+					      //异常处理；
+//					      console.log(type);
+							switch (type) {
+								case "timeout":
+									mui.toast('连接超时，请重试');
+									break;
+								default:
+									mui.toast('请重试或重新登录');
+							}
+					    }
+					  });
+				}
+				
+				
+				
+				
+				
+		</script>
+		
+		<script type="text/javascript" charset="utf-8">
+			/* //mui初始化
+			mui.init();
+			var subpages = ['tab-webview-subpage-about.html', 'tab-webview-subpage-chat.html', 'tab-webview-subpage-contact.html', 'tab-webview-subpage-setting.html'];
+			var subpage_style = {
+				top: '45px',
+				bottom: '51px'
+			};
+			
+			var aniShow = {};
+			
+			 //创建子页面，首个选项卡页面显示，其它均隐藏；
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				for (var i = 0; i < 4; i++) {
+					var temp = {};
+					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+					if (i > 0) {
+						sub.hide();
+					}else{
+						temp[subpages[i]] = "true";
+						mui.extend(aniShow,temp);
+					}
+					self.append(sub);
+				}
+			});*/
+			/* //当前激活选项
+			var activeTab = subpages[0];
+			var title = document.getElementById("title");
+			 //选项卡点击事件
+			mui('.mui-bar-tab').on('tap', 'a', function(e) {
+				var targetTab = this.getAttribute('href');
+				if (targetTab == activeTab) {
+					return;
+				}
+				//更换标题
+				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+				//显示目标选项卡
+				//若为iOS平台或非首次显示，则直接显示
+				if(mui.os.ios||aniShow[targetTab]){
+					plus.webview.show(targetTab);
+				}else{
+					//否则，使用fade-in动画，且保存变量
+					var temp = {};
+					temp[targetTab] = "true";
+					mui.extend(aniShow,temp);
+					plus.webview.show(targetTab,"fade-in",300);
+				}
+				//隐藏当前;
+				plus.webview.hide(activeTab);
+				//更改当前活跃的选项卡
+				activeTab = targetTab;
+			});*/
+			/* //自定义事件，模拟点击“首页选项卡”
+			document.addEventListener('gohome', function() {
+				var defaultTab = document.getElementById("defaultTab");
+				//模拟首页点击
+				mui.trigger(defaultTab, 'tap');
+				//切换选项卡高亮
+				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+				if (defaultTab !== current) {
+					current.classList.remove('mui-active');
+					defaultTab.classList.add('mui-active');
+				}
+			});*/
+		</script>
+	</body>
+
+</html>

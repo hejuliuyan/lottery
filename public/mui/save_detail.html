@@ -1,0 +1,618 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="format-detection" content="telephone=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/save_detail.css" rel="stylesheet"/>
+		<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<script src="js/jquery-latest.js"></script>
+	</head>
+	<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+	    <h1 class="mui-title">方案内容</h1>
+	</header>
+	<nav class='mui-bar mui-bar-tab' >
+		<button type="button" class="mui-btn mui-btn-red sub_save">提交投注</button>
+	</nav>
+	<div class="mui-content main_con">
+	   <!-- <div class="cp_list_num">
+	    	<div class='list_left'>
+	    		<dt class='cp_title tz_num'>大乐透</dt>
+	    		<dt class='l_font'><span class='f_red'>34</span>&nbsp;&nbsp;注&nbsp;&nbsp;<span class='f_red'>100</span>&nbsp;&nbsp;倍&nbsp;&nbsp;<span>追加</span></dt>
+	    	</div>
+	    	<div class='list_right'>
+	    		<span class='f_red'>9000</span>&nbsp;元
+	    	</div>
+	    	<div class='clear'></div>
+	    </div>-->
+	     <div class="cp_list_num">
+	    	<div class='cp_title tz_num'>投注号码</div>
+	    	<div class='clear'></div>
+	    	<div class='cp_numm'>
+	    	</div>
+	    </div>
+	</div>
+	</body>
+	<script src="js/tk_check.js"></script>
+	<script type="text/javascript">
+		//var url = window.location.search;
+    	//var id = url.substring(url.lastIndexOf('=')+1, url.length);
+    	var userid=window.localStorage.getItem('token');
+    	var id=window.localStorage.getItem('save_id');
+    	mui.ajax(config[0].url+'/index.php/save_detail',{
+		 	data:{
+		  		id:id,
+		  	},
+		  	dataType:'json',//服务器返回json格式数据
+		  	type:'post',//HTTP请求类型
+		  	timeout:10000,//超时时间设置为10秒；
+		  	success:function(data){
+			    if(typeof data == "string") {var data = eval('('+data+')');}
+			 	//console.log(data);
+			 	var a='';
+			 	var brr=[];
+				var brr=['大乐透','七星彩','排三·直选','排三·组三','排三·组六','排三·直选复式胆拖','排五','排三·和值·直选','排三·和值·组三','排三·和值·组六'];
+			 	a="<div class='cp_list_num'><div class='list_left'><dt class='cp_title tz_num'>"+brr[data[0].new_type]+"</dt><dt class='l_font'><span class='f_red'>"+data[0].save_z+"</span>&nbsp;&nbsp;注&nbsp;&nbsp;<span class='f_red'>"+data[0].save_b+"</span>&nbsp;&nbsp;倍&nbsp;&nbsp;<span class='zj'>追加</span></dt></div><div class='list_right'><span class='f_red'>"+data[0].save_money+"</span>&nbsp;元</div><div class='clear'></div></div>";
+			 	$('.main_con').prepend(a);
+			 	if(data[0].save_add==0){
+			 		$('.zj').hide();
+			 	}
+			 	
+			 	
+		  	},
+		  	error:function(xhr,type,errorThrown){
+			  	//异常处理；
+//			    console.log(type);
+				switch (type) {
+					case "timeout":
+						mui.toast('连接超时，请重试');
+						break;
+					default:
+						mui.toast('请重试或重新登录');
+				}switch (type) {
+					case "timeout":
+						mui.toast('连接超时，请重试');
+						break;
+					default:
+						mui.toast('请重试或重新登录');
+				}
+			}
+		});
+		
+		mui.ajax(config[0].url+'/index.php/save_detail_num',{
+		 	data:{
+		  		id:id,
+		  	},
+		  	dataType:'json',//服务器返回json格式数据
+		  	type:'post',//HTTP请求类型
+		  	timeout:10000,//超时时间设置为10秒；
+		  	success:function(data){
+			    if(typeof data == "string") {var data = eval('('+data+')');}
+			 	console.log(data);
+			 	if(data.data[0].type=='01'){
+			 				var arr=[];
+							  var brr=[];
+							  
+							  for(var i=0;i<data.data.length;i++){
+							  		var a='';
+									var b='';
+									var c='';
+										
+							  		brr[i]=data.data[i].num.split('|');
+							  		/*drr=brr[i][0];*/
+							  		if(brr[i][0].indexOf(';') == -1 && brr[i][1].indexOf(';') == -1 ){
+							  				var crr=[];
+							  				var drr=[];
+							  				/*console.log(brr[i][0]);*/
+							  				crr=brr[i][0].split(',');
+							  				drr=brr[i][1].split(',');
+							  				
+							  				var a='';
+											var b='';
+											var c='';
+											
+																    
+											for(var j=1;j<=crr.length;j++){
+													a+="<div class='choose_rball rxq'>"+crr[j-1]+"<input class='choose_h1' type='hidden' value="+crr[j-1]+"></div>";																							
+												}
+													
+											for(var h=1;h<=drr.length;h++){														
+													b+="<div class='choose_bball bxq'>"+drr[h-1]+"<input class='choose_h2' type='hidden' value="+drr[h-1]+"></div>";																							
+													}					
+											
+											c="<div class='cp_num'>"+a+b+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(c);
+											
+							  		}
+							  		
+							  		if(brr[i][0].indexOf(';')>-1 && brr[i][1].indexOf(';') == -1){
+							  				var crr=[];
+							  				var drr=[];
+							  				var err=[];
+							  				var grr=[];
+							  				console.log(brr[i]);
+							  				console.log(brr[i][0]);
+							  				crr=brr[i][0].split(';');
+							  				console.log(crr);
+							  				grr=crr.pop().split(',');
+							  				console.log(grr);
+							  				//err=crr.split(';');
+							  				console.log(crr);
+							  				drr=brr[i][1].split(',');
+							  				
+							  				
+									  		var b='';
+											var a='';
+											var c='';
+											var d='';
+											var e='';
+											var f='';
+											var g='';
+											for( var j=0;j<crr.length;j++){
+													a+="<div class='choose_rball rxd rd'>"+crr[j]+"<input class='choose_h1' type='hidden' value="+crr[j]+"></div>";
+					}
+					a="<div style='float:left'>[胆:</div>"+a+"<div style='float:left'>]</div>";
+													
+											for(var h=0;h<grr.length;h++){														
+													b+="<div class='choose_rball rxq'>"+grr[h]+"<input class='choose_h1' type='hidden' value="+grr[h]+"></div>";																							
+													}
+											
+											for(var k=0;k<drr.length;k++){
+													d+="<div class='choose_bball bxq'>"+drr[k]+"<input class='choose_h2' type='hidden' value="+drr[k]+"></div>";	
+											}
+											
+											c="<div class='cp_num'>"+a+b+d+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(c);
+							  				
+							  		}
+							  		
+							  		
+							  		if(brr[i][0].indexOf(';') == -1 && brr[i][1].indexOf(';') >-1){
+							  				var crr=[];
+							  				var drr=[];
+							  				var grr=[];
+							  				/*console.log(brr[i][0]);*/
+							  				crr=brr[i][0].split(',');
+							  				drr=brr[i][1].split(';');
+							  				grr=drr.pop().split(',');
+							  				
+							  				var a='';
+											var b='';
+											var c='';
+											var d='';
+											
+											
+																    
+											for(var j=0;j<crr.length;j++){
+													a+="<div class='choose_rball rxq'>"+crr[j]+"<input class='choose_h1' type='hidden' value="+crr[j]+"></div>";																							
+												}
+											
+											for( var h=0;h<drr.length;h++){
+													b+="<div class='choose_bball bxd bd'>"+drr[h]+"<input class='choose_h2' type='hidden' value="+drr[h]+"></div>";
+					}
+					b="<div style='float:left'>[胆:</div>"+b+"<div style='float:left'>]</div>";
+											
+											for(var k=0;k<grr.length;k++){
+													d+="<div class='choose_bball bxq'>"+grr[k]+"<input class='choose_h1' type='hidden' value="+grr[k]+"></div>";	
+											
+							  		}
+							  		
+							  				c="<div class='cp_num'>"+a+b+d+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(c);
+							  	
+							  	}
+							  		
+							  		if(brr[i][0].indexOf(';') > -1 && brr[i][1].indexOf(';') >-1){
+							  				var crr=[];
+							  				var drr=[];
+							  				var grr=[];
+							  				var err=[];
+							  				/*console.log(brr[i][0]);*/
+							  				crr=brr[i][0].split(';');
+							  				drr=brr[i][1].split(';');
+							  				grr=drr.pop().split(',');
+							  				err=crr.pop().split(',');
+							  				
+							  				var a='';
+											var b='';
+											var c='';
+											var d='';
+											var e='';
+											
+											for( var p=0;p<crr.length;p++){
+													e+="<div class='choose_rball rxd rd' >"+crr[p]+"<input class='choose_h1' type='hidden' value="+crr[p]+"></div>";
+					}
+					e="<div style='float:left'>[胆:</div>"+e+"<div style='float:left'>]</div>";
+											
+																    
+											for(var j=0;j<err.length;j++){
+													a+="<div class='choose_rball rxq'>"+err[j]+"<input class='choose_h1' type='hidden' value="+err[j]+"></div>";																							
+												}
+											
+											for( var h=0;h<drr.length;h++){
+													b+="<div class='choose_bball bxd bd'>"+drr[h]+"<input class='choose_h2' type='hidden' value="+drr[h]+"></div>";
+					}
+					b="<div style='float:left'>[胆:</div>"+b+"<div style='float:left'>]</div>";
+											
+											for(var k=0;k<grr.length;k++){
+													d+="<div class='choose_bball bxq'>"+grr[k]+"<input class='choose_h1' type='hidden' value="+grr[k]+"></div>";	
+											
+							  		}
+							  		
+							  				c="<div class='cp_num'>"+e+a+b+d+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(c);
+							  		}
+							  		
+							  }
+							}else if(data.data[0].type=='03'){
+							 	if(data.data[0].tz_type==0){
+							 		var a='';
+								 	var b='';
+								 	var c='';
+								 	var d='';
+								 	var e='';
+								 	var f="<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+								 	var arr=[];							  
+								  	for(var i=0;i<data.data.length;i++){
+								  		arr[i]=data.data[i].num.split('|');
+								  		console.log(arr);
+								  		if(arr[i][0].indexOf(',') > -1){
+								  			var brr=[];
+								  			brr=arr[i][0].split(',');
+								  			
+								  			for(var j=1;j<=brr.length;j++){
+												a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+											}
+								  		}else if(arr[i][0].indexOf(',') == -1){							  			
+												a="<div class='choose_rball rxq'>"+arr[i][0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][1].indexOf(',') > -1){
+								  			var crr=[];
+								  			crr=arr[i][1].split(',');
+								  			
+								  			for(var k=1;k<=crr.length;k++){
+												b+="<div class='choose_rball rxq'>"+crr[k-1]+"<input class='choose_h1' type='hidden' value="+crr[k-1]+"></div>";																							
+											}
+								  		}else if(arr[i][1].indexOf(',') == -1){							  			
+												b="<div class='choose_rball rxq'>"+arr[i][1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][2].indexOf(',') > -1){
+								  			var drr=[];
+								  			drr=arr[i][2].split(',');
+								  			
+								  			for(var h=1;h<=drr.length;h++){
+												c+="<div class='choose_rball rxq'>"+drr[h-1]+"<input class='choose_h1' type='hidden' value="+drr[h-1]+"></div>";																							
+											}
+								  		}else if(arr[i][2].indexOf(',') == -1){							  			
+												c="<div class='choose_rball rxq'>"+arr[i][2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";																							
+											
+								  		}
+								  		
+								  		e="<div class='cp_num'>"+a+f+b+f+c+"<div class='clear'></div></div>";
+										jQuery('.cp_numm').append(e);
+								  		
+								  		
+								  	}
+							  	
+								
+								}else if(data.data[0].tz_type==1 || data.data[0].tz_type==2 || data.data[0].tz_type==3 ){
+					 									  
+								  	for(var i=0;i<data.data.length;i++){
+								  		var a='';
+									 	var b='';
+									 	var c='';
+									 	var d='';
+									 	var e='';	
+								  		if(data.data[i].num.indexOf(';')==-1){
+								  			var brr=[];
+								  			brr=data.data[i].num.split(',');
+								  			console.log(brr);
+								  			for(var j=1;j<=brr.length;j++){
+												a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+											}
+								  			e="<div class='cp_num'>"+a+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(e);
+								  		}
+								  		
+								  		if(data.data[i].num.indexOf(';')>-1){
+							  				var drr=[];
+							  				var crr=[];
+							  				var grr=[];
+								  			crr=data.data[i].num.split(';');
+								  			console.log(crr);
+								  			grr=crr.pop().split(',');
+								  			console.log(grr);
+								  			console.log(crr);
+								  			
+								  			for( var p=0;p<crr.length;p++){
+													a+="<div class='choose_rball rxd rd'>"+crr[p]+"<input class='choose_h1' type='hidden' value="+crr[p]+"></div>";
+					}
+					a="<div style='float:left'>[胆:</div>"+a+"<div style='float:left'>]</div>";
+													
+											for(var h=0;h<grr.length;h++){														
+													b+="<div class='choose_rball rxq'>"+grr[h]+"<input class='choose_h1' type='hidden' value="+grr[h]+"></div>";																							
+													}
+								  			
+								  			e="<div class='cp_num'>"+a+b+"<div class='clear'></div></div>";
+											jQuery('.cp_numm').append(e);
+								  			
+							  			
+							  				
+								  		}
+	
+								  	}
+							 	}else if(data.data[0].tz_type == 4 || data.data[0].tz_type == 5 || data.data[0].tz_type == 6){
+				                	var a = '';
+				                    var b = '';
+				                    var c = '';
+				                    var d = '';
+				                    var e = '';
+				                    var f = "<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+				                    
+				                    for (var i = 0; i < data.data.length; i++) {
+				                    	var a = '';
+				                    	var arr = [];
+				                        arr = data.data[i].num.split(',');
+				                        for(var zz=0;zz<arr.length;zz++){
+				                        	a += "<div class='choose_rball rxq'>" + arr[zz] + "<input class='choose_h1' type='hidden' value=" + arr[zz] + "></div>";
+				                        
+				                        	
+					                    }
+				                        
+				                         e = "<div class='cp_num'>" + a +"<div class='clear'></div></div>";
+					                     jQuery('.cp_numm').append(e);
+				                        
+				               		 }
+				                    console.log(arr.length);
+				                   
+								}
+							}else if(data.data[0].type=='04'){
+								
+							 		var a='';
+								 	var b='';
+								 	var c='';
+								 	var d='';
+								 	var e='';
+								 	var g='';
+								 	var m='';
+								 	var f="<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+								 	var arr=[];							  
+								  	for(var i=0;i<data.data.length;i++){
+								  		arr[i]=data.data[i].num.split('|');
+								  		console.log(arr);
+								  		if(arr[i][0].indexOf(',') > -1){
+								  			var brr=[];
+								  			brr=arr[i][0].split(',');
+								  			
+								  			for(var j=1;j<=brr.length;j++){
+												a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+											}
+								  		}else if(arr[i][0].indexOf(',') == -1){							  			
+												a="<div class='choose_rball rxq'>"+arr[i][0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][1].indexOf(',') > -1){
+								  			var crr=[];
+								  			crr=arr[i][1].split(',');
+								  			
+								  			for(var k=1;k<=crr.length;k++){
+												b+="<div class='choose_rball rxq'>"+crr[k-1]+"<input class='choose_h1' type='hidden' value="+crr[k-1]+"></div>";																							
+											}
+								  		}else if(arr[i][1].indexOf(',') == -1){							  			
+												b="<div class='choose_rball rxq'>"+arr[i][1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][2].indexOf(',') > -1){
+								  			var drr=[];
+								  			drr=arr[i][2].split(',');
+								  			
+								  			for(var h=1;h<=drr.length;h++){
+												c+="<div class='choose_rball rxq'>"+drr[h-1]+"<input class='choose_h1' type='hidden' value="+drr[h-1]+"></div>";																							
+											}
+								  		}else if(arr[i][2].indexOf(',') == -1){							  			
+												c="<div class='choose_rball rxq'>"+arr[i][2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][3].indexOf(',') > -1){
+								  			var err=[];
+								  			err=arr[i][3].split(',');
+								  			
+								  			for(var p=1;p<=err.length;p++){
+												g+="<div class='choose_rball rxq'>"+err[p-1]+"<input class='choose_h1' type='hidden' value="+err[p-1]+"></div>";																							
+											}
+								  		}else if(arr[i][3].indexOf(',') == -1){							  			
+												g="<div class='choose_rball rxq'>"+arr[i][3]+"<input class='choose_h1' type='hidden' value="+arr[3]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][4].indexOf(',') > -1){
+								  			var grr=[];
+								  			grr=arr[i][4].split(',');
+								  			
+								  			for(var u=1;u<=grr.length;u++){
+												m+="<div class='choose_rball rxq'>"+grr[u-1]+"<input class='choose_h1' type='hidden' value="+grr[u-1]+"></div>";																							
+											}
+								  		}else if(arr[i][4].indexOf(',') == -1){							  			
+												m="<div class='choose_rball rxq'>"+arr[i][4]+"<input class='choose_h1' type='hidden' value="+arr[4]+"></div>";																							
+											
+								  		}
+								  		
+								  		e="<div class='cp_num'>"+a+f+b+f+c+f+g+f+m+"<div class='clear'></div></div>";
+										jQuery('.cp_numm').append(e);
+								  		
+								  		
+								  	}
+							}else if(data.data[0].type=='02'){
+								
+							 		var a='';
+								 	var b='';
+								 	var c='';
+								 	var d='';
+								 	var e='';
+								 	var g='';
+								 	var m='';
+								 	var n='';
+								 	var f="<div style='float: left;width: 9px;height: 21px;text-align: center;color: gray;margin-left: 5px;'>|</div>";
+								 	var arr=[];							  
+								  	for(var i=0;i<data.data.length;i++){
+								  		arr[i]=data.data[i].num.split('|');
+								  		console.log(arr);
+								  		if(arr[i][0].indexOf(',') > -1){
+								  			var brr=[];
+								  			brr=arr[i][0].split(',');
+								  			
+								  			for(var j=1;j<=brr.length;j++){
+												a+="<div class='choose_rball rxq'>"+brr[j-1]+"<input class='choose_h1' type='hidden' value="+brr[j-1]+"></div>";																							
+											}
+								  		}else if(arr[i][0].indexOf(',') == -1){							  			
+												a="<div class='choose_rball rxq'>"+arr[i][0]+"<input class='choose_h1' type='hidden' value="+arr[0]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][1].indexOf(',') > -1){
+								  			var crr=[];
+								  			crr=arr[i][1].split(',');
+								  			
+								  			for(var k=1;k<=crr.length;k++){
+												b+="<div class='choose_rball rxq'>"+crr[k-1]+"<input class='choose_h1' type='hidden' value="+crr[k-1]+"></div>";																							
+											}
+								  		}else if(arr[i][1].indexOf(',') == -1){							  			
+												b="<div class='choose_rball rxq'>"+arr[i][1]+"<input class='choose_h1' type='hidden' value="+arr[1]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][2].indexOf(',') > -1){
+								  			var drr=[];
+								  			drr=arr[i][2].split(',');
+								  			
+								  			for(var h=1;h<=drr.length;h++){
+												c+="<div class='choose_rball rxq'>"+drr[h-1]+"<input class='choose_h1' type='hidden' value="+drr[h-1]+"></div>";																							
+											}
+								  		}else if(arr[i][2].indexOf(',') == -1){							  			
+												c="<div class='choose_rball rxq'>"+arr[i][2]+"<input class='choose_h1' type='hidden' value="+arr[2]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][3].indexOf(',') > -1){
+								  			var err=[];
+								  			err=arr[i][3].split(',');
+								  			
+								  			for(var p=1;p<=err.length;p++){
+												g+="<div class='choose_rball rxq'>"+err[p-1]+"<input class='choose_h1' type='hidden' value="+err[p-1]+"></div>";																							
+											}
+								  		}else if(arr[i][3].indexOf(',') == -1){							  			
+												g="<div class='choose_rball rxq'>"+arr[i][3]+"<input class='choose_h1' type='hidden' value="+arr[3]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][4].indexOf(',') > -1){
+								  			var grr=[];
+								  			grr=arr[i][4].split(',');
+								  			
+								  			for(var u=1;u<=grr.length;u++){
+												m+="<div class='choose_rball rxq'>"+grr[u-1]+"<input class='choose_h1' type='hidden' value="+grr[u-1]+"></div>";																							
+											}
+								  		}else if(arr[i][4].indexOf(',') == -1){							  			
+												m="<div class='choose_rball rxq'>"+arr[i][4]+"<input class='choose_h1' type='hidden' value="+arr[4]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][5].indexOf(',') > -1){
+								  			var hrr=[];
+								  			hrr=arr[i][5].split(',');
+								  			
+								  			for(var x=1;x<=hrr.length;x++){
+												d+="<div class='choose_rball rxq'>"+hrr[x-1]+"<input class='choose_h1' type='hidden' value="+hrr[x-1]+"></div>";																							
+											}
+								  		}else if(arr[i][5].indexOf(',') == -1){							  			
+												d="<div class='choose_rball rxq'>"+arr[i][5]+"<input class='choose_h1' type='hidden' value="+arr[5]+"></div>";																							
+											
+								  		}
+								  		
+								  		if(arr[i][6].indexOf(',') > -1){
+								  			var trr=[];
+								  			trr=arr[i][6].split(',');
+								  			
+								  			for(var z=1;z<=trr.length;z++){
+												n+="<div class='choose_rball rxq'>"+trr[z-1]+"<input class='choose_h1' type='hidden' value="+trr[z-1]+"></div>";																							
+											}
+								  		}else if(arr[i][6].indexOf(',') == -1){							  			
+												n="<div class='choose_rball rxq'>"+arr[i][6]+"<input class='choose_h1' type='hidden' value="+arr[6]+"></div>";																							
+											
+								  		}
+								  		
+								  		e="<div class='cp_num'>"+a+f+b+f+c+f+g+f+m+f+d+f+n+"<div class='clear'></div></div>";
+										jQuery('.cp_numm').append(e);
+								  		
+								  		
+								  	}
+								}
+			 	
+			 	
+		  	},
+		  	error:function(xhr,type,errorThrown){
+			  	//异常处理；
+//			    console.log(type);
+				switch (type) {
+					case "timeout":
+						mui.toast('连接超时，请重试');
+						break;
+					default:
+						mui.toast('请重试或重新登录');
+				}
+			}
+		});
+		
+		
+		$(document).on('tap','.bk',function(){
+			/*var html='save_case_main.html';
+    		token_check(userid,html);*/
+    		mui.plusReady(function () {
+				var web=plus.webview.getWebviewById('save_case_main.html');
+	        	web.show();
+				             
+        	});
+			/*mui.openWindow({
+				url:'save_case_main.html'
+			})*/
+		})
+		
+		$(document).on('tap','.sub_save',function(){
+			var type=window.localStorage.getItem('save_types');
+			if(type=='01'){
+				var html='dlt_sec.html?id='+id;
+    			token_check(userid,html);
+				//window.location.href='dlt_sec.html?id='+id;
+			}else if(type=='03'){
+				var html='p3_sec.html?id='+id;
+    			token_check(userid,html);
+				//window.location.href='p3_sec.html?id='+id;
+			}else if(type=='04'){
+				var html='p5_sec.html?id='+id;
+    			token_check(userid,html);
+				//window.location.href='p5_sec.html?id='+id;
+			}else if(type=='02'){
+				var html='qxc_sec.html?id='+id;
+    			token_check(userid,html);
+				//window.location.href='qxc_sec.html?id='+id;
+			}
+			
+		
+		})
+	</script>
+</html>

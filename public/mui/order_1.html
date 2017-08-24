@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>提交确认</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!--标准mui.css-->
+<link rel="stylesheet" href="css/mui.min.css">
+<link rel="stylesheet" href="css/css.css">
+<style>
+body {
+	background-color: #efeff4;
+}
+
+/*.mui-bar {
+	background-color: #fff;
+	webkit-box-shadow: 0 0 0;
+	box-shadow: 0 0 0;
+}*/
+
+.mui-bar dt {
+	line-height: 34px;
+	height: 34px;
+	text-align: center;
+	border-radius: 6px;
+	margin-top: 10px;
+	font-size: 14px;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 10px;;
+}
+
+.active_r {
+    background:red;
+    color: #fff;
+}
+
+.mr{
+	background-color: red;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 4px;}
+    
+.s_right {
+    background-image: url(wimages/personal/jt_rr.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 30px;
+    background-position: center;
+    display: block;
+    /* margin-left: 2px; */
+    margin-top: 8px;
+    float: right;
+}
+</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class=" mui-icon mui-icon-left-nav mui-pull-left bck"></a>
+		<h1 class="mui-title">提交确认</h1>
+	</header>
+	<nav class="mui-bar mui-bar-tab">
+		<dt class="active_r w_but">确定下单</dt>
+	</nav>
+	<!--上部分-->
+	<section class="ord1_top">
+		<div class="ord1_top1">
+			<div class="ord1_cen">
+				<div class="ord1_xhcon">选号内容</div>
+				<div class="ord1_xhconr ord1_first">
+					<div style="float: left; width: 80%;">
+						<dt class="w_qi"></dt>
+						<dt class="w_detail"></dt>
+					</div>
+					<div style="float: left; width: 20%; height: 50px;">
+						<span class="w_money"></span>
+					</div>
+					<div style="clear: both;"></div>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+		<div class="ord1_top1">
+			<div class="ord1_cen">
+				<div class="ord1_xhcon">手机号码</div>
+				<div class="ord1_xhconr w_mobile"></div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+		<div class="ord1_top1" style="border-bottom: none;">
+			<div class="ord1_cen">
+				<div class="ord1_xhcon">取票方式</div>
+				<div class="ord1_xhconr ord1_last">
+					<dt class="active_l" data-id="1">自取</dt>
+					<dt data-id="2">代管代兑</dt>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+		<div class="ord1_top2" style='border-bottom: 1px solid lightgray'>*自行到店取票,自行兑奖</div>
+		<div class="ord1_top1">
+			<div class="ord1_cen choose_shop">
+				<div class="ord1_xhcon">提交彩店</div>
+				<div class="ord1_xhconr myshop" style='width:60%;'><span class='shop_name'></span><span class='mr'>默认</span><input type='hidden' value='' class='shopid'></div>
+				<div class='s_right'></div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+	</section>
+	<!--选择彩店-->
+	<!--<section style="margin-bottom: 50px;">
+		<dt class="ord1_dt">我的彩店</dt>
+		<div class="w_mycai1">
+			<div class="ord1_bot">
+				<div class="ord1_cen">
+					
+				</div>
+			</div>
+		</div>
+		<dt class="ord1_dt">附近彩店</dt>
+		<div class="w_mycai2">
+			
+		</div>
+	</section>-->
+	
+	<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+	<script src="js/jquery-latest.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=3N9hsSctbasaQ9cP7cATdEQOg0SDaDA3" type="text/javascript"></script>	
+	<script src="js/tk_check.js"></script>
+	<script>
+		
+		//alert(window.localStorage.getItem('shop_id'));
+		var userid = window.localStorage.getItem("token");
+		/*order_id = window.localStorage.getItem("order_id");*/
+		//nickname = window.localStorage.getItem("nickname");
+		var order_money = window.localStorage.getItem('to_money');
+		var order_z = window.localStorage.getItem('to_z');
+		var order_b = window.localStorage.getItem('to_b');
+		var order_qi = window.localStorage.getItem('order_qi');
+		var cp_hm = window.localStorage.getItem('cp_hm');
+		//var order_content = window.localStorage.getItem('order_content');
+		var type = window.localStorage.getItem('cp_types');
+		var user_mobile = window.localStorage.getItem("phone");
+		var add = window.localStorage.getItem('zjj');
+		var tz_type = window.localStorage.getItem('tz_type');
+		var tz_bj = window.localStorage.getItem('tz_bj');
+		var c_shop=window.localStorage.getItem('choose_shop');
+		//var shop_code=window.localStorage.getItem('shop_bj');
+		//alert(shop_code)
+		
+		/*if(shop_code==1){
+			//alert(3)
+			$('.s_right').hide();
+		}else{
+			//alert(4)
+			$(document).on('tap','.choose_shop',function(){
+				var html='choose_shop.html';
+				token_check(userid,html);
+			})
+		}*/
+		//console.log(tz_type);
+		
+		shop_id = 0;
+		if (type == '01') {
+			$('.w_qi').text('大乐透' + order_qi + '期');
+		}else if(type == '03'){
+			if(tz_type==0){
+				$('.w_qi').text('排列三·直选' + order_qi + '期');
+			}else if(tz_type==1){
+				$('.w_qi').text('排列三·组三' + order_qi + '期');
+			}else if(tz_type==2){
+				$('.w_qi').text('排列三·组六' + order_qi + '期');
+			}else if(tz_type==3){
+				$('.w_qi').text('排列三·直选复式胆拖' + order_qi + '期');
+			}else if(tz_type==4){
+				$('.w_qi').text('排列三·和值·直选' + order_qi + '期');
+			}else if(tz_type==5){
+				$('.w_qi').text('排列三·和值·组三' + order_qi + '期');
+			}else if(tz_type==6){
+				$('.w_qi').text('排列三·和值·组六' + order_qi + '期');
+			}
+			
+		}else if(type == '04'){
+			$('.w_qi').text('排列五' + order_qi + '期');
+			
+		}else if(type == '02'){
+			$('.w_qi').text('七星彩' + order_qi + '期');
+			
+		}
+		$('.w_mobile').text(user_mobile);
+		$('.w_money').html(
+				'<font style="color:red">' + order_money + '</font>元');
+		var order_detail = '<font style="color:red">' + order_z
+				+ '</font>注<font style="color:red">' + order_b + '</font>倍';				
+		
+		if (add == 1) {
+			$('.w_detail').html(order_detail + '<span class="w_zj">追加</span>');
+		} else {
+			$('.w_detail').html(order_detail);
+		}
+
+		$('.bck').on('tap', function() {
+			var btnArray = [ '是', '否' ];
+			mui.confirm('未完成下单，确认退出？', '', btnArray, function(e) {
+				if (e.index == 0) {
+					window.localStorage.setItem('order_qi', '');
+					//window.localStorage.setItem('order_content', '');
+					window.localStorage.setItem('cp_types', '');
+					if(type=='01'){
+						var html='dlt_sec.html';
+						token_check(userid,html);
+						//window.location.href = 'dlt_sec.html';
+					}else if(type=='03'){
+						window.localStorage.setItem('tz_type',tz_type);
+						window.localStorage.setItem('tz_bj',tz_bj);
+						var html='p3_sec.html';
+						token_check(userid,html);
+						//window.location.href = 'p3_sec.html';
+					}else if(type=='04'){
+						var html='p5_sec.html';
+						token_check(userid,html);
+						//window.location.href = 'p5_sec.html';
+					}else if(type=='02'){
+						var html='qxc_sec.html';
+						token_check(userid,html);
+						//window.location.href = 'qxc_sec.html';
+					}
+					
+				} else {
+
+				}
+			})
+		})
+		
+		if(c_shop){
+			//选择店铺
+			mui.ajax(config[0].url+'/index.php/c_shop', {
+				data : {
+					token:userid,shopid : c_shop,
+				},
+				dataType : 'json',//服务器返回json格式数据
+				type : 'post',//HTTP请求类型
+				timeout : 10000,//超时时间设置为10秒；
+				success : function(data) {
+					//if(typeof data == "string") {var data = eval('('+data+')');}
+					console.log(data);
+					if(data==false){
+						$('.shop_name').text('此彩店不存在');
+						$('.mr').hide();
+					}else{
+						if(data[0].mr_shop==1){
+							$('.shop_name').text(data[0].shop_name);
+							$('.shopid').val(c_shop);
+							
+						}else if(data[0].mr_shop==0){
+							$('.shop_name').text(data[0].shop_name);
+							$('.shopid').val(c_shop);
+							$('.mr').hide();
+						}
+						
+						
+					}
+					
+					
+				},
+				error : function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+					switch (type) {
+		              case "timeout":
+		                mui.toast('连接超时，请重试');
+		                break;
+		              default:
+		                mui.toast('请重试或重新登录');
+		            }
+				}
+			});
+		}else{
+			//默认店铺
+			mui.ajax(config[0].url+'/index.php/mr_shop', {
+				data : {
+					token : userid,
+				},
+				dataType : 'json',//服务器返回json格式数据
+				type : 'post',//HTTP请求类型
+				timeout : 10000,//超时时间设置为10秒；
+				success : function(data) {
+					//if(typeof data == "string") {var data = eval('('+data+')');}
+					console.log(data);
+					if(data==false){
+						$('.shop_name').text('暂无默认彩店，请选择店铺');
+						$('.mr').hide();
+						$(document).on('tap','.choose_shop',function(){
+							var html='choose_shop.html';
+							token_check(userid,html);
+						})
+					}else{
+						if(data[0].bj==1){
+							$('.s_right').hide();
+						}else{
+							$(document).on('tap','.choose_shop',function(){
+								var html='choose_shop.html';
+								token_check(userid,html);
+							})
+						}
+						$('.shop_name').text(data[0].shop_name);
+						$('.shopid').val(data[0].id);
+						
+					}
+					
+					
+				},
+				error : function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+					switch (type) {
+		              case "timeout":
+		                mui.toast('连接超时，请重试');
+		                break;
+		              default:
+		                mui.toast('请重试或重新登录');
+		            }
+				}
+			});
+		}
+		
+		
+		
+		
+		
+		
+
+		$(document).one('tap', '.w_but', function() {
+			//$(this).attr('disabled',true);
+			var type_id = $('.active_l ').attr('data-id');
+			var shop_id = $('.shopid').val();
+			if (shop_id=='' || shop_id==null || shop_id==undefined || shop_id==0) {
+				mui.toast('请选择投注店铺');
+				//setTimeout("window.location.reload()",2000);
+				return;
+			}else{
+				token_check(userid);
+			}
+			mui.ajax(config[0].url+'/index.php/order', {
+				data : {
+					userid : userid,
+					order_money : order_money,
+					order_z : order_z,
+					order_b : order_b,
+					order_qi : order_qi,
+					user_mobile : user_mobile,
+					add : add,
+					type : type,
+					type_id : type_id,
+					shop_id : shop_id,
+					cp_hm : cp_hm,
+				},
+				dataType : 'json',//服务器返回json格式数据
+				type : 'post',//HTTP请求类型
+				timeout : 10000,//超时时间设置为10秒；
+				success : function(data) {
+					/* console.log(JSON.stringify(data));*/
+					//console.log(data);
+					var order_id=data.data;
+					if (data.status == 1) {
+						window.localStorage.setItem('order_id', data.data);
+						window.localStorage.setItem('to_money', '');
+						window.localStorage.setItem('to_z', '');
+						window.localStorage.setItem('to_b', '');
+						window.localStorage.setItem('order_qi', '');
+						//window.localStorage.setItem('order_content', '');
+						window.localStorage.setItem('cp_types', '');
+						window.localStorage.setItem('zjj', '');
+						window.localStorage.setItem('nb_type','');
+						window.localStorage.setItem('nb','');
+						window.localStorage.setItem('update_num','');
+						window.localStorage.setItem('next','');
+						window.localStorage.setItem('choose_shop','');
+						
+						var tz_type = window.localStorage.getItem('tz_type');
+						if(tz_type){
+							mui.ajax(config[0].url+'/index.php/order_tz_type',{
+								data:{
+									order_id:order_id,tz_type:tz_type,
+								},
+								dataType:'json',//服务器返回json格式数据
+								type:'post',//HTTP请求类型
+								timeout:10000,//超时时间设置为10秒；
+								success:function(data){
+									if(typeof data == "string") {
+										var data = eval('('+data+')');
+									}
+									if(data==true){
+										window.localStorage.setItem('tz_type', '');
+										window.localStorage.setItem('tz_bj', '');
+									}
+								},
+								error:function(xhr,type,errorThrown){
+									//异常处理；
+									console.log(type);
+									switch (type) {
+						              case "timeout":
+						                mui.toast('连接超时，请重试');
+						                break;
+						              default:
+						                mui.toast('请重试或重新登录');
+						            }
+								}
+							});
+						}
+						
+						
+						mui.ajax(config[0].url+'/index.php/orderlog',{
+							data:{
+								order_id:order_id,order_status:'00',value:'订单已提交',
+							},
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success:function(data){
+								if(typeof data == "string") {
+									var data = eval('('+data+')');
+								}
+								mui.openWindow({
+									url : 'order_ok.html',
+									id : 'order_ok',
+									createNew:true
+								});
+								
+							},
+							error:function(xhr,type,errorThrown){
+								//异常处理；
+								console.log(type);
+								switch (type) {
+						              case "timeout":
+						                mui.toast('连接超时，请重试');
+						                break;
+						              default:
+						                mui.toast('请重试或重新登录');
+						            }
+							}
+						});
+						
+					}
+				},
+				error : function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+					switch (type) {
+		              case "timeout":
+		                mui.toast('连接超时，请重试');
+		                break;
+		              default:
+		                mui.toast('请重试或重新登录');
+		            }
+				}
+			});
+			
+		});
+		$(".ord1_last dt").on('tap', function() {
+			if ($(this).attr("data-id") == 2) {
+				$('.ord1_top2').text('店主提供免费存票30天和10000元以下代兑服务');
+			} else {
+				$('.ord1_top2').text('*自行到店取票,自行兑奖');
+			}
+
+			$(".ord1_last dt").removeClass("active_l");
+			$(this).addClass("active_l ");
+		});
+
+		
+	
+	</script>
+</body>
+</html>

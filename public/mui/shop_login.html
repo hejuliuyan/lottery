@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/login.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">登录</h1>
+	</header>
+	<div class="mui-content">
+	    <div class="login">
+	    	 <div class="mui-input-row us">
+		       	<div class='head'><img src="wimages/head.png" width='15' height="15"/></div>
+		        <input id='user' type="text" class="mui-input-clear inp" placeholder="请输入手机号码">
+		    </div>
+		     <div class="mui-input-row pass">
+		       	<div class='head'><img src="wimages/lock.png" width='15' height="15"/></div>
+		        <input id='pass' type="password" class="mui-input-password inp" placeholder="请输入密码">
+		    </div>
+	    </div>
+	    
+	    <div class='mid_font'>
+	    	<div class='foget_pass'>忘记密码？</div>
+	    	<div class='clear'></div>
+	    </div>
+	     <div class='sub_btn' ><button type="button" class="mui-btn mui-btn-danger sub log">登录</button></div>	      
+	</div>
+	<input type="hidden" value='' class='oid'/>
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+			mui.init({  
+			  keyEventBind:{  
+			    backbutton:true  
+			  }  
+			});
+			
+			var first=null;  
+			mui.back=function(){  
+			  if(!first){  
+			    first=new Date().getTime();  
+			    mui.toast('再按一次退出应用!');  
+			  
+			    setTimeout(function(){  
+			      first=null;  
+			    },2000);  
+			  }else{  
+			    if(new Date().getTime()-first<2000){  
+			      plus.runtime.quit();  
+			   }  
+			 }  
+			};  
+		
+		</script>
+<script type="text/javascript">
+
+		if(isWeiXin()){
+			function getQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null)
+				return unescape(r[2]);
+			return null;
+			}
+			var data = getQueryString('openid');
+			var data = eval('('+data+')');
+			if(data){
+				//window.localStorage.setItem('openid', data.openid);
+				//wx_name(data.openid);
+				$('.oid').val(data.openid);
+				
+				/*function wx_name(obj) {
+					mui.ajax(config[0].url+'/index.php/wx_name', {
+						data : {
+							openid : obj,
+						},
+						dataType : 'json',//服务器返回json格式数据
+						type : 'post',//HTTP请求类型
+						timeout : 10000,//超时时间设置为10秒；
+						success : function(data) {
+							if (typeof data == "string") {
+								var data = eval('(' + data + ')');
+							}
+							//console.dir(data.headimgurl);
+							window.localStorage.setItem('nickname', data.nickname);
+							window.localStorage.setItem('headimgurl', data.headimgurl);
+							//console.log(window.localStorage.getItem('nickname'));
+						},
+						error : function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log(type);
+						}
+					});
+				}*/
+			}
+			
+		}
+		
+
+		
+	window.onload = function(){
+	    if(isWeiXin()){ 	  	
+    	  	//var shop_openid =window.localStorage.getItem('openid');
+    	  	var shop_openid=$('.oid').val();
+    	  	var shop_login_bs=window.localStorage.getItem("shop_login_bs");
+    	  	console.log(shop_openid)
+    	  	/*if(!shop_openid){
+    	  		mui.openWindow({
+				    url: config[0].url+'/index.php/wx?tz=2', 
+				    id:'wx'						 
+				});
+    	  	}*/
+    	  	
+    	  	if(shop_login_bs==1){
+    	  		mui.ajax(config[0].url+'/index.php/shop_open',{
+				  	data:{shop_openid:shop_openid,
+				  	},
+				  	dataType:'json',//服务器返回json格式数据
+				  	type:'post',//HTTP请求类型
+				  	timeout:10000,//超时时间设置为10秒；
+				  	success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					    console.log(data);
+					   	if(data.data==false){									   	
+							//window.localStorage.setItem('openid','');
+							/*mui.openWindow({
+								    url: 'shop_login.html', 
+								    id:'shop_login'						 
+								});*/
+							
+					  /* 	}else{*/
+					   	    window.localStorage.setItem('shopid',data.data[0].shop_token);					   	    							window.localStorage.setItem('shop_status',data.data[0].shop_status);
+							window.localStorage.setItem('shop_phone',data.data[0].keeper_mobile);
+							var shop_token=data.data[0].shop_token;
+						   	wx_name(shop_token,2);
+					
+				   	  
+						}
+				 
+
+					},
+				  	error:function(xhr,type,errorThrown){
+					    //异常处理；
+//					    console.log(type);
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+    	  	}else{
+    	  		
+    	  		
+    	  	}
+		
+		
+				
+	    	jQuery('.log').on('tap',function(){
+					var phone=jQuery('#user').val();
+					var pass=jQuery('#pass').val();
+					var shop_openid=$('.oid').val();
+					//console.log(shop_openid);return;
+				
+						 mui.ajax(config[0].url+'/index.php/shop_login',{
+								  data:{keeper_mobile:phone,shop_pwd:pass,shop_openid:shop_openid,
+								  },
+								  dataType:'json',//服务器返回json格式数据
+								  type:'post',//HTTP请求类型
+								  timeout:10000,//超时时间设置为10秒；
+								  success:function(data){
+								    if(typeof data == "string") {var data = eval('('+data+')');}
+								    
+								   if(data==false){
+								   	mui.toast('账号不存在或者密码错误')
+								   }else{
+								  		
+								   	  window.localStorage.setItem('shopid',data[0].shop_token);
+								   	  window.localStorage.setItem('shop_status',data[0].shop_status);
+								   	  window.localStorage.setItem('shop_phone',data[0].keeper_mobile);
+								   	  window.localStorage.setItem('shop_login_bs','1');	
+								   	  var shop_token=data[0].shop_token;
+								   	  console.log(shop_token)
+									  wx_name(shop_token,2);
+			
+								    
+								}
+								 
+			
+							},
+								  error:function(xhr,type,errorThrown){
+								    //异常处理；
+//								    console.log(type);
+									  switch (type) {
+										  case "timeout":
+											  mui.toast('连接超时，请重试');
+											  break;
+										  default:
+											  mui.toast('请重试或重新登录');
+									  }
+						}
+					});
+				
+				
+			
+		})
+	    	
+	    	
+	    }else{
+	    	var shop_login_bs=window.localStorage.getItem("shop_login_bs");
+	    	if(shop_login_bs==1){
+	    		mui.openWindow({
+				    url: 'shop_order.html', 
+				    id:'shop_order',
+				    createNew:true
+				});
+	    	}
+	    	/*var shop_login_bs=window.localStorage.getItem("shop_login_bs");
+	    	if(shop_login_bs==1){
+	    		var shopid = window.localStorage.getItem('shopid');
+	    		mui.ajax(config[0].url+'/index.php/shop_login_app',{
+				  	data:{shopid:shopid,
+				  	},
+				  	dataType:'json',//服务器返回json格式数据
+				  	type:'post',//HTTP请求类型
+				  	timeout:10000,//超时时间设置为10秒；
+				  	success:function(data){
+					    if(typeof data == "string") {var data = eval('('+data+')');}
+					  
+					   	if(data==false){
+					   		mui.toast('账号不存在或者密码错误')
+					   	}else{
+					   	
+					   	  	window.localStorage.setItem('shopid',data[0].shop_token);
+					   	  	window.localStorage.setItem('shop_status',data[0].shop_status);
+					   	  	window.localStorage.setItem('shop_phone',phone);
+					 		var shop_token=data[0].shop_token;
+						   	console.log(shop_token)
+							wx_name(shop_token,2);
+					   	
+						}
+	
+					},
+				  	error:function(xhr,type,errorThrown){
+					    //异常处理；
+						switch (type) {
+							case "timeout":
+								mui.toast('连接超时，请重试');
+								break;
+							default:
+								mui.toast('请重试或重新登录');
+						}
+					}
+				});
+	    	}else{*/
+	    		jQuery('.log').on('tap',function(){
+	    			//alert(1)
+					var phone=jQuery('#user').val();
+					var pass=jQuery('#pass').val();
+					
+					mui.ajax(config[0].url+'/index.php/shop_login_app',{
+					  	data:{keeper_mobile:phone,shop_pwd:pass,
+					  	},
+					  	dataType:'json',//服务器返回json格式数据
+					  	type:'post',//HTTP请求类型
+					  	timeout:10000,//超时时间设置为10秒；
+					  	success:function(data){
+						    if(typeof data == "string") {var data = eval('('+data+')');}
+						    console.log(data);
+						   	if(data==false){
+						   		mui.toast('账号不存在或者密码错误')
+						   	}else{
+						   	
+						   	  	window.localStorage.setItem('shopid',data[0].shop_token);
+						   	  	window.localStorage.setItem('shop_status',data[0].shop_status);
+						   	  	window.localStorage.setItem('shop_phone',phone);
+						   	  	window.localStorage.setItem('shop_login_bs','1');
+						   	 	var shop_token=data[0].shop_token;
+							   	console.log(shop_token)
+								wx_name(shop_token,2);
+						   	
+							}
+		
+						},
+					  	error:function(xhr,type,errorThrown){
+						    //异常处理；
+							switch (type) {
+								case "timeout":
+									mui.toast('连接超时，请重试');
+									break;
+								default:
+									mui.toast('请重试或重新登录');
+							}
+						}
+					});
+
+				})
+	    	/*}*/
+	    	
+	    	
+	  	}
+}
+	
+	
+	function isWeiXin(){
+	    var ua = window.navigator.userAgent.toLowerCase();
+	    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+	        return true;
+	    }else{
+	        return false;
+	    }
+	}
+	
+	//手机号匹配
+	function iphone(obj){   
+           
+        reg=/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;    
+        if(!reg.test(obj)){   
+           return false;
+        }else{   
+           return true;
+        }   
+    }   
+    
+    //密码匹配
+    function passwd(obj){   
+           
+        reg=/^\w{6,20}$/;    
+        if(!reg.test(obj)){   
+           return false;
+        }else{   
+           return true;   
+        }   
+    }   
+	
+	function wx_name(token,type){
+		mui.ajax(config[0].url+'/index.php/wx_name',{
+			data:{token:token,type:type},
+			dataType:'json',//服务器返回json格式数据
+			type:'post',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			success:function(data){
+				if(typeof data == "string") {var data = eval('('+data+')');}
+				console.log(data.nickname);
+				
+				window.localStorage.setItem('shop_nickname',data.nickname);
+				window.localStorage.setItem('shop_login_bs','1');
+				window.localStorage.setItem('headimgurl', data.headimgurl);
+				
+				mui.openWindow({
+				    url: 'shop_order.html', 
+				    id:'shop_order',
+				    createNew:true
+				});
+			},
+			error:function(xhr,type,errorThrown){
+				//异常处理；
+//				console.log(type);
+				switch (type) {
+					case "timeout":
+						mui.toast('连接超时，请重试');
+						break;
+					default:
+						mui.toast('请重试或重新登录');
+				}
+			}
+		});
+	}
+	
+</script>
+</html>

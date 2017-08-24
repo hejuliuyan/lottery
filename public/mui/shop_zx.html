@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/zx_personal.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+    <script src="js/jquery-latest.js"></script>
+    <style>
+    	.index {
+		    background-image: url(./wimages/index2.png);
+		    background-size: 100%;
+		    background-repeat: no-repeat;
+		    width: 24px;
+		    height: 22px;
+		    background-position: center;
+		    display: block;
+		    margin: 0 auto;
+		    margin-top: 3px;
+		}
+		
+		.wd_font {
+		    font-size: 11px;
+		    color: #56abe4;
+		}
+		
+		.index_font{
+			font-size: 11px;
+		    color: lightgray;
+		}
+		
+		.dj {
+		    background-image: url(./wimages/dj.png);
+		    background-size: 100%;
+		    background-repeat: no-repeat;
+		    width: 24px;
+		    height: 22px;
+		    background-position: center;
+		    display: block;
+		    margin: 0 auto;
+		    margin-top: 3px;
+		}
+		
+		.wd {
+		    background-image: url(./wimages/shop.png);
+		    background-size: 100%;
+		    background-repeat: no-repeat;
+		    width: 24px;
+		    height: 22px;
+		    background-position: center;
+		    display: block;
+		    margin: 0 auto;
+		    margin-top: 3px;
+		}
+		.m_left{width: 49%;float: left;margin-right: 1%;background-color: #fff;height: 40px;}
+        .m_right{width: 50%;float: left;background-color: #fff;height: 40px;}
+        .m_top2 {height: 42px;background-color: #e7e7e7;}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <!--<a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>-->
+	    <h1 class="mui-title">店铺中心</h1>
+	</header>
+	<nav class="mui-bar mui-bar-tab">
+			<a id="defaultTab" class="mui-tab-item  w_index" href="javascript:void(0)">
+				<span class="index"></span>
+				<span class="mui-tab-label index_font">首页</span>
+			</a>
+			<!--<a class="mui-tab-item" href="javascript:void(0)">
+				<span class="dj"></span>
+				<span class="mui-tab-label dj_font">兑奖</span>
+			</a>-->
+			<a class="mui-tab-item my_shop" href="javascript:void(0)">
+				<span class="wd"></span>
+				<span class="mui-tab-label wd_font">我的</span>
+			</a>
+			
+		</nav>
+	<!--<nav class="mui-bar mui-bar-tab">
+		<dt class="active_r login_out">退出登录</dt>
+	</nav>-->
+	<div class="mui-content">
+	    <div class='main_top'>
+	    	<div class='m_top1'>
+	    		<div class='tx'>
+	    			<dt><img class='headimgurl' src="wimages/personal/wx_head.png " width='50' height='50'/></dt>
+	    			<dt class='wx_name'></dt>
+	    		</div>
+	    	</div>
+	    	<div class='m_top2'>
+	    		<div class='m_left'>
+		           	<dt style='font-size: 14px;'>账户余额</dt>
+		           	<dt class='balance' style='color:#56ABE4;font-size: 16px;'></dt>
+           		</div>
+		        <div class='m_right'>
+		           	<dt style='font-size: 14px;'>累计派奖</dt>
+			        <dt class='winprize' style='color:red;font-size: 16px;'></dt>
+		        </div>
+	    	</div>
+	    </div>
+	    <div class='main_mid'>
+	    	<div class='n_pic my_customer'>
+    			<dt><img src="wimages/personal/customer.png" width='50' height='50'/></dt>
+    			<dt class='n_title '>我的客户</dt>
+	    	</div>
+	    	<div class='n_pic ew_code'>
+    			<dt><img src="wimages/personal/code.png" width='50' height='50'/></dt>
+    			<dt class='n_title'>扫码绑定</dt>
+	    	</div>
+	    	<div class='n_pic '>
+    			<dt><img src="wimages/personal/count.png" width='50' height='50'/></dt>
+    			<dt class='n_title'>销售统计</dt>
+	    	</div>
+	    	<div class='n_pic my_wallet'>
+    			<dt><img src="wimages/personal/purse.png" width='50' height='50'/></dt>
+    			<dt class='n_title'>交易流水</dt>
+	    	</div>
+	    </div>
+	    <div class='clear'></div>
+	    <div class='main_bottom'>
+	    	<div class='list shop_info'>
+	    		<div class='list_left'>
+	    			<div class='left_img'><img src="wimages/personal/shop.png" width='30' height='30'/></div>
+	    			<div class='left_font'>店铺信息</div>
+	    		</div>
+	    		<div class='list_right'>
+	    			<div class='no_ready'>
+	    				<span>未完善</span>
+	    			</div>
+	    			 <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+	    		</div>
+	    		
+	    	</div>
+	    	<div class='list update_pass'>
+	    		<!--<div class='list_left'>
+	    			<div class='left_img'><img src="wimages/personal/pass.png" width='30' height='30'/></div>
+	    			<div class='left_font'>修改密码</div>
+	    		</div>-->
+				<div class='list_left'>
+					<div class='left_img'><img src="wimages/personal/pass.png" width='30' height='30'/></div>
+					<div class='left_font'>密码管理</div>
+				</div>
+	    		<div class='list_right'>
+	    			 <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+	    		</div>
+	    		
+	    	</div>
+	    </div>
+	    <div style='text-align: center;margin-top: 20px;'><button type="button" class="mui-btn mui-btn-danger login_out" style='width:80%;margin-top: 20px;'>退出登录</button></div>
+	</div>
+</body>
+<script src="js/shop_check.js"></script>
+<script type="text/javascript">
+		var shopid=window.localStorage.getItem('shopid');
+		//var openid=window.localStorage.getItem('openid');
+		var headimgurl=window.localStorage.getItem('headimgurl');	
+		console.log(shopid)
+		if(!shopid){
+			shop_check(shopid);
+		}else{
+			if(headimgurl){
+				$('.headimgurl').attr('src',headimgurl).css('border-radius','30px');
+			}
+			mui.ajax(config[0].url+'/index.php/shop_check',{
+				data:{
+					shopid:shopid
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					if(typeof data == "string") {
+						var data = eval('('+data+')');
+					}
+					console.log(data);
+					if(data==false){
+						$('.no_ready').show();
+					} 
+					$('.wx_name').text(data[0].shop_name);
+					if(data[0].verified=='N' || data[0].verified=='' || data[0].verified==null || data[0].verified==undefined){
+						$('.no_ready').show();
+						
+					}
+					
+					
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+//					console.log(type);
+					switch (type) {
+						case "timeout":
+							mui.toast('连接超时，请重试');
+							break;
+						default:
+							mui.toast('请重试或重新登录');
+					}
+				}
+			});
+			
+			mui.ajax(config[0].url+'/index.php/shop_balance',{
+			  	data:{
+				  	shopid:shopid,
+				},
+			  	dataType:'json',//服务器返回json格式数据
+			  	type:'post',//HTTP请求类型
+			  	timeout:10000,//超时时间设置为10秒；
+			  	success:function(data){
+				    if(typeof data == "string") {var data = eval('('+data+')');}
+				 		//console.log(data.order_money);
+					$('.balance').html(data.balance+'元');
+               		$('.winprize').html(data.giveprize+'元');
+				},
+			 	 error:function(xhr,type,errorThrown){
+				    //异常处理；
+//				   	console.log(type);
+					 switch (type) {
+						 case "timeout":
+							 mui.toast('连接超时，请重试');
+							 break;
+						 default:
+							 mui.toast('请重试或重新登录');
+					 }
+				}
+			});
+			
+		}
+	/*$('.bk').on('tap',function(){
+		mui.openWindow({
+			url: 'shop_order.html', 
+			id:'shop_order'						 
+		});
+	})*/
+	
+	$(document).on('tap','.my_shop',function(){
+		var html='shop_zx.html';
+		shop_check(shopid,html);
+		/*mui.openWindow({
+		    url: 'shop_zx.html', 
+		    id:'shop_zx'						 
+		});*/
+	})
+		
+	$(document).on('tap', '.w_index', function(){
+			//alert(123);
+			var html='shop_order.html';
+			shop_check(shopid,html);
+			/*mui.openWindow({
+				url : 'shop_order.html',
+				id : 'shop'
+			});*/
+		});
+			
+			
+	$('.login_out').on('tap',function(){
+		var btnArray = ['是', '否'];
+		mui.confirm('确定退出？', '', btnArray, function(e) {
+			if (e.index == 0) {
+				window.localStorage.setItem('shop_login_bs','0');
+				window.localStorage.setItem('shopid','');
+				mui.openWindow({
+					url: 'shop_login.html', 
+					id:'shop_login',
+					createNew:true
+				});
+			} else {
+				
+			}
+		})
+	})
+	
+	$('.update_pass').on('tap',function(){
+		/*window.location.href='update_pass.html?update=2';*/
+		var html='psd_mg.html?update=2';
+		shop_check(shopid,html);
+		//window.location.href = 'psd_mg.html?update=2';
+		/*mui.openWindow({
+			url: 'update_pass.html', 
+			id:'update_pass'						 
+		});*/
+	})
+	
+	$('.shop_info').on('tap',function(){
+		var html='shop_personal.html';
+		shop_check(shopid,html);
+		/*mui.openWindow({
+			url: 'shop_personal.html', 
+			id:'shop_personal'						 
+		});*/
+	})
+	
+	$('.my_wallet').on('tap',function(){
+		var html='mycashbox_list.html';
+		shop_check(shopid,html);
+		/*mui.openWindow({
+			url: 'mycashbox_list.html', 
+			id:'mycashbox_list.html'						 
+		});*/
+	})
+	
+	$('.ew_code').on('tap',function(){
+		var html='ewm.html';
+		shop_check(shopid,html);
+	})
+	$('.my_customer').on('tap',function(){
+		var html='my_customer.html';
+		shop_check(shopid,html);
+	})
+	
+	
+	
+	
+</script>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的钱包</title>
+    <meta name="viewport"
+          content="width=device-width, 		initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no"/>
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/css.css">
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <style>
+        .mui-bar {
+            background-color: #EEEEEE;
+        }
+
+        .info_con {
+            /*padding-bottom: 5px;*/
+            /*height: ;*/
+
+        }
+    </style>
+</head>
+
+<body>
+<!--<header class="mui-bar mui-bar-nav"><h1 class="mui-title">我的钱包</h1></header>-->
+<header class="mui-bar mui-bar-nav">
+    <a href="mywallet_list.html" class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+    <h1 class="mui-title" style="color: #62B1E5">用户详情</h1>
+</header>
+<div class="mui-content">
+    <div class="info_con">
+        <p class="p1"></p>
+        <p class="p2">交易金额</p>
+        <p class="p3" id="col_p3"></p>
+    </div>
+    <div class="cont_test"></div>
+    <div class="info_boot">
+        <p class="info_date">
+            交易时间&nbsp;&nbsp;&nbsp;&nbsp;<span></span>
+        </p>
+        <!--<p class="info_num">
+            交易单号&nbsp;&nbsp;&nbsp;&nbsp;<span></span>
+        </p>-->
+    </div>
+</div>
+
+</body>
+<script>
+    var money_id = window.localStorage.getItem('member_id');
+    //var order_id = window.localStorage.getItem('order_id');
+    var url = window.location.search;
+    var order_id = url.substring(url.lastIndexOf('=') + 1, url.length);
+    //var url = window.location.search;
+    //var order_id = url.substring(url.lastIndexOf('=')+1, url.length);
+    var bj = url.substring(url.lastIndexOf('?') + 1, 4);
+
+    if (bj == 'pay') {
+        mui.ajax(config[0].url+'/index.php/order_yes', {
+            data: {
+                order_id: order_id,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                //console.log(data);
+                jQuery('.info_con').children('.p3').text(Math.floor(data[0].trans_price));
+                jQuery('.info_date').children('span').text(data[0].trans_date);
+                jQuery('.info_num').children('span').text(data[0].document_id);
+                jQuery('.info_con').children('.p1').text('支付成功');
+                var a = '';
+                a = "<p class='order_num' style='height: auto;padding-left: 20px;margin-top: -7px;color: #000000;'>订单号&nbsp;&nbsp;&nbsp;&nbsp;<span>" + data[0].order_num + "</span></p>";
+                $('.info_boot').append(a);
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                //console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+        var url = 'order_status.html?' + order_id;
+        $('.bk').attr('href', url);
+    } else if (bj == 'pnt') {
+        mui.ajax(config[0].url+'/index.php/order_no', {
+            data: {
+                order_id: order_id,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                console.log(data);
+                jQuery('.info_con').children('.p3').text(data[0].trans_price);
+                jQuery('.info_date').children('span').text(data[0].trans_date);
+                jQuery('.info_num').children('span').text(data[0].document_id);
+                jQuery('.info_con').children('.p1').text('退单成功');
+                var a = '';
+                a = "<p class='order_num' style='height: auto;padding-left: 20px;margin-top: -7px;color: #000000;'>订单号&nbsp;&nbsp;&nbsp;&nbsp;<span>" + data[0].order_num + "</span></p>";
+                $('.info_boot').append(a);
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                //console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+
+        $('.bk').attr('href', 'order_ok.html');
+    } else if (bj == 'paj') {
+        mui.ajax(config[0].url+'/index.php/order_paj', {
+            data: {
+                order_id: order_id,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                console.log(data);
+                console.log(order_id);
+                jQuery('.info_con').children('.p3').text(data[0].trans_price);
+                jQuery('.info_date').children('span').text(data[0].trans_date);
+                jQuery('.info_num').children('span').text(data[0].document_id);
+                jQuery('.info_con').children('.p1').text('派奖成功');
+                var a = '';
+                a = "<p class='order_num' style='height: auto;padding-left: 20px;margin-top: -7px;color: #000000;'>订单号&nbsp;&nbsp;&nbsp;&nbsp;<span>" + data[0].order_num + "</span></p>";
+                $('.info_boot').append(a);
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                //console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+        $('.bk').attr('href', 'shop_order.html');
+    } else {
+
+        mui.get(config[0].url+'/index.php/mywallet_info', {id: money_id}, function (data) {
+                    //console.log(data);
+
+                    var b = '';
+
+                    /* jQuery('.info_con').children('.p3').text();
+                     jQuery('.info_date').children('span').text();
+                     jQuery('.info_num').children('span').text(); */
+                    if (data[0].trans_title == 1) {
+
+                        /* jQuery('.info_con').trans_price('.p3').text(); */
+                        b = '充值成功';
+                        /* $("#col_p3").css('color','red');*/
+
+                    } else if (data[0].trans_title == 2) {
+
+                        b = '支付成功';
+                        /*$("#col_p3").css("color","#30D65A");*/
+
+                    } else if (data[0].trans_title == 3) {
+
+                        b = '兑奖成功';
+                        /* $("#col_p3").css('color','red');*/
+
+                    } else if (data[0].trans_title == 4) {
+
+                        b = '提现成功';
+                        /*$("#col_p3").css("color","#30D65A");*/
+
+                    }
+                    else {
+
+                        b = '退款成功';
+                    }
+                    jQuery('.info_con').children('.p3').text(Math.floor(data[0].trans_price));
+                    jQuery('.info_date').children('span').text(data[0].trans_date);
+
+                    //jQuery('.info_num').children('span').text(data[0].document_id);
+                    if (data[0].document_id != '') {
+                        jQuery('.info_boot').append(
+                                '<p class="info_num">交易单号&nbsp;&nbsp;&nbsp;&nbsp;<span>' + data[0].document_id + '</span></p>'
+                        );
+                    }
+                    jQuery('.info_con').children('.p1').text(b);
+
+                    if ((data[0].order_num != '') && (data[0].order_num != null) && (data[0].order_num != undefined)) {
+                        jQuery('.info_boot').append(
+                                '<p class="info_ord">订单号&nbsp;&nbsp;&nbsp;&nbsp;<span>' + data[0].order_num + '</span></p>'
+                        );
+                    }
+                    jQuery('.info_boot').append(
+                            '<p class="info_num">店铺手机号&nbsp;&nbsp;&nbsp;&nbsp;<span>' + data[0].keeper_mobile + '</span></p>'
+                    );
+                }, 'json'
+        );
+    }
+</script>
+
+</html>

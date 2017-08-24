@@ -1,0 +1,561 @@
+{
+  "shop_login.html": {
+    "resources": [
+      "css/login.css",
+      "js/mui.min.js",
+      "wimages/lock.png",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "wimages/head.png",
+      "js/jquery-1.7.2.min.js"
+    ],
+    "refer": [
+      "shop_order.html"
+    ]
+  },
+  "shop_order.html": {
+    "resources": [
+      "js/shop_check.js",
+      "wimages/shop2.png",
+      "wimages/index.png",
+      "css/shop_order.css",
+      "wimages/search.png",
+      "wimages/idc.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js"
+    ],
+    "refer": [
+      "order_detail.html",
+      "cp_upload.html",
+      "pj_detail.html",
+      "shop_zx.html"
+    ]
+  },
+  "order_detail.html": {
+    "resources": [
+      "css/cp_upload.css",
+      "wimages/tab-thbg.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js",
+      "js/shop_check.js"
+    ],
+    "refer": [
+      "shop_order.html"
+    ]
+  },
+  "cp_upload.html": {
+    "resources": [
+      "js/common.js",
+      "js/zepto.min.js",
+      "wimages/photo.png",
+      "shop_order.html",
+      "css/cp_upload.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js"
+    ],
+    "refer": [
+      "order_detail.html"
+    ]
+  },
+  "pj_detail.html": {
+    "resources": [
+      "shop_order.html",
+      "wimages/tab-thbg.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/cp_upload.css",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js"
+    ],
+    "refer": [
+      "shop_order.html"
+    ]
+  },
+  "shop_zx.html": {
+    "resources": [
+      "wimages/personal/code.png",
+      "wimages/personal/wx_head.png",
+      "css/zx_personal.css",
+      "wimages/personal/count.png",
+      "wimages/personal/pass.png",
+      "wimages/personal/shop.png",
+      "wimages/personal/jt_rr.png",
+      "wimages/personal/purse.png",
+      "js/jquery-latest.js",
+      "wimages/personal/customer.png",
+      "wimages/shop.png",
+      "wimages/index2.png",
+      "js/shop_check.js",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "shop_order.html",
+      "ewm.html",
+      "shop_personal.html",
+      "my_customer.html",
+      "mycashbox_list.html",
+      "shop_login.html"
+    ]
+  },
+  "ewm.html": {
+    "resources": [
+      "js/jquery.qrcode.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-latest.js"
+    ],
+    "refer": []
+  },
+  "shop_personal.html": {
+    "resources": [
+      "wimages/no_rz.png",
+      "wimages/head2.png",
+      "wimages/gou.png",
+      "wimages/personal/shop.png",
+      "wimages/rz.png",
+      "fonts/mui.ttf",
+      "wimages/photo.png",
+      "wimages/address.png",
+      "wimages/read_star.png",
+      "wimages/card.png",
+      "js/jquery-1.7.2.min.js",
+      "wimages/realname.png",
+      "wimages/phone.png",
+      "wimages/idcard.png",
+      "js/mui.min.js",
+      "css/personal.css",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "my_customer.html": {
+    "resources": [
+      "css/css.css",
+      "shop_zx.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js"
+    ],
+    "refer": [
+      "shop_zx.html",
+      "zjia.html"
+    ]
+  },
+  "mycashbox_list.html": {
+    "resources": [
+      "shop_zx.html",
+      "css/css.css"
+    ],
+    "refer": [
+      "shop_zx.html"
+    ]
+  },
+  "index.html": {
+    "resources": [
+      "wimages/lq2.png",
+      "wimages/p32.png",
+      "wimages/b1.png",
+      "dlt.html",
+      "js/tk_check.js",
+      "wimages/d1.png",
+      "wimages/dlt2.png",
+      "wimages/gr2.png",
+      "js/jquery-1.7.2.min.js",
+      "wimages/r92.png",
+      "css/css.css",
+      "wimages/zq2.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "wimages/p52.png",
+      "js/jquery-latest.js",
+      "wimages/index.png",
+      "wimages/sf2.png",
+      "wimages/qxc2.png",
+      "wimages/z1.png",
+      "p5.html",
+      "qxc.html",
+      "js/config.js",
+      "p3.html"
+    ],
+    "refer": [
+      "dlt.html",
+      "qxc.html",
+      "zx_personal.html"
+    ]
+  },
+  "dlt.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "wimages/jt_down.png",
+      "css/test.css",
+      "wimages/jt_round_down.png",
+      "index.html",
+      "Lotto_chart_main.html",
+      "js/mui.min.js",
+      "js/tk_check.js",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js",
+      "wimages/jt_round_up.png"
+    ],
+    "refer": [
+      "login.html",
+      "dlt_sec.html"
+    ]
+  },
+  "login.html": {
+    "resources": [
+      "css/login.css",
+      "wimages/lock.png",
+      "wimages/head.png"
+    ],
+    "refer": [
+      "index.html"
+    ]
+  },
+  "dlt_sec.html": {
+    "refer": [
+      "dlt.html",
+      "order_1.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "js/tk_check.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/test.css",
+      "js/jquery-1.7.2.min.js"
+    ]
+  },
+  "p5.html": {
+    "resources": [
+      "wimages/jt_round_up.png",
+      "fonts/mui.ttf",
+      "css/test.css",
+      "wimages/jt_round_down.png",
+      "index.html"
+    ],
+    "refer": [
+      "p5_sec.html",
+      "Rfive_chart_main.html"
+    ]
+  },
+  "order_1.html": {
+    "resources": [
+      "wimages/personal/jt_rr.png",
+      "css/css.css"
+    ],
+    "refer": [
+      "choose_shop.html",
+      "p5_sec.html",
+      "order_ok.html"
+    ]
+  },
+  "p5_sec.html": {
+    "refer": [
+      "order_1.html",
+      "p5.html"
+    ],
+    "resources": [
+      "css/test.css",
+      "js/jquery-1.7.2.min.js"
+    ]
+  },
+  "choose_shop.html": {
+    "resources": [
+      "wimages/ok.png",
+      "wimages/yes.png",
+      "wimages/lbs.png"
+    ],
+    "refer": [
+      "order_1.html"
+    ]
+  },
+  "qxc.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "css/test.css",
+      "wimages/jt_round_down.png",
+      "index.html"
+    ],
+    "refer": [
+      "qxc_sec.html",
+      "index.html",
+      "Scolor_chart_main.html"
+    ]
+  },
+  "qxc_sec.html": {
+    "refer": [
+      "qxc.html"
+    ],
+    "resources": []
+  },
+  "zjia.html": {
+    "resources": [
+      "css/css.css",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js",
+      "fonts/mui.ttf",
+      "my_customer.html"
+    ],
+    "refer": []
+  },
+  "zx_personal.html": {
+    "resources": [
+      "wimages/personal/wx_head.png",
+      "wimages/gr.png",
+      "css/zx_personal.css",
+      "wimages/personal/pass.png",
+      "wimages/personal/shop.png",
+      "wimages/personal/award.png",
+      "wimages/personal/jt_rr.png",
+      "wimages/personal/realname.png",
+      "wimages/personal/save.png",
+      "wimages/index2.png",
+      "wimages/personal/purse.png",
+      "wimages/personal/order.png",
+      "js/tk_check.js",
+      "js/jquery-latest.js",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "psd_mg.html",
+      "personal.html",
+      "index.html",
+      "award_record_main.html",
+      "tz_record_main.html",
+      "save_case_main.html",
+      "mywallet_list.html"
+    ]
+  },
+  "personal.html": {
+    "resources": [
+      "wimages/idcard.png",
+      "wimages/head2.png",
+      "wimages/gou.png",
+      "js/mui.min.js",
+      "wimages/lock.png",
+      "fonts/mui.ttf",
+      "css/personal.css",
+      "css/mui.min.css",
+      "wimages/head.png",
+      "wimages/realname.png",
+      "js/jquery-1.7.2.min.js",
+      "wimages/phone.png"
+    ],
+    "refer": [
+      "zx_personal.html"
+    ]
+  },
+  "psd_mg.html": {
+    "resources": [
+      "js/shop_check.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "award_record.html": {
+    "resources": [
+      "wimages/kj.png",
+      "js/tk_check.js",
+      "wimages/personal/jt_rr.png"
+    ],
+    "refer": [
+      "order_ok.html"
+    ]
+  },
+  "order_ok.html": {
+    "resources": [
+      "wimages/tab-thbg.png",
+      "wimages/shop_phone.png",
+      "wimages/photo.png",
+      "css/cp_upload.css",
+      "wimages/ts_phone.png",
+      "award_record_main.html",
+      "wimages/kj.png",
+      "css/css.css",
+      "js/mui.min.js",
+      "js/tk_check.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js",
+      "order_status.html"
+    ],
+    "refer": [
+      "tz_record_main.html",
+      "tz_record.html",
+      "zx_personal.html"
+    ]
+  },
+  "award_record_main.html": {
+    "resources": [
+      "award_record.html",
+      "css/tz_record.css",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery-latest.js"
+    ],
+    "refer": [
+      "award_record.html",
+      "zx_personal.html"
+    ]
+  },
+  "tz_record.html": {
+    "refer": [
+      "order_ok.html"
+    ],
+    "resources": [
+      "wimages/personal/jt_rr.png",
+      "js/tk_check.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery-latest.js",
+      "css/tz_record.css"
+    ]
+  },
+  "tz_record_main.html": {
+    "resources": [
+      "tz_record.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-latest.js",
+      "css/tz_record.css"
+    ],
+    "refer": [
+      "tz_record.html",
+      "zx_personal.html"
+    ]
+  },
+  "save_case_main.html": {
+    "resources": [
+      "css/save_case.css",
+      "save_case.html",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery-latest.js"
+    ],
+    "refer": [
+      "zx_personal.html"
+    ]
+  },
+  "save_detail.html": {
+    "resources": [
+      "css/save_detail.css",
+      "js/mui.min.js",
+      "js/tk_check.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-latest.js"
+    ],
+    "refer": [
+      "save_case_main.html",
+      "dlt_sec.html",
+      "p5_sec.html"
+    ]
+  },
+  "save_case.html": {
+    "resources": [
+      "wimages/personal/jt_rr.png",
+      "js/tk_check.js"
+    ],
+    "refer": [
+      "save_detail.html"
+    ]
+  },
+  "mywallet_list.html": {
+    "resources": [
+      "wimages/lower_money.png",
+      "fonts/mui.ttf",
+      "wimages/jt_down.png",
+      "wimages/aaa_ok.png",
+      "css/css.css",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery-1.7.2.min.js",
+      "zx_personal.html"
+    ],
+    "refer": []
+  },
+  "p3.html": {
+    "resources": [
+      "index.html",
+      "fonts/mui.ttf",
+      "wimages/jt_down.png",
+      "css/test.css",
+      "wimages/jt_round_down.png"
+    ],
+    "refer": [
+      "index.html",
+      "p3_sec.html",
+      "Rthree_chart_main.html"
+    ]
+  },
+  "order_status.html": {
+    "resources": [
+      "wimages/user_pay.png",
+      "wimages/dan.png",
+      "order_ok.html",
+      "css/css.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery-latest.js"
+    ],
+    "refer": [
+      "order_ok.html"
+    ]
+  },
+  "p3_sec.html": {
+    "refer": [
+      "p3.html"
+    ],
+    "resources": []
+  },
+  "Lotto_chart_main.html": {
+    "resources": [
+      "css/save_case.css",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery-latest.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "dlt.html"
+    ]
+  },
+  "Rthree_chart_main.html": {
+    "resources": [
+      "css/save_case.css"
+    ],
+    "refer": [
+      "p3.html"
+    ]
+  },
+  "Rfive_chart_main.html": {
+    "refer": [
+      "p5.html"
+    ],
+    "resources": []
+  },
+  "Scolor_chart_main.html": {
+    "resources": [
+      "css/save_case.css"
+    ],
+    "refer": [
+      "qxc.html"
+    ]
+  }
+}

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/update_pass.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+        mui.init();
+    </script>
+    <script src="js/jquery-latest.js"></script>
+    <style>
+        .wjmm {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .wm_s {
+            font-size: 15px;
+            color: #A9ABB6;
+            float: right;
+        }
+
+        .wm_s_left {
+            font-size: 15px;
+            color: #A9ABB6;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+    <h1 class="mui-title">支付密码重置</h1>
+</header>
+<div class="mui-content">
+    <div class='reg'>
+        <div class="mui-input-row paw">
+            <label class='l_font'>原密码：</label>
+            <input id='old_pass' type="password" class="mui-input-password inp" placeholder="英文或数字,6~20个字符"
+                   maxlength="20" value=''>
+        </div>
+        <div class="mui-input-row paw">
+            <label class='l_font'>新密码：</label>
+            <div class='yzm'><input id='new_pass' type="password" class="mui-input-password inp"
+                                    placeholder="英文或数字,6~20个字符" value='' maxlength="20"></div>
+        </div>
+        <div class="mui-input-row paw">
+            <label class='l_font'>确认密码：</label>
+            <div class='pass'><input id='ready_pass' type="password" class=" mui-input-password  inp"
+                                     placeholder="英文或数字,6~20个字符" value='' maxlength="20"></div>
+        </div>
+    </div>
+    <div class="wjmm"><span class="wm_s_left">初次设置</span><span class="wm_s">忘记密码</span></div>
+    <div class="active_r update_ready">确认修改</div>
+</div>
+</body>
+<script>
+    var url = window.location.search;
+    var loc = url.substring(url.lastIndexOf('=') + 1, url.length);
+
+    $('.wm_s').on('tap', function () {
+        mui.alert('客服电话:0877-3249568');
+    })
+    $('.wm_s_left').on('tap', function () {
+        mui.openWindow({
+            url: 'pay_psd_add.html?update=' + loc,
+            id: 'pay_psd',
+            createNew: true
+        });
+    })
+    var userid = window.localStorage.getItem('userid');
+
+    var shopid = window.localStorage.getItem('shopid');
+    /*mui.get(config[0].url+'/index.php/is_pay_psd', {userid: userid, openid: openid}, function (data) {
+     //alert(data);
+     if (data == '0') {
+
+     } else {
+
+     }
+
+     }, 'json'
+     );*/
+
+    /* if (loc == 1) {*/
+
+
+    if (loc == 1) {
+        var token = window.localStorage.getItem('token');
+//        alert(token);
+        var type_t = 'person';
+
+    } else {
+        var token = window.localStorage.getItem('shopid');
+        var type_t = 'shop';
+
+    }
+    /*console.info('token:'+token);
+     console.info('type_t:'+type_t);
+     console.info('openid:'+openid);*/
+    /*mui.ajax(config[0].url+'/index.php/has_pay_psd', {
+     data: {
+     token: token,
+     openid: openid,
+     type: type_t
+
+     },
+     dataType: 'json',//服务器返回json格式数据
+     type: 'get',//HTTP请求类型
+     timeout: 10000,//超时时间设置为10秒；
+     success: function (data) {
+
+     if (typeof data == "string") {
+     var data = eval('(' + data + ')');
+     }
+     console.info(data);
+     if (data == 'ok') {
+     $('.wm_s_left').remove();
+     }
+     }
+     });*/
+
+    /*mui.post(config[0].url+'/index.php/has_pay_psd', {
+     token: token,
+     openid: openid,
+     type: type_t,
+     }, function (data) {
+     alert(data);
+     console.info(data);
+     }, 'json'
+     );*/
+    $.post("http://test.foodietech.cn/index.php/has_pay_psd", {
+                token: token,
+                type: type_t,
+            },
+            function (data) {
+                //alert("Data Loaded: " + data);
+                if (data == 'ok') {
+                    $('.wm_s_left').remove();
+                }
+            });
+    $(document).on('tap', '.bk', function () {
+        /*if (loc == 1) {
+         mui.openWindow({
+         url: 'psd_mg.html?update=1',
+         id: 'zx_personal'
+         });
+         } else {
+         mui.openWindow({
+         url: 'psd_mg.html?update=2',
+         id: 'shop_zx'
+         });
+         }*/
+        mui.openWindow({
+            url: 'psd_mg.html?update=' + loc,
+            id: 'zx_personal'
+        });
+
+    })
+    /*} else if (loc == 2) {
+     $(document).on('tap', '.bk', function () {
+     mui.openWindow({
+     url: 'shop_zx.html',
+     id: 'shop_zx'
+     });
+     })
+     }*/
+    $('.update_ready').on('tap', function () {
+        //var userid=window.localStorage.getItem('userid');
+        //alert(userid);
+        /*var openid=window.localStorage.getItem('openid');*/
+        var shopid = window.localStorage.getItem('shopid');
+        //alert(shopid);
+        var old_pass = $('#old_pass').val();
+        var new_pass = $('#new_pass').val();
+        var ready_pass = $('#ready_pass').val();
+
+        if (old_pass == '' || old_pass == null || old_pass == undefined) {
+            mui.toast('密码不能为空');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        }
+        if (new_pass == '' || new_pass == null || new_pass == undefined) {
+            mui.toast('密码不能为空');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        }
+        if (ready_pass == '' || ready_pass == null || ready_pass == undefined) {
+            mui.toast('密码不能为空');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        }
+        if (new_pass != ready_pass) {
+            mui.toast('两次输入的密码不一致');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        } else if (passwd(old_pass) == false || passwd(new_pass) == false || passwd(ready_pass) == false) {
+            mui.toast('请输入正确格式的密码，英文或数字,6~20个字符');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        } else {
+
+            if (loc == 1) {
+                mui.ajax(config[0].url+'/index.php/pay_psd_saves', {
+                    data: {
+
+                        old_pass: old_pass,
+                        new_pass: new_pass,
+                        ready_pass: ready_pass,
+                        token: token,
+                        type: 'person',
+
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        console.info(data);
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+
+                        if (data == 1) {
+                            mui.toast('两次输入的密码不一致');
+
+                        } else if (data == 2) {
+                            mui.toast('原始密码不正确');
+                        } else if (data == false) {
+                            mui.toast('未知错误，修改失败');
+                        } else if (data == '3') {
+
+                            mui.openWindow({
+                                url: 'zx_personal.html',
+                                id: 'zx_personal',
+                                createNew: true
+                            });
+
+
+                        } else if (data == '4') {
+                            mui.alert('新旧密码不能一致！');
+                        }
+
+
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+
+
+            } else if (loc == 2) {
+                mui.ajax(config[0].url+'/index.php/pay_psd_saves', {
+                    data: {
+
+                        old_pass: old_pass,
+                        new_pass: new_pass,
+                        ready_pass: ready_pass,
+                        token: token,
+                        type: 'shop',
+                    },
+                    dataType: 'json',//服务器返回json格式数据
+                    type: 'post',//HTTP请求类型
+                    timeout: 10000,//超时时间设置为10秒；
+                    success: function (data) {
+                        console.info(data);
+                        if (typeof data == "string") {
+                            var data = eval('(' + data + ')');
+                        }
+
+                        if (data == 1) {
+                            mui.toast('两次输入的密码不一致');
+
+                        } else if (data == 2) {
+                            mui.toast('原始密码不正确');
+                        } else if (data == false) {
+                            mui.toast('修改失败');
+                        } else if (data == 3) {
+                            mui.openWindow({
+                                url: 'shop_zx.html',
+                                id: 'shop_zx',
+                                createNew: true
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        //异常处理；
+                        //console.log(type);
+                        switch (type) {
+                            case "timeout":
+                                mui.toast('连接超时，请重试');
+                                break;
+                            default:
+                                mui.toast('请重试或重新登录');
+                        }
+                    }
+                });
+
+
+            }
+
+        }
+    })
+
+    //密码匹配
+    function passwd(obj) {
+
+        reg = /^\w{6,20}$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+</html>

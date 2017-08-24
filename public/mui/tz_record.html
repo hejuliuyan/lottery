@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/tz_record.css" rel="stylesheet"/>
+
+    <script src="js/jquery-latest.js"></script>
+    <style>
+        .mui-content {
+            background-color: #fff;
+        }
+        
+        .kj{
+        	width: 19%;
+        	height: 80px;
+        	float: left;
+        	background-image: url(wimages/kj.png);
+		    background-size: 100%;
+		    background-repeat: no-repeat;
+		    background-position: center;
+		    display: block;
+		  
+        	}
+
+        /*.index {
+            background-image: url(./wimages/index.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 24px;
+            height: 22px;
+            background-position: center;
+            display: block;
+            margin: 0 auto;
+            margin-top: 3px;
+        }
+        .index_font,.wd_font {
+            font-size: 11px;
+            color: #56abe4;
+        }
+
+        .wd {
+            background-image: url(./wimages/gr.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 24px;
+            height: 22px;
+            background-position: center;
+            display: block;
+            margin: 0 auto;
+            margin-top: 3px;
+        }
+
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            padding: 11px 9px;
+        }
+        .bottom_nav {
+            display: table-cell;
+            overflow: hidden;
+            width: 1%;
+            height: 52px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #929292;
+        }*/
+    </style>
+
+</head>
+<body>
+<!--<nav class="mui-bar mui-bar-tab">
+    <a class="bottom_nav mui-active w_index" href="javascript:void(0)">
+        <span class="index"></span>
+        <span class="mui-tab-label index_font">首页</span>
+    </a>
+
+    <a href="javascript:void(0)" class="bottom_nav w_info">
+        <span class="wd"></span>
+        <span class="mui-tab-label wd_font">我的</span>
+    </a>
+
+</nav>-->
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class='mid'>
+
+
+        </div>
+    </div>
+</div>
+<script src="js/tk_check.js"></script>
+<script type="text/javascript" charset="UTF-8">
+//location.reload();
+
+    mui.init({
+        pullRefresh: {
+            container: '#pullrefresh',
+            up: {
+                contentrefresh: '正在加载...',
+                callback: pullupRefresh,
+                auto:true,
+            }
+        }
+    });
+    
+  /*  var reset = window.localStorage.getItem('reset');
+    if(reset){
+    	alert(1)
+    	pullupRefresh();
+    	mui('#pullup-container').pullRefresh().refresh(true);
+    }*/
+
+    var userid = window.localStorage.getItem('token');
+    //var openid = window.localStorage.getItem('openid');
+    
+//  if (!userid) {
+//      mui.openWindow({
+//          url: 'login.html',
+//          id: 'login',
+//          createNew:true
+//      })
+//  }
+
+    $('.bk').on('tap', function () {
+    	var html='zx_personal.html';
+    	token_check(userid,html);
+        
+    })
+
+    $(document).on('tap', '.w_info', function () {
+        //alert(123);
+        var html='zx_personal.html';
+    	token_check(userid,html);
+        
+    });
+
+    $(document).on('tap', '.w_index', function () {
+        //alert(123);
+        var html='index.html';
+    	token_check(userid,html);
+        
+    });
+
+    $(document).on('tap', '.list_2', function () {
+        var order_id = $(this).next().val();
+        //alert(order_id);
+        window.localStorage.setItem("order_id", order_id);
+        window.localStorage.setItem('reset',0);       
+        //window.location.href='order_ok.html?record=tz';
+        var html='order_ok.html';
+    	token_check(userid,html);
+       /* mui.openWindow({
+            url: 'order_ok.html',
+            id: 'order_ok'
+        });*/
+    })
+    
+    
+    var skip = 0;
+    var count = 0;
+    var cp_type = '01';
+    /**
+     * 上拉加载具体业务实现
+     */
+    function pullupRefresh() {
+
+        mui.ajax(config[0].url+'/index.php/save_total', {
+            data: {
+                userid: userid, type: 'tz', cp_type: cp_type,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                console.log(data);
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > data));
+                /*setTimeout(function () {*/
+                    mui.ajax(config[0].url+'/index.php/tz_record', {
+                        data: {
+                            userid: userid, skip: skip,
+                        },
+                        dataType: 'json',//服务器返回json格式数据
+                        type: 'post',//HTTP请求类型
+                        timeout: 10000,//超时时间设置为10秒；
+                        success: function (data) {
+                            if (typeof data == "string") {
+                                var data = eval('(' + data + ')');
+                            }
+                            console.log(data);
+                            var arr = [];
+                            var brr = [];
+                            var arr = ['订单已提交', '用户已支付', '店铺已接单', '店铺已出票', '已确认出票', '订单已取消', '订单已中奖', '店铺已派奖'];
+                            var brr = ['大乐透', '七星彩', '排三·直选', '排三·组三', '排三·组六', '排三·直选复式胆拖', '排五','排三·和值·直选','排三·和值·组三','排三·和值·组六'];
+                            for (var i = 0; i < data.length; i++) {
+                                var a = '';
+                                var b = '';
+                                var c = '';
+                                if(data[i].award==0){
+                                	b = "<div class='list'><div class='list_1'><div class='left_1'>" + data[i].shop_name + "&nbsp;></div><div class='right_1'>" + arr[data[i].status] + "</div></div><div class='list_2'><div class='left_2'><dt>" + brr[data[i].new_type] + "</dt><dt>" + data[i].order_qi + "</dt></div><div class='right_2'><div class='s_left'><dt class='f_red'>￥" + data[i].order_money + "</dt><dt>" + data[i].new_time + "</dt></div><div class='s_right'></div></div></div><input type='hidden' value='" + data[i].id + "'></div>";
+                                }else if(data[i].award==2){
+                                	b = "<div class='list'><div class='list_1'><div class='left_1'>" + data[i].shop_name + "&nbsp;></div><div class='right_1'>" + arr[data[i].status] + "</div></div><div class='list_2'><div class='left_2'><dt>" + brr[data[i].new_type] + "</dt><dt>" + data[i].order_qi + "</dt></div><div class='kj'></div><div class='right_2'><div class='s_left'><dt class='f_red'>￥" + data[i].order_money + "</dt><dt>" + data[i].new_time + "</dt></div><div class='s_right'></div></div></div><input type='hidden' value='" + data[i].id + "'></div>";
+                                }
+                                
+
+                                $('.mid').append(b);
+                            }
+                        },
+                        error: function (xhr, type, errorThrown) {
+                            //异常处理；
+//                            console.log(type);
+                            switch (type) {
+                                case "timeout":
+                                    mui.toast('连接超时，请重试');
+                                    break;
+                                default:
+                                    mui.toast('请重试或重新登录');
+                            }
+                        }
+                    });
+
+                    skip += 6;
+
+
+                /*}, 1500);*/
+
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+//                console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+
+    }
+
+    if (mui.os.plus) {
+        mui.plusReady(function () {
+            setTimeout(function () {
+                mui('#pullrefresh').pullRefresh().pullupLoading();
+            }, 1000);
+
+        });
+    } else {
+        mui.ready(function () {
+            mui('#pullrefresh').pullRefresh().pullupLoading();
+        });
+    }
+
+
+</script>
+</body>
+</html>

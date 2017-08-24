@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/zx_personal.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+        mui.init({
+           
+        });
+    </script>
+    <script src="js/jquery-latest.js"></script>
+    <style>
+        .mui-content {
+            background-color: #fff;
+        }
+
+        .index {
+            background-image: url(./wimages/index2.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 24px;
+            height: 22px;
+            background-position: center;
+            display: block;
+            margin: 0 auto;
+            margin-top: 3px;
+        }
+
+        .wd_font {
+            font-size: 11px;
+            color: #56abe4;
+        }
+
+        .index_font {
+            font-size: 11px;
+            color: lightgray;
+        }
+
+        .wd {
+            background-image: url(./wimages/gr.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 24px;
+            height: 22px;
+            background-position: center;
+            display: block;
+            margin: 0 auto;
+            margin-top: 3px;
+        }
+
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            padding: 11px 9px;
+        }
+
+        .bottom_nav {
+            display: table-cell;
+            overflow: hidden;
+            width: 1%;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #929292;
+        }
+
+        .m_left {
+            width: 49%;
+            float: left;
+            /*margin-left: 2%;*/
+            margin-right: 1%;
+            background-color: #fff;
+            height: 40px;
+        }
+
+        .m_right {
+            width: 50%;
+            float: left;
+            background-color: #fff;
+            height: 40px;
+        }
+
+        .m_top2 {
+            height: 42px;
+            background-color: #e7e7e7;
+        }
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <!-- <a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>-->
+    <h1 class="mui-title">个人中心</h1>
+</header>
+<!--<nav class="mui-bar mui-bar-tab">
+    <dt class="active_r login_out">退出登录</dt>
+</nav>-->
+<nav class="mui-bar mui-bar-tab">
+    <a class="bottom_nav mui-active w_index" href="javascript:void(0)">
+        <span class="index"></span>
+        <span class="mui-tab-label index_font">首页</span>
+    </a>
+    <!--<a class="bottom_nav" href="#tabbar-with-chat">
+        <span class="mui-icon mui-icon-email"></span>
+        <span class="mui-tab-label">搜店</span>
+    </a> -->
+    <a href="javascript:void(0)" class="bottom_nav w_info">
+        <span class="wd"></span>
+        <span class="mui-tab-label wd_font">我的</span>
+    </a>
+
+</nav>
+<div class="mui-content">
+    <div class='main_top'>
+        <div class='m_top1'>
+            <div class='tx'>
+                <dt><img class='headimgurl' src="wimages/personal/wx_head.png " width='50' height='50'/></dt>
+                <dt class='wx_name'></dt>
+            </div>
+        </div>
+        <div class='m_top2'>
+            <div class='m_left'>
+                <dt style='font-size: 14px;'>账户余额</dt>
+                <dt class='balance' style='color:#56ABE4;font-size: 16px;'></dt>
+            </div>
+            <div class='m_right'>
+                <dt style='font-size: 14px;'>累计兑奖</dt>
+                <dt class='winprize' style='color:red;font-size: 16px;'></dt>
+            </div>
+        </div>
+    </div>
+    <div class='main_mid'>
+        <div class='n_pic tz_record'>
+            <dt><img src="wimages/personal/order.png" width='50' height='50'/></dt>
+            <dt class='n_title '>投注记录</dt>
+        </div>
+        <div class='n_pic award_record'>
+            <dt><img src="wimages/personal/award.png" width='50' height='50'/></dt>
+            <dt class='n_title'>中奖纪录</dt>
+        </div>
+        <div class='n_pic save_case'>
+            <dt><img src="wimages/personal/save.png" width='50' height='50'/></dt>
+            <dt class='n_title'>保存方案</dt>
+        </div>
+        <div class='n_pic my_wallet'>
+            <dt><img src="wimages/personal/purse.png" width='50' height='50'/></dt>
+            <dt class='n_title'>我的钱包</dt>
+        </div>
+    </div>
+    <div class='clear'></div>
+    <div class='main_bottom'>
+        <div class='list ready_name'>
+            <div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/realname.png" width='30' height='30'/></div>
+                <div class='left_font'>实名认证</div>
+            </div>
+            <div class='list_right'>
+                <div class='no_ready'>
+                    <span>未完善</span>
+                </div>
+                <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+            </div>
+
+        </div>
+        <div class='list update_pass'>
+            <!--<div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/pass.png" width='30' height='30'/></div>
+                <div class='left_font'>修改密码</div>
+            </div>-->
+            <div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/pass.png" width='30' height='30'/></div>
+                <div class='left_font'>密码管理</div>
+            </div>
+            <div class='list_right'>
+                <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+            </div>
+
+        </div>
+        <!--<div class='list update_zf'>
+            <div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/pass.png" width='30' height='30'/></div>
+                <div class='left_font'>支付密码</div>
+            </div>
+            <div class='list_right'>
+                <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+            </div>
+
+        </div>-->
+        <div class='list myshop'>
+            <div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/shop.png" width='30' height='30'/></div>
+                <div class='left_font'>我的彩店</div>
+            </div>
+            <div class='list_right'>
+                <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+            </div>
+
+        </div>
+    </div>
+    <div style='text-align: center;margin-top: 20px;'>
+        <button type="button" class="mui-btn mui-btn-danger login_out" style='width:80%;    margin-top: 20px;'>退出登录
+        </button>
+    </div>
+</div>
+</body>
+<script src="js/tk_check.js"></script>
+<script type="text/javascript">
+    var userid = window.localStorage.getItem('token');
+    //alert(userid);
+    //var openid = window.localStorage.getItem('openid');
+    var headimgurl = window.localStorage.getItem('headimgurl');
+    //alert(headimgurl)
+    if (!userid) {
+//  	if(isWeiXin()){
+//  		mui.openWindow({
+//	            url: config[0].url+'/index.php/wx?tz=1',
+//	            id: 'wx'
+//	        })
+//  	}else{
+//  		mui.openWindow({
+//	            url: 'login.html',
+//	            id: 'login',
+//	            createNew:true
+//	        })
+//  	}
+        
+    } else {
+        if (headimgurl) {
+            $('.headimgurl').attr('src', headimgurl).css('border-radius', '30px');
+        }
+        		
+        mui.ajax(config[0].url+'/index.php/personal_check', {
+            data: {
+                userid: userid
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                /*if (data == false) {
+                 mui.toast('未知异常');
+                 return;
+                 }*/
+                $('.wx_name').text(data[0].account);
+                if (data[0].real_name == '' || data[0].real_name == null || data[0].real_name == undefined || data[0].idcard_numer == '' || data[0].idcard_numer == null || data[0].idcard_numer == undefined) {
+                    $('.no_ready').show();
+
+                }
+
+
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+
+        mui.ajax(config[0].url+'/index.php/search_user_balance', {
+            data: {
+                token: userid,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                console.log(data.winprize);
+                $('.balance').html(data.balance + '元');
+                if(data.hasOwnProperty('winprize')){
+                	$('.winprize').html(data.winprize + '元');
+                }else{
+                	$('.winprize').html(data.giveprize + '元');
+                }
+                
+              
+
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                //console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+
+    }
+    /* $('.bk').on('tap', function () {
+     mui.openWindow({
+     url: 'index.html',
+     id: 'index'
+     });
+     })*/
+
+    $(document).on('tap', '.w_info', function () {
+        var html = 'zx_personal.html';
+        token_check(userid, html);
+
+    });
+
+    $(document).on('tap', '.w_index', function () {
+        var html = 'index.html';
+        token_check(userid, html);
+
+    });
+
+
+    $('.login_out').on('tap', function () {
+        var btnArray = ['是', '否'];
+        mui.confirm('确定退出？', '', btnArray, function (e) {
+            if (e.index == 0) {
+                window.localStorage.setItem('token', '');
+                window.localStorage.setItem('login_bs', '0');
+                mui.openWindow({
+                    url: 'login.html',
+                    id: 'login',
+                    createNew:true
+                });
+            } else {
+
+            }
+        })
+    })
+
+    $('.update_pass').on('tap', function () {
+        var html = 'psd_mg.html?update=1';
+        token_check(userid, html);
+        //window.location.href = 'psd_mg.html?update=1';
+    })
+    $('.update_zf').on('tap', function () {
+        var html = 'pay_psd.html';
+        token_check(userid, html);
+        //window.location.href = 'pay_psd.html';
+    })
+    $('.ready_name').on('tap', function () {
+        var html = 'personal.html';
+        token_check(userid, html);
+        /* mui.openWindow({
+         url: 'personal.html',
+         id: 'personal'
+         });*/
+    })
+
+    $('.tz_record').on('tap', function () {
+        var html = 'tz_record_main.html';
+        //alert(123);
+        token_check(userid, html);
+        /*mui.openWindow({
+         url: 'tz_record_main.html',
+         id: 'tz_record_main.html'
+         });*/
+    })
+
+    $('.award_record').on('tap', function () {
+        var html = 'award_record_main.html';
+        token_check(userid, html);
+        /*mui.openWindow({
+         url: 'award_record_main.html',
+         id: 'award_record_main.html'
+         });*/
+    })
+
+    $('.save_case').on('tap', function () {
+        var html = 'save_case_main.html';
+        token_check(userid, html);
+        /*mui.openWindow({
+         url: 'save_case_main.html',
+         id: 'save_case_main'
+         });*/
+    })
+    $('.my_wallet').on('tap', function () {
+        var html = 'mywallet_list.html';
+        token_check(userid, html);
+        /*mui.openWindow({
+         url: 'mywallet_list.html',
+         id: 'mywallet_list'
+         });*/
+    })
+
+    $('.myshop').on('tap', function () {
+        var html = 'myshop_main.html';
+        token_check(userid, html);
+        /*mui.openWindow({
+         url: 'mywallet_list.html',
+         id: 'mywallet_list'
+         });*/
+    })
+    
+    function isWeiXin(){
+	    var ua = window.navigator.userAgent.toLowerCase();
+	    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+	        return true;
+	    }else{
+	        return false;
+	    }
+	}
+
+</script>
+</html>

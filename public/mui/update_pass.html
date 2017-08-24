@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/update_pass.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+        mui.init();
+    </script>
+    <script src="js/jquery-latest.js"></script>
+    <style>
+        .wjmm {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .wm_s {
+            font-size: 15px;
+            color: #A9ABB6;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+    <h1 class="mui-title">登录密码重置</h1>
+</header>
+<div class="mui-content">
+    <div class='reg'>
+        <div class="mui-input-row paw">
+            <label class='l_font'>原密码：</label>
+            <input id='old_pass' type="password" class="mui-input-password inp" placeholder="英文或数字,6~20个字符"
+                   maxlength="20" value=''>
+        </div>
+        <div class="mui-input-row paw">
+            <label class='l_font'>新密码：</label>
+            <div class='yzm'><input id='new_pass' type="password" class="mui-input-password inp"
+                                    placeholder="英文或数字,6~20个字符" value='' maxlength="20"></div>
+        </div>
+        <div class="mui-input-row paw">
+            <label class='l_font'>确认密码：</label>
+            <div class='pass'><input id='ready_pass' type="password" class=" mui-input-password  inp"
+                                     placeholder="英文或数字,6~20个字符" value='' maxlength="20"></div>
+        </div>
+    </div>
+    <div class="wjmm"><span class="wm_s">忘记密码</span></div>
+    <div class="active_r update_ready">确认修改</div>
+</div>
+</body>
+<script>
+    $('.wm_s').on('tap', function () {
+        alert('客服电话:0111-111111');
+    })
+    var url = window.location.search;
+    $(document).on('tap', '.bk', function () {
+        mui.openWindow({
+            url: 'psd_mg.html?update=1',
+            id: 'zx_personal',
+            createNew: true
+        });
+    })
+ 
+    $('.update_ready').on('tap', function () {
+        var userid = window.localStorage.getItem('token');
+        //var openid = window.localStorage.getItem('openid');
+        var old_pass = $('#old_pass').val();
+        var new_pass = $('#new_pass').val();
+        var ready_pass = $('#ready_pass').val();
+        if (old_pass == '' || old_pass == null || old_pass == undefined) {
+            mui.toast('密码不能为空');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        }
+        if (new_pass == '' || new_pass == null || new_pass == undefined) {
+            mui.toast('密码不能为空');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        }
+        if (ready_pass == '' || ready_pass == null || ready_pass == undefined) {
+            mui.toast('确认密码不能为空');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        }
+        if (new_pass != ready_pass) {
+            mui.toast('两次输入的密码不一致');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        } else if (passwd(old_pass) == false || passwd(new_pass) == false || passwd(ready_pass) == false) {
+            mui.toast('请输入正确格式的密码，英文或数字,6~20个字符');
+            $('#old_pass').val('');
+            $('#new_pass').val('');
+            $('#ready_pass').val('');
+            return;
+        } else {
+            mui.ajax(config[0].url+'/index.php/update_pass', {
+                data: {
+                    token: userid,
+                    old_pass: old_pass,
+                    new_pass: new_pass,
+                    ready_pass: ready_pass,
+                    type: 'person',
+                },
+                dataType: 'json',//服务器返回json格式数据
+                type: 'post',//HTTP请求类型
+                timeout: 10000,//超时时间设置为10秒；
+                success: function (data) {
+                    console.info(data);
+                    if (typeof data == "string") {
+                        var data = eval('(' + data + ')');
+                    }
+
+                    if (data == 2) {
+                       
+						mui.toast('原始密码不正确');
+                    }else if (data == 3) {
+                         mui.toast('两次输入的密码不一致');
+                    }else if (data == '4') {
+                        mui.alert('新旧密码不能一致！');
+                    }else if (data == false) {
+                        mui.toast('未知错误，修改失败');
+                    }else if (data == true) {
+                        mui.openWindow({
+                            url: 'zx_personal.html',
+                            id: 'zx_personal',
+                            createNew: true
+                        });
+                    }
+                },
+                error: function (xhr, type, errorThrown) {
+                    //异常处理；
+//                        console.log(type);
+                    switch (type) {
+                        case "timeout":
+                            mui.toast('连接超时，请重试');
+                            break;
+                        default:
+                            mui.toast('请重试或重新登录');
+                    }
+                }
+            });
+
+
+        }
+    })
+
+    //密码匹配
+    function passwd(obj) {
+
+        reg = /^\w{6,20}$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+</html>

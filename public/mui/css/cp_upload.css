@@ -1,0 +1,258 @@
+html,body {
+	background-color: #efeff4;
+	min-width: 320px;
+	max-width: 640px;
+	margin:0 auto;
+			}
+			
+.clear{ clear: both;}
+
+.cp_list{
+	width:100%;
+	height: 54px;
+	border-bottom: 1px solid gainsboro;
+	background-color: #fff;
+	text-align: center;
+}
+
+.cp_list_num{
+	width:100%;
+	min-height: 110px;
+	border-bottom: 1px solid gainsboro;
+	background-color: #fff;
+	text-align: center;
+}
+
+.cp_list_camera{
+	width:100%;
+	min-height: 60px;
+	border-bottom: 1px solid gainsboro;
+	background-color: #fff;
+	text-align: center;
+}
+
+.f_red{
+	color:red;
+}
+.tz_num{
+	color:#56abe4;
+	font-size: 16px;
+}
+.cp_content dt{
+	width:100%;
+	height:22px;
+	line-height: 22px;
+	margin-top: 4px;
+	font-size: 14px;
+	color: gray;
+}
+
+.cp_title{
+	width:30%;
+	float:left;
+	text-align: center;
+	height: 54px;
+	line-height: 54px;
+}
+
+.cp_content{
+	width:50%;
+	float:left;
+	height: 54px;
+	line-height:54px;
+	font-size: 14px;
+	color: gray;
+	
+}
+
+.cp_money{
+	width:20%;
+	float:left;
+	height: 54px;
+	line-height: 54px;
+}
+
+.cp_num{
+	width:100%;
+	min-height: 50px;
+	text-align: center;
+	padding-left: 8%;
+	margin-bottom: 4px;
+}
+.choose_rball{
+			width:24px;
+			height:24px;
+			border:1px solid red;
+			float:left;
+			margin-left:8px ;
+			margin-right:-1px;
+			margin-bottom: 12px;
+			text-align: center;
+			color:#fff;
+			border-radius: 25px;
+			line-height: 24px;
+			font-size: 10px
+}
+
+.choose_bball{
+			width:24px;
+			height:24px;
+			border:1px solid #419FDE;
+			float:left;
+			margin-left:8px ;
+			margin-right:-1px;
+			margin-bottom: 12px;
+			text-align: center;
+			color:#fff;
+			border-radius: 25px;
+			line-height: 24px;
+			font-size: 10px;
+}
+
+/*红球选中*/
+.rxq{
+	color:#ffffff;
+	background-color: red;
+}
+
+/*蓝球选中*/
+.bxq{
+	color:#ffffff;
+	background-color: #419FDE;
+}
+
+.photo{
+	width: 80%;
+    min-height: 156px;
+  /*  border: 1px solid gray;*/
+    margin-left: 10%;
+    text-align: center;
+}
+
+.photo_img{
+	background-image: url(../wimages/photo.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    background-position: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 18px;
+}
+
+.cp_up{
+	width:80%;
+	margin-top:5px;
+	margin:0 auto;
+}
+
+.pj_ready{
+	width:80%;
+	margin-top:5px;
+	margin:0 auto;
+}
+
+.mui-bar .mui-btn{
+	margin-left: 10%;
+}
+
+.rxd{ background: red;}
+.bxd{background: #56abe4;}
+
+
+/**********中奖详情CSS************/
+.zj_tab {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    margin-left: 5%;
+    }
+    
+.zj_tab th, .zj_tab td {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #e1e1e1;
+}
+
+.zj_tab th {
+    font-weight: normal;
+    font-size: 12px;
+    text-align:center;
+    background: url(../wimages/tab-thbg.png) #f9f9f9 0 bottom repeat-x;
+}
+
+.zj_tab tr {
+    line-height: 25px;
+}
+
+.zj_tab td{
+	font-weight: normal;
+    font-size: 12px;
+}
+
+
+.zj_total{
+	width:90%;
+	margin-left: 5%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	
+	height:30px;
+	line-height: 30px;
+	text-align: left;
+	font-size: 14px;
+}
+
+.zj_money,.zj_font{
+	font-size: 20px;
+}
+
+
+.pay_order{
+	width:80%;
+
+}
+
+.out_order{
+	width:40%;
+	float:left;
+}
+
+.c_order{
+	width:40%;
+	float:left;
+}
+
+.ts_order{
+	width:40%;
+	float:left;
+}
+
+.cp_order{
+	width:80%;
+	float:left;
+}
+
+.order_more{
+	width:80%;
+	float:left;
+}
+
+
+.ts_tb{
+	background-image:url(../wimages/ts_phone.png);
+	width:12px;
+	height:12px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	
+}
+
+.shop_tb{
+	background-image: url(../wimages/shop_phone.png);
+	width:12px;
+	height:12px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+

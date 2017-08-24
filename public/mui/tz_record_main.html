@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/tz_record.css" rel="stylesheet"/>
+
+    <script src="js/jquery-latest.js"></script>
+</head>
+<body>
+
+<header class="mui-bar mui-bar-nav">
+    <a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+    <h1 class="mui-title">投注记录</h1>
+</header>
+<div class="mui-content">
+
+</div>
+
+</body>
+<script type="text/javascript">
+
+    //启用双击监听
+    mui.init({
+    	
+        gestureConfig: {
+            doubletap: true
+        },
+        subpages: [{
+            url: 'tz_record.html',
+            id: 'tz_record.html',
+            styles: {
+                top: '45px',
+                bottom: '0px',
+            }
+        }]      
+    });
+	
+    var contentWebview = null;
+    document.querySelector('header').addEventListener('doubletap', function () {
+        if (contentWebview == null) {
+            contentWebview = plus.webview.currentWebview().children()[0];
+        }
+        contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+    });
+    
+    /*if(!isWeiXin()){
+    	if(window.localStorage.getItem('reset')==1){
+    		//alert(122)
+	    	
+			
+			mui.plusReady(function () {
+				
+				
+               var subWebview = mui.preload({
+				    url:'tz_record.html',
+				    id:'tz_record.html',
+				    styles:{
+				        top: '45px',
+				        bottom: '0px'
+				    }
+				});
+           		var par=plus.webview.getWebviewById('tz_record_main.html');
+				par.append(subWebview);
+	          
+				
+
+        	});
+			
+    	}
+    }*/
+    
+    
+
+    $('.bk').on('tap', function () {
+        mui.openWindow({
+            url: 'zx_personal.html',
+            createNew:true
+        });
+    })
+	
+	function isWeiXin(){
+	    var ua = window.navigator.userAgent.toLowerCase();
+	    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+	        return true;
+	    }else{
+	        return false;
+	    }
+	}
+
+</script>
+</html>

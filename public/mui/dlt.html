@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+    content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/test.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8">
+        mui.init({});
+    </script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <style>
+        .mui-bar .mui-btn {
+            padding: 4px 10px 5px;
+        }
+
+        .rxd {
+            background: red;
+        }
+
+        .bxd {
+            background: dodgerblue;
+        }
+
+        .add_tb li {
+            list-style-type: none;
+        }
+
+        .mui-switch:before {
+            top: -5px;
+        }
+
+        .mui-switch.mui-active {
+            border-color: #007aff;
+            background-color: #007aff;
+        }
+    </style>
+</head>
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <div class='head_choose'>
+            <div class='jt' style='float: left;'><a href='index.html' class="jt_back mui-icon mui-icon-left-nav mui-pull-left"></a></div>
+            <h1 class="mui-title"><span id='ttz'>普通投注</span><input type="hidden" value='0'/><a href="#popover_mid"
+             id="openPopover"><img
+             src="wimages/jt_down.png" alt="" width='25' height='25'></a></h1>
+             <div class='menu' style='float: right;'><a href="#popover_right" id="openPopover"><span
+                class="mui-icon mui-icon-bars"></span></a></div>
+            </div>
+
+            <div class="head_ready">
+                <a class=" bk mui-icon mui-icon-left-nav mui-pull-left"></a>
+                <h1 class="mui-title">确认选单</h1>
+            </div>
+        </header>
+        <!--顶部右边菜单-->
+        <div id="popover_right" class="mui-popover">
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell"><a href="#">玩法说明</a></li>
+                <li class="mui-table-view-cell"><a href="#">历史开奖</a></li>
+                <li class="mui-table-view-cell dlt_chart"><a href="javascript:void(0)">走势图</a></li>
+        <!--<li class="mui-table-view-cell"><a href="#">Item3</a></li>
+	    <li class="mui-table-view-cell"><a href="#">Item4</a></li>
+	    <li class="mui-table-view-cell"><a href="#">Item5</a></li>-->
+    </ul>
+</div>
+<!--顶部中部菜单-->
+<div id="popover_mid" class="mui-popover">
+    <ul class="mui-table-view mui-table-view-radio">
+        <li class="mui-table-view-cell mui-selected pt">
+            <a class="mui-navigate-right ">普通投注</a>
+        </li>
+        <li class="mui-table-view-cell dan">
+            <a class="mui-navigate-right">定胆投注</a>
+        </li>
+    </ul>
+</div>
+<input type="hidden" id='tz_bj' value='0'/>
+
+<!--底部固定栏-->
+<nav id="footerBar" class="mui-bar mui-bar-tab">
+    <div class='foot_choose'>
+        <div class='footer_font'>至少选5红球2蓝球</div>
+        <div class='footer_next'>
+            <button id='next' type="button" class="mui-btn mui-btn-danger h_gao" style='width:80%'>下一步</button>
+        </div>
+    </div>
+    <div class="foot_ready">
+        <!--<div id="bs" style="height: 44px;">
+				<button type="button" id='jia' class="mui-btn mui-btn-primary">+</button>
+				<div class='bb'><div class='bs_num'>1</div><div class='bs_font'>倍</div></div>
+				<button type="button" class="mui-btn mui-btn-primary jian">-</button><div class="clear"></div>
+			</div>
+			<div class='clear'></div>
+			<div id='total_money'>
+				金额:<span class='total_mon'></span>元 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id='zj' class='zjj' type="checkbox">追加(每注3元)
+			</div>
+			<div class='bs_btn'>
+				<button type="button" id='sub' class="mui-btn mui-btn-danger">提交彩店</button><button type="button" id='save' class="mui-btn">保存</button>
+
+			</div>
+			<div class='bs_buttom_font'>
+
+				<p class='p2'><input type="checkbox" checked="checked"  disabled="disabled"/>同意《希迈尔代购协议》并已经认可投注详情</p>
+			</div>-->
+            <div class='foot_list'>
+                <div class='bs_buttom_font'>
+                    <p class='p2'><input type="checkbox" checked="checked" disabled="disabled"/>同意《希迈尔代购协议》并已经认可投注详情</p>
+                </div>
+            </div>
+            <div class='foot_list'>
+                <div class='bs_fonts'>倍数：<span class='bs_nn'>1</span></div>
+                <div class='bs_tb'>
+                    <button type="button" id='jia' class="mui-btn mui-btn-primary">+</button>
+                    <div class='bb'>
+                        <div class='bs_num'>1</div>
+                    </div>
+                    <button type="button" class="mui-btn mui-btn-primary jian">-</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class='foot_list'>
+                <div class='add_font'>
+                    追加(每注3元)：<span class='add_bj'>是</span>
+                </div>
+                <div class='add_tb' style='width:38%'>
+                    <li class="mui-table-view-cell" style='padding: 20px 15px;'>
+                        <input type="hidden" class='add_zj' value=''/>
+                        <div class="mui-switch mui-active">
+                            <div class="mui-switch-handle zk"></div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+            <div class='foot_list'>
+                <div class='zs_font'>
+                    注数：<span class='zs_num'></span>
+                </div>
+                <div class='mon_font' style='text-align: center;'>
+                    金额：&nbsp;&nbsp;&nbsp;<span class='total_mon' style='color:red'></span>&nbsp;&nbsp;元
+                </div>
+            </div>
+            <div class='foot_list' style='height: 50px'>
+                <button id='sub' type="button" class="mui-btn mui-btn-red"
+                style='margin-left: 5%;width: 40%;height: 34px;margin-top: 8px;'>提交彩店
+            </button>
+            <button id='save' type="button" class="mui-btn mui-btn-blue"
+            style='margin-left: 8%;width: 40%;height: 34px;margin-top: 8px;'>保存方案
+        </button>
+    </div>
+</div>
+</nav>
+
+<div class="mui-content">
+    <div class='choose'>
+        <!--顶部开奖时间-->
+        <div class='kj_time'>
+            <span><span class='now_qi'></span>&nbsp;&nbsp;&nbsp;<span class='kjt'>今天20:00截止，20:30开奖</span></span>
+            <div class='jt_round'><img class='jt_change' src="wimages/jt_round_down.png" alt="" width='20' height="20"/>
+            </div>
+            <input type="hidden" value="0" class='jt_v'/>
+        </div>
+        <!--历史开奖-->
+        <div class="history">
+            <div class='h_top'>
+                <span class='q_all'>期号</span>
+                <span class='k_all'>开奖号码</span>
+            </div>
+            <div class="clear"></div>
+            <div class='h_main'>
+
+            </div>
+        </div>
+        <div class='clear'></div>
+
+
+        <!--机选-->
+        <div class="index_top"><span class='sj'>机选</span></div>
+        <!--选择球-->
+        <div id='index_main'>
+            <div id='index_main1'></div>
+            <div>
+                <hr>
+            </div>
+            <div id='index_main2'></div>
+            <input id='red_num' type="hidden" value='0'>
+            <input id='blue_num' type="hidden" value='0'>
+            <input id='money' type="hidden" value='0'>
+            <input id='tz' type="hidden" value='0'>
+            <input id='rr_dan' type="hidden" value='0'/>
+            <input id='bb_dan' type="hidden" value='0'/>
+            <input id='to_tz' type="hidden" value='0'/>
+            <input type="hidden" value='0' class='person'/>
+
+        </div>
+
+    </div>
+    <div class="yes"></div>
+    <div class='saj' style='display: none'></div>
+
+    <div class="ready">
+        <div class='end_time'>
+            <span><span class='now_qi'></span>&nbsp;&nbsp;<span class='e_time'>05-14 20:00</span>停售</span>
+        </div>
+        <div class="re_btn">
+            <button type="button" id='hand' class="mui-btn mui-btn-primary mui-btn-outlined">手选号码</button>
+            <button type="button" id='robot' class="mui-btn mui-btn-primary mui-btn-outlined">机选一注</button>
+            <div class="clear"></div>
+        </div>
+        <div class='preview'></div>
+
+    </div>
+
+</div>
+
+</body>
+<script type="text/javascript">
+    mui('.foot_ready .mui-switch').each(function () { //循环所有toggle
+        //toggle.classList.contains('mui-active') //可识别该toggle的开关状态
+        var a = this.classList.contains("mui-active");
+
+        //console.log(this.previousSibling.previousSibling.value);
+        if (a) {
+            this.previousSibling.previousSibling.value = 'true';
+
+
+            //b.innerText='是';
+
+        } else {
+            this.previousSibling.previousSibling.value = 'false';
+
+            // b.innerText='否';
+
+        }
+        /**
+         * toggle 事件监听
+         */
+        //console.log(this.classList.contains('mui-active'));
+        this.addEventListener('toggle', function (event) {
+            //event.detail.isActive 可直接获取当前状态
+            //this.parentNode.querySelector('input').value = (event.detail.isActive ? 'true' : 'false');
+            this.previousSibling.previousSibling.value = event.detail.isActive ? 'true' : 'false';
+
+            if (event.detail.isActive) {
+                this.previousSibling.previousSibling.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText = '是';
+            } else {
+                this.previousSibling.previousSibling.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].innerText = '否';
+
+            }
+            //console.log(event.detail.isActive);
+            //console.log(toggle.classList.contains('mui-active'));
+        });
+    });
+</script>
+<script src="js/tk_check.js"></script>
+<script type="text/javascript">
+    mui.plusReady(function () {
+        plus.webview.currentWebview();
+    });
+    reset();//进页面重置一下
+    function xh_red() {
+        //循环红球
+        var b = '';
+        for (var i = 1; i <= 35; i++) {
+            if (i < 10) {
+                i = '0' + i;
+            }
+            b += "<div class='r_ball'><span>" + i + "</span></div><input class='checkbox_h1' type='hidden' value=" + i + "><input class='r_dan' type='hidden' value='0'>";
+
+
+        }
+        jQuery('#index_main1').append(b);
+
+        //循环蓝球
+        var d = '';
+        for (var j = 1; j <= 12; j++) {
+            if (j < 10) {
+                j = '0' + j;
+            }
+            d += "<div class='b_ball'>" + j + "</div><input class='checkbox_h2' type='hidden' value=" + j + "><input class='b_dan' type='hidden' value='0'>";
+
+        }
+        jQuery('#index_main2').append(d);
+    }
+    xh_red();
+
+    var url = window.location.search;
+    var loc = url.substring(url.lastIndexOf('=') + 1, url.length);
+    var s_id = url.substring(url.lastIndexOf('?') + 1, 3);
+    //console.log(save_id);
+    
+    $(document).on('tap','.dlt_chart',function(){
+    	mui.plusReady(function () {
+			var web=plus.webview.getWebviewById('Lotto_chart_main');
+			var web_child=plus.webview.getWebviewById('Lotto_chart.html');
+			//web.show();
+			if(web){
+				//alert(222)
+				web.show();
+				web_child.show();
+			}else{
+				//alert(333)
+				mui.openWindow({
+				    url: 'Lotto_chart_main.html', 
+				    id:'Lotto_chart_main',
+				    createNew:true
+				});
+			}
+        	
+			             
+    	});
+	    	//alert(2)
+	    	/*mui.openWindow({
+			    url: 'Lotto_chart_main.html', 
+			    //id:'index',
+			    createNew:true
+			});*/
+	   
+    })
+
+    if (loc == 'update') {
+    	$('.jt_back').attr('href','dlt_sec.html');
+        /*jQuery(document).on('tap', '.jt_back', function () {
+            var userid = window.localStorage.getItem("token");
+            var html = 'dlt_sec.html';
+            token_check(userid, html);
+            
+     	})*/
+        var num = window.localStorage.getItem('update_num');
+        var up_num = JSON.parse(num);
+        console.log(up_num);
+        var red = jQuery('.r_ball');
+        var blue = jQuery('.b_ball');
+        var arr = [];
+        arr = up_num.num.split('|');
+        if (up_num.dlt_types == 1) {
+            $('#ttz').text('普通投注');
+            $('#tz_bj').val(0);
+            var brr = [];
+            var crr = [];
+            brr = arr[0].split(',');
+            crr = arr[1].split(',');
+            for (var i = 0; i < brr.length; i++) {
+                red.eq(brr[i] - 1).addClass("rxq").next().next().val(1);
+            }
+
+            for (var k = 0; k < crr.length; k++) {
+                blue.eq(crr[k] - 1).addClass("bxq").next().next().val(1);
+            }
+
+        } else if (up_num.dlt_types == 2) {
+            $('#ttz').text('定胆投注');
+            $('#tz_bj').val(1);
+            var brr = [];
+            var crr = [];
+            var drr = [];
+            brr = arr[0].split(';');
+            crr = arr[1].split(',');
+            drr = brr.pop().split(',');
+            for (var i = 0; i < brr.length; i++) {
+                red.eq(brr[i] - 1).addClass("rxq rr_dan").html("<span class='font_num'>" + brr[i] + "</span><span class='font_rdan'>胆</span>").next().next().val(2);
+            }
+
+            for (var j = 0; j < drr.length; k++) {
+                red.eq(drr[j] - 1).addClass("rxq").next().next().val(1);
+            }
+
+            for (var k = 0; k < crr.length; k++) {
+                blue.eq(crr[k] - 1).addClass("bxq").next().next().val(1);
+            }
+
+        } else if (up_num.dlt_types == 3) {
+            $('#ttz').text('定胆投注');
+            $('#tz_bj').val(1);
+            var brr = [];
+            var crr = [];
+            var drr = [];
+            brr = arr[0].split(';');
+            crr = arr[1].split(';');
+            drr = brr.pop().split(',');
+            err = crr.pop().split(',');
+            for (var i = 0; i < brr.length; i++) {
+                red.eq(brr[i] - 1).addClass("rxq rr_dan").html("<span class='font_num'>" + brr[i] + "</span><span class='font_rdan'>胆</span>").next().next().val(2);
+            }
+
+            for (var j = 0; j < drr.length; k++) {
+                red.eq(drr[j] - 1).addClass("rxq").next().next().val(1);
+            }
+
+            for (var p = 0; p < crr.length; p++) {
+                blue.eq(crr[p] - 1).addClass("bxq bb_dan").html("<span class='font_num'>" + crr[p] + "</span><span class='font_rdan'>胆</span>").next().next().val(2);
+            }
+
+            for (var k = 0; k < err.length; k++) {
+                blue.eq(err[k] - 1).addClass("bxq").next().next().val(1);
+            }
+        } else if (up_num.dlt_types == 4) {
+            $('#ttz').text('定胆投注');
+            $('#tz_bj').val(1);
+            var brr = [];
+            var crr = [];
+            var drr = [];
+            brr = arr[0].split(',');
+            crr = arr[1].split(';');
+            err = crr.pop().split(',');
+            for (var i = 0; i < brr.length; i++) {
+                red.eq(brr[i] - 1).addClass("rxq").next().next().val(1);
+            }
+
+            for (var p = 0; p < crr.length; p++) {
+                blue.eq(crr[p] - 1).addClass("bxq bb_dan").html("<span class='font_num'>" + crr[p] + "</span><span class='font_rdan'>胆</span>").next().next().val(2);
+            }
+
+            for (var k = 0; k < err.length; k++) {
+                blue.eq(err[k] - 1).addClass("bxq").next().next().val(1);
+            }
+
+        }
+
+    }
+
+    /*从新记录各种颜色球的数量*/
+    var red_xq = jQuery('.r_ball.rxq').length;
+    jQuery('#red_num').val(red_xq);
+
+    var blue_xq = jQuery('.b_ball.bxq').length;
+    jQuery('#blue_num').val(blue_xq);
+
+    var red_dd = jQuery('.rr_dan').length;
+    jQuery('#rr_dan').val(red_dd);
+
+    var blue_dd = jQuery('.bb_dan').length;
+    jQuery('#bb_dan').val(blue_dd);
+
+    if (loc == 'show') {
+        jQuery('.choose,.foot_choose,.head_choose').attr('style', 'display:none');
+        jQuery('.head_ready,.ready,.foot_ready').attr('style', 'display:block');
+        var cp_h = window.localStorage.getItem('cp_hm');
+        jQuery('.yes').html(cp_h);
+        var to_m = window.localStorage.getItem('to_money');
+        var to_z = window.localStorage.getItem('to_z');
+        var to_b = window.localStorage.getItem('to_b');
+        var xhye = window.localStorage.getItem('xhy');
+        var tz_zj = window.localStorage.getItem('zjj');
+        jQuery('#to_tz').val(to_z);
+        jQuery('.zs_num').text(to_z);
+        jQuery('.total_mon').text(to_m);
+        jQuery('.bs_num').text(to_b);
+        jQuery('.bs_nn').text(to_b);
+        jQuery('.preview').html(xhye);
+        if (tz_zj == 1) {
+            jQuery('#zj').attr("checked", 'true');
+        }
+    }
+
+    if (s_id == 'id') {
+        var save_id = url.substring(url.lastIndexOf('=') + 1, url.length);
+        //console.log(save_id);
+        jQuery('.choose,.foot_choose,.head_choose').attr('style', 'display:none');
+        jQuery('.head_ready,.ready,.foot_ready').attr('style', 'display:block');
+        mui.ajax('/index.php/save_detail', {
+            data: {
+                id: save_id,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                console.log(data);
+                $('.yes').html(data[0].save_num);
+                $('#to_tz').val(data[0].save_z);
+                jQuery('.zs_num').text(data[0].save_z)
+                $('.total_mon').text(data[0].save_money);
+                $('.bs_num').text(data[0].save_b);
+                $('.bs_nn').text(data[0].save_b);
+                $('.preview').html(data[0].save_style);
+                if (data[0].save_add == 1) {
+                    $('#zj').attr("checked", 'true');
+                }
+
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                //console.log(type);
+                switch (type) {
+                    case "timeout":
+                    mui.toast('连接超时，请重试');
+                    break;
+                    default:
+                    mui.toast('请重试或重新登录');
+                }
+            }
+        });
+    }
+
+
+    /*jQuery('.jt_back').on('tap', function () {
+        mui.openWindow({
+            url: 'index.html',
+            id: 'index'
+        });
+    })*/
+
+    mui.ajax(config[0].url+'/index.php/cp_qi', {
+        data: {
+            types: '01',
+        },
+        dataType: 'json',//服务器返回json格式数据
+        type: 'post',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            /*console.log(JSON.stringify(data));*/
+            //console.log(data);
+            $('.now_qi').text('大乐透' + data + '期');
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+            //console.log(type);
+            switch (type) {
+                case "timeout":
+                mui.toast('连接超时，请重试');
+                break;
+                default:
+                mui.toast('请重试或重新登录');
+            }
+        }
+    });
+
+
+    //userid判断
+    function numbers_check(obj) {
+        reg = /^[0-9]+.?[0-9]*$/;
+        ;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /*投注标记*/
+    var tz_bj = 0;
+    var list = document.querySelector('.mui-table-view.mui-table-view-radio');
+    var title = document.getElementById('ttz');
+    list.addEventListener('selected', function (e) {
+
+        title.innerText = e.detail.el.innerText;
+        jQuery('#ttz').children('br').remove();
+        var a = e.detail.el.className;
+        if (a == 'mui-table-view-cell dan mui-selected') {
+            jQuery('#tz_bj').val(1);
+        } else if (a == 'mui-table-view-cell pt mui-selected') {
+            jQuery('#tz_bj').val(0);
+        }
+
+    });
+
+    //判断数组是否相等
+    function isContained(a, b) {
+        var astr = a.sort().toString();
+        var bstr = b.sort().toString();
+        if (astr == bstr) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /*var isnum = window.localStorage.getItem("num");
+
+     if(isnum){
+     $('.preview').html(window.localStorage.getItem("num"));
+ }*/
+
+ var userid = window.localStorage.getItem("token");
+ mui.ajax(config[0].url+'/index.php/personal_check', {
+    data: {
+        userid: userid
+    },
+        dataType: 'json',//服务器返回json格式数据
+        type: 'post',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            if (data == false) {
+                $('.person').val(2);
+
+            } else if (data[0].active == 1) {
+                $('.person').val(3);
+            } else if (data[0].real_name == '' || data[0].real_name == null || data[0].real_name == undefined || data[0].idcard_numer == '' || data[0].idcard_numer == null || data[0].idcard_numer == undefined) {
+                $('.person').val(1);
+
+
+            } else {
+                $('.person').val(0);
+            }
+
+
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+            //console.log(type);
+            switch (type) {
+                case "timeout":
+                mui.toast('连接超时，请重试');
+                break;
+                default:
+                mui.toast('请重试或重新登录');
+            }
+        }
+    });
+
+
+ /*下一步*/
+ jQuery('#next').on('tap', function () {
+    var r_num = jQuery('#red_num').val();
+    var b_num = jQuery('#blue_num').val();
+    var t_num = jQuery('#tz').val();
+    var red_d = jQuery('#rr_dan').val();
+    var blue_d = jQuery('#bb_dan').val();
+    var mom = parseInt(jQuery('#money').val());
+    var timestamp = new Date().getTime();
+
+    if ($('.person').val() == 1) {
+        mui.alert('身份未完善，请去完善个人资料', '资料未完善', function () {
+            mui.openWindow({
+                url: 'zx_personal.html',
+                id: 'zx_personal',
+                createNew:true
+            });
+
+        });
+        return;
+    } else if ($('.person').val() == 2) {
+        mui.alert('用户未登录', '用户未登录', function () {
+            mui.openWindow({
+                url: 'login.html',
+                id: 'login',
+                createNew:true
+            });
+
+        });
+        return;
+    } else if ($('.person').val() == 3) {
+        mui.alert('用户被禁用', '用户被禁用', function () {
+            mui.openWindow({
+                url: 'login.html',
+                id: 'login',
+                createNew:true
+            });
+
+        });
+        return;
+    }
+
+    if (mom > 20000) {
+        mui.toast('单注不能超过20000元');
+        reset();
+    } else {
+        if (red_d == 0 && blue_d == 0) {
+            if (r_num < 5 || b_num < 2) {
+                mui.toast('至少选5红球2蓝球');
+            } else {
+                var aa = jQuery('.r_ball.rxq').next();
+                var bb = jQuery('.b_ball.bxq').next();
+                var arr = [];
+                var brr = [];
+                jQuery.each(aa, function (i, val) {
+                        /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                         console.log(i); //输出索引为0，1，2，3
+                         console.log(val.value); //输出value的值*/
+                         arr[i] = val.value;
+                     });
+                jQuery.each(bb, function (i, val) {
+                        /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                         console.log(i); //输出索引为0，1，2，3
+                         console.log(val.value); //输出value的值*/
+                         brr[i] = val.value;
+                     });
+                cp_num = arr + '|' + brr;
+                if (loc == 'update') {
+                    var ud_num = window.localStorage.getItem('update_num');
+                    var now_num = window.localStorage.getItem('nb');
+                    var up_num = JSON.parse(ud_num);
+                    var nows_num = JSON.parse(now_num);
+                    var space = up_num.sp;
+                    nows_num[space].num = cp_num;
+                    nows_num[space].z = t_num;
+                    nows_num[space].dlt_types = 1;
+
+                    window.localStorage.setItem('nb', JSON.stringify(nows_num));
+
+                    mui.openWindow({
+                        url: 'dlt_sec.html',
+                        id: 'dlt_sec',
+                        createNew:true
+                    });
+                    return;
+
+
+                }
+
+                var nb = window.localStorage.getItem('nb');
+                console.log(nb);
+                if (nb != '') {
+                    var num = JSON.parse(nb);
+                    var add = {'num': cp_num, 'z': t_num, 'dlt_types': '1'};
+                    num.push(add);
+                    window.localStorage.setItem('nb', JSON.stringify(num));
+                    if (!window.localStorage.getItem("token")) {
+                        window.localStorage.setItem('next', 'dlt');
+                        mui.openWindow({
+                            url: 'login.html',
+                            id: 'login',
+                            createNew:true
+                        });
+                        return;
+                    }
+                    mui.openWindow({
+                        url: 'dlt_sec.html',
+                        id: 'dlt_sec',
+                        createNew:true
+                    });
+                    return;
+                } else {
+                    var nb = [];
+                    var add = {'num': cp_num, 'z': t_num, 'dlt_types': '1'};
+                    nb.push(add);
+
+                    window.localStorage.setItem('nb', JSON.stringify(nb));
+                    if (!window.localStorage.getItem("token")) {
+                        window.localStorage.setItem('next', 'dlt');
+                        mui.openWindow({
+                            url: 'login.html',
+                            id: 'login',
+                            createNew:true
+                        });
+                        return;
+                    }
+                    mui.openWindow({
+                        url: 'dlt_sec.html',
+                        id: 'dlt_sec',
+                        createNew:true
+                    });
+                    return;
+                }
+
+
+                var len = arr.length + brr.length;
+                var rlen = arr.length;
+                var blen = brr.length;
+                var b = '';
+                var a = '';
+                var c = '';
+                var d = '';
+                for (var i = 1; i <= len; i++) {
+                    if (i <= rlen) {
+                        a += "<div class='choose_rball rxq'>" + arr[i - 1] + "<input class='choose_h1' type='hidden' value=" + arr[i - 1] + "></div>";
+                    } else {
+                        b += "<div class='choose_bball bxq'>" + brr[i - rlen - 1] + "<input class='choose_h2' type='hidden' value=" + brr[i - rlen - 1] + "></div>";
+                    }
+                }
+                b = b + "<div class='clear'></div>";
+                c = a + b;
+                d = "<div class='xh'><div class='xh_close'>x</div><div class='xhm'>" + c + "</div><input class='t_dz' type='hidden' value='" + t_num + "'><div class='rjt'>></div><input class='save_bj' type='hidden' value='" + timestamp + "'><div class='clear'></div></div>";
+                jQuery('.preview').append(d);
+            }
+        } else {
+            if (red_d > 0 && r_num < 6) {
+                mui.toast('红球定胆至少选6个号码');
+            } else if (blue_d > 0 && b_num < 3) {
+                mui.toast('蓝球定胆至少选3个号码');
+            } else {
+                var aa = jQuery('.r_ball.rxq').next();
+                var bb = jQuery('.b_ball.bxq').next();
+                var cc = jQuery('.rr_dan').next();
+                var dd = jQuery('.bb_dan').next();
+                var arr = [];
+                var brr = [];
+                var crr = [];
+                var drr = [];
+                jQuery.each(aa, function (i, val) {
+                        /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                         console.log(i); //输出索引为0，1，2，3
+                         console.log(val.value); //输出value的值*/
+                         arr[i] = val.value;
+                     });
+                jQuery.each(bb, function (i, val) {
+                        /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                         console.log(i); //输出索引为0，1，2，3
+                         console.log(val.value); //输出value的值*/
+                         brr[i] = val.value;
+                     });
+                jQuery.each(cc, function (i, val) {
+                        /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                         console.log(i); //输出索引为0，1，2，3
+                         console.log(val.value); //输出value的值*/
+                         crr[i] = val.value;
+                     });
+                jQuery.each(dd, function (i, val) {
+                        /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                         console.log(i); //输出索引为0，1，2，3
+                         console.log(val.value); //输出value的值*/
+                         drr[i] = val.value;
+                     });
+                var r_miuns = minus(arr, crr);
+                var b_minus = minus(brr, drr);
+                if (red_d > 0 && blue_d == 0) {
+                    var len = arr.length + brr.length;
+                    var rto = arr.length;
+                    var bto = brr.length;
+                    var rdan = crr.length;
+                    var bdan = drr.length;
+                    var rcj = parseInt(rto - rdan);
+                    var b = '';
+                    var a = '';
+                    var c = '';
+                    var d = '';
+                    var e = '';
+                    var f = '';
+
+
+                    var hdrr = [];
+                    for (var hd = 0; hd < crr.length; hd++) {
+                        hdrr += crr[hd] + ';';
+                    }
+                    var cp_hdans = hdrr + r_miuns + '|' + brr;
+                    if (loc == 'update') {
+                        var ud_num = window.localStorage.getItem('update_num');
+                        var now_num = window.localStorage.getItem('nb');
+                        var up_num = JSON.parse(ud_num);
+                        var nows_num = JSON.parse(now_num);
+                        var space = up_num.sp;
+                        nows_num[space].num = cp_hdans;
+                        nows_num[space].z = t_num;
+                        nows_num[space].dlt_types = 2;
+
+                        window.localStorage.setItem('nb', JSON.stringify(nows_num));
+
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+
+
+                    }
+
+                    var nb = window.localStorage.getItem('nb');
+                    console.log(nb);
+                    if (nb != '') {
+                        var num = JSON.parse(nb);
+                        var add = {'num': cp_hdans, 'z': t_num, 'dlt_types': '2'};
+                        num.push(add);
+                        window.localStorage.setItem('nb', JSON.stringify(num));
+                        if (!window.localStorage.getItem("token")) {
+                            window.localStorage.setItem('next', 'dlt');
+                            mui.openWindow({
+                                url: 'login.html',
+                                id: 'login',
+                                createNew:true
+                            });
+                            return;
+                        }
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+                    } else {
+                        var nb = [];
+                        var add = {'num': cp_hdans, 'z': t_num, 'dlt_types': '2'};
+                        nb.push(add);
+
+                        window.localStorage.setItem('nb', JSON.stringify(nb));
+                        if (!window.localStorage.getItem("token")) {
+                            window.localStorage.setItem('next', 'dlt');
+                            mui.openWindow({
+                                url: 'login.html',
+                                id: 'login',
+                                createNew:true
+                            });
+                            return;
+                        }
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+                    }
+
+                } else if (red_d > 0 && blue_d > 0) {
+                    var len = arr.length + brr.length;
+                    var rto = arr.length;
+                    var bto = brr.length;
+                    var rdan = crr.length;
+                    var bdan = drr.length;
+                    var rcj = parseInt(rto - rdan);
+                    var bcj = parseInt(bto - bdan);
+                    var b = '';
+                    var a = '';
+                    var c = '';
+                    var d = '';
+                    var e = '';
+                    var f = '';
+                    var g = '';
+
+                    var hdrr = [];
+                    for (var hd = 0; hd < crr.length; hd++) {
+                        hdrr += crr[hd] + ';';
+                    }
+                    var bdrr = [];
+                    for (var bd = 0; bd < drr.length; bd++) {
+                        bdrr += drr[bd] + ';';
+                    }
+
+                    var cp_hdans = hdrr + r_miuns + '|' + bdrr + b_minus;
+                    if (loc == 'update') {
+                        var ud_num = window.localStorage.getItem('update_num');
+                        var now_num = window.localStorage.getItem('nb');
+                        var up_num = JSON.parse(ud_num);
+                        var nows_num = JSON.parse(now_num);
+                        var space = up_num.sp;
+                        nows_num[space].num = cp_hdans;
+                        nows_num[space].z = t_num;
+                        nows_num[space].dlt_types = 3;
+
+                        window.localStorage.setItem('nb', JSON.stringify(nows_num));
+
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+
+
+                    }
+
+                    var nb = window.localStorage.getItem('nb');
+                    console.log(nb);
+                    if (nb != '') {
+                        var num = JSON.parse(nb);
+                        var add = {'num': cp_hdans, 'z': t_num, 'dlt_types': '3'};
+                        num.push(add);
+                        window.localStorage.setItem('nb', JSON.stringify(num));
+                        if (!window.localStorage.getItem("token")) {
+                            window.localStorage.setItem('next', 'dlt');
+                            mui.openWindow({
+                                url: 'login.html',
+                                id: 'login',
+                                createNew:true
+                            });
+                            return;
+                        }
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+                    } else {
+                        var nb = [];
+                        var add = {'num': cp_hdans, 'z': t_num, 'dlt_types': '3'};
+                        nb.push(add);
+
+                        window.localStorage.setItem('nb', JSON.stringify(nb));
+                        if (!window.localStorage.getItem("token")) {
+                            window.localStorage.setItem('next', 'dlt');
+                            mui.openWindow({
+                                url: 'login.html',
+                                id: 'login',
+                                createNew:true
+                            });
+                            return;
+                        }
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+                    }
+
+                } else if (red_d == 0 && blue_d > 0) {
+                    var len = arr.length + brr.length;
+                    var rto = arr.length;
+                    var bto = brr.length;
+                    var rdan = crr.length;
+                    var bdan = drr.length;
+                    var rcj = parseInt(rto - rdan);
+                    var bcj = parseInt(bto - bdan);
+                    var b = '';
+                    var a = '';
+                    var c = '';
+                    var d = '';
+                    var e = '';
+                    var f = '';
+                    var g = '';
+                    for (var i = 0; i < rto; i++) {
+                        a += "<div class='choose_rball rxq '>" + arr[i] + "<input class='choose_h1' type='hidden' value=" + arr[i] + "></div>";
+                    }
+
+
+                    for (var h = 0; h < bdan; h++) {
+                        d += "<div class='choose_bball bxd bd'>" + drr[h] + "<input class='choose_h2' type='hidden' value=" + drr[h] + "></div>";
+                    }
+                    d = "<div style='float:left'>[胆:</div>" + d + "<div style='float:left'>]</div>";
+
+                    for (var k = 0; k < bcj; k++) {
+                        e += "<div class='choose_bball bxq'>" + b_minus[k] + "<input class='choose_h2' type='hidden' value=" + b_minus[k] + "></div>";
+                    }
+
+
+                    var bdrr = [];
+                    for (var bd = 0; bd < drr.length; bd++) {
+                        bdrr += drr[bd] + ';';
+                    }
+                    var cp_hdans = arr + '|' + bdrr + b_minus;
+                    if (loc == 'update') {
+                        var ud_num = window.localStorage.getItem('update_num');
+                        var now_num = window.localStorage.getItem('nb');
+                        var up_num = JSON.parse(ud_num);
+                        var nows_num = JSON.parse(now_num);
+                        var space = up_num.sp;
+                        nows_num[space].num = cp_hdans;
+                        nows_num[space].z = t_num;
+                        nows_num[space].dlt_types = 4;
+
+                        window.localStorage.setItem('nb', JSON.stringify(nows_num));
+
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+
+
+                    }
+                    var nb = window.localStorage.getItem('nb');
+                    console.log(nb);
+                    if (nb != '') {
+                        var num = JSON.parse(nb);
+                        var add = {'num': cp_hdans, 'z': t_num, 'dlt_types': '4'};
+                        num.push(add);
+                        window.localStorage.setItem('nb', JSON.stringify(num));
+                        if (!window.localStorage.getItem("token")) {
+                            window.localStorage.setItem('next', 'dlt');
+                            mui.openWindow({
+                                url: 'login.html',
+                                id: 'login',
+                                createNew:true
+                            });
+                            return;
+                        }
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+                    } else {
+                        var nb = [];
+                        var add = {'num': cp_hdans, 'z': t_num, 'dlt_types': '4'};
+                        nb.push(add);
+
+                        window.localStorage.setItem('nb', JSON.stringify(nb));
+                        if (!window.localStorage.getItem("token")) {
+                            window.localStorage.setItem('next', 'dlt');
+                            mui.openWindow({
+                                url: 'login.html',
+                                id: 'login',
+                                createNew:true
+                            });
+                            return;
+                        }
+                        mui.openWindow({
+                            url: 'dlt_sec.html',
+                            id: 'dlt_sec',
+                            createNew:true
+                        });
+                        return;
+                    }
+                    f = a + d + e + "<div class='clear'></div>";
+                    g = "<div class='xh'><div class='xh_close'>x</div><div class='xhm'>" + f + "</div><input class='t_dz' type='hidden' value='" + t_num + "'><div class='rjt'>></div><input class='save_bj' type='hidden' value='" + timestamp + "'><div class='clear'></div></div>";
+
+                    jQuery('.preview').append(g);
+
+                }
+
+
+            }
+
+        }
+
+    }
+
+})
+
+    //求两个数组差集
+    function minus(arr1, arr2) {
+        var arr3 = [];
+        for (var i = 0; i < arr1.length; i++) {
+            var flag = true;
+            for (var j = 0; j < arr2.length; j++) {
+                if (arr2[j] == arr1[i]) {
+                    flag = false;
+                }
+            }
+            if (flag) {
+                arr3.push(arr1[i]);
+            }
+        }
+        return arr3;
+    }
+
+
+    /*初始化选号页面*/
+    function reset() {
+        var red = jQuery('.r_ball');
+        var blue = jQuery('.b_ball');
+        red.removeClass('rxq').removeClass('rr_dan').removeClass('rd');
+        blue.removeClass('bxq').removeClass('dd_dan').removeClass('bd');
+        jQuery('.font_rdan').remove();
+        jQuery('.r_ball').children('span').removeClass('font_num');
+        jQuery('.font_bdan').remove();
+        jQuery('.b_ball').children('span').removeClass('font_num');
+        jQuery('.footer_font').html('至少选5红球2蓝球');
+        jQuery('#red_num').val(0);
+        jQuery('#blue_num').val(0);
+        jQuery('#money').val(0);
+        jQuery('#rr_dan').val(0);
+        jQuery('#bb_dan').val(0);
+        jQuery('#tz').val(0);
+        jQuery('.r_dan').val(0);
+        jQuery('.b_dan').val(0);
+        $('.saj').text();
+
+    }
+
+
+    //倍数
+    jQuery('#jia').on('tap', function () {
+
+        var numm = parseInt(jQuery('.bs_num').text());
+        numm++;
+        if (numm > 99) {
+            numm = 99;
+        }
+        jQuery('.bs_num').text(numm);
+        jQuery('.bs_nn').text(numm);
+
+    })
+
+    jQuery('.jian').on('tap', function () {
+
+        var numm = parseInt(jQuery('.bs_num').text());
+        numm--;
+        if (numm < 1) {
+            numm = 1;
+        }
+        jQuery('.bs_num').text(numm);
+        jQuery('.bs_nn').text(numm);
+
+    })
+
+    function m_on() {
+        var tz_bj = $('#tz_bj').val();
+        var red_n = parseInt(jQuery('#red_num').val());
+        var blue_n = parseInt(jQuery('#blue_num').val());
+        if (tz_bj == 0) {
+            //随时计算金额数
+            if (red_n < 5 || blue_n < 2) {
+                jQuery('.footer_font').html('至少选5红球2蓝球');
+            } else {
+
+                var money = parseInt(su(5, red_n) * su(2, blue_n) * 2);
+                var num = parseInt(money / 2);
+                jQuery('#money').val(money);
+                jQuery('#tz').val(num);
+
+                jQuery('.footer_font').html(function () {
+                    return red_n + "红球" + blue_n + "蓝球，共" + money + "元";
+                });
+            }
+
+        } else if (tz_bj == 1) {
+            if (red_n < 5 || blue_n < 2) {
+                jQuery('.footer_font').html('至少选5红球2蓝球');
+            } else {
+                if (rdan_num > 0 || bdan_num > 0) {
+
+                    var money = parseInt(rd(rdan_num, re) * bd(bdan_num, blu) * 2);
+                    var num = parseInt(money / 2);
+                    jQuery('#money').val(money);
+                    jQuery('#tz').val(num);
+
+                    jQuery('.footer_font').html(function () {
+                        return red_n + "红球" + blue_n + "蓝球，共" + money + "元";
+                    });
+                } else {
+                    var money = parseInt(su(5, red_n) * su(2, blue_n) * 2);
+                    var num = parseInt(money / 2);
+                    jQuery('#money').val(money);
+                    jQuery('#tz').val(num);
+
+                    jQuery('.footer_font').html(function () {
+                        return red_n + "红球" + blue_n + "蓝球，共" + money + "元";
+                    });
+                }
+
+
+            }
+        }
+    }
+
+    m_on();
+
+
+    jQuery(document).on('tap', function () {
+        tz_bj = jQuery('#tz_bj').val();
+        var red_n = parseInt(jQuery('#red_num').val());
+        var blue_n = parseInt(jQuery('#blue_num').val());
+        var mo = jQuery('#money').val();
+        var rdan_num = parseInt(jQuery('#rr_dan').val());
+        var bdan_num = parseInt(jQuery('#bb_dan').val());
+        var re = parseInt(red_n - rdan_num);
+        var blu = parseInt(blue_n - bdan_num);
+
+
+        /*预览页面金额计算*/
+        var total_tz = jQuery('.t_dz');
+        var trr = [];
+        jQuery.each(total_tz, function (i, val) {
+            /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+             console.log(i); //输出索引为0，1，2，3
+
+             console.log(val.value); //输出value的值*/
+             trr[i] = parseInt(val.value);
+
+         });
+        var to = eval(trr.join('+'));
+        var numm = jQuery('.bs_num').text();
+        jQuery('#to_tz').val(to);
+        jQuery('.zs_num').text(to);
+        //alert(to)
+        if (to == undefined || to == '') {
+            to = 0;
+        }
+
+        if (jQuery('.add_zj').val() == 'true') {
+            var t_money = to * 3 * numm;
+            jQuery('.total_mon').text(t_money);
+
+
+        } else {
+            var t_money = to * 2 * numm;
+            jQuery('.total_mon').text(t_money);
+
+        }
+
+        jQuery('.zk').on('click', function () {
+
+            if (jQuery('.add_zj').val() == 'true') {
+                var t_money = to * 3 * numm;
+                jQuery('.total_mon').text(t_money);
+
+
+            } else {
+                var t_money = to * 2 * numm;
+                jQuery('.total_mon').text(t_money);
+
+            }
+
+        })
+
+
+        /*修改选中号*/
+        jQuery('.rjtt').on('tap', function () {
+            jQuery(this).addClass('update');
+            var r_ba = jQuery(this).prev().prev().children('.choose_rball.rxq').children('.choose_h1');
+            var r_badan = jQuery(this).prev().prev().children('.rd').children('.choose_h1');
+            var r_dd = r_badan.length;
+            console.log(r_badan);
+            var b_badan = jQuery(this).prev().prev().children('.bd').children('.choose_h2');
+            var b_dd = b_badan.length;
+            /*console.log(b_dd);*/
+            var b_ba = jQuery(this).prev().prev().children('.choose_bball').children('.choose_h2');
+            var r_nu = parseInt(jQuery('#red_num').val());
+            var b_nu = parseInt(jQuery('#blue_num').val());
+            var rr_d = parseInt(jQuery('#rr_dan').val());
+            jQuery('.choose,.foot_choose,.head_choose').attr('style', 'display:block');
+            jQuery('.head_ready,.ready,.foot_ready').attr('style', 'display:none');
+            reset();//调用初始化选号页面
+
+            var red = jQuery('.r_ball');
+            var blue = jQuery('.b_ball');
+
+            var arr = [];
+            var brr = [];
+            var crr = [];
+            var drr = [];
+
+
+            jQuery.each(r_ba, function (i, val) {
+                /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                 console.log(i); //输出索引为0，1，2，3
+
+                 console.log(val.value); //输出value的值*/
+                 arr[i] = val.value;
+
+             });
+
+
+            jQuery.each(b_ba, function (i, val) {
+                /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                 console.log(i); //输出索引为0，1，2，3
+
+                 console.log(val.value); //输出value的值*/
+                 brr[i] = val.value;
+
+             });
+
+            jQuery.each(r_badan, function (i, val) {
+                /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                 console.log(i); //输出索引为0，1，2，3
+
+                 console.log(val.value); //输出value的值*/
+                 crr[i] = val.value;
+
+             });
+            console.log(crr);
+
+            jQuery.each(b_badan, function (i, val) {
+                /*console.log(val); //输出[object HTMLInputElement]，因为它是一个表单元素。
+                 console.log(i); //输出索引为0，1，2，3
+
+                 console.log(val.value); //输出value的值*/
+                 drr[i] = val.value;
+
+             });
+            /*console.log(drr);*/
+
+
+            if (r_dd == 0 && b_dd == 0) {
+                for (var i = 0; i < r_nu; i++) {
+                    red.eq(arr[i] - 1).addClass("rxq").next().next().val(1);
+
+                }
+
+                for (var j = 0; j < b_nu; j++) {
+                    blue.eq(brr[j] - 1).addClass("bxq").next().next().val(1);
+
+                }
+
+
+            } else if (r_dd > 0 && b_dd == 0) {
+                var rrcj = minus(arr, crr);
+                var rrcj_len = rrcj.length;
+                for (var i = 0; i < rrcj_len; i++) {
+                    red.eq(rrcj[i] - 1).addClass("rxq").next().next().val(1);
+
+                }
+
+                for (var h = 0; h < r_dd; h++) {
+                    red.eq(crr[h] - 1).addClass("rxq rr_dan").html("<span class='font_num'>" + crr[h] + "</span><span class='font_rdan'>胆</span>").next().next().val(2);
+
+
+                }
+
+                for (var j = 0; j < b_nu; j++) {
+                    blue.eq(brr[j] - 1).addClass("bxq").next().next().val(1);
+
+                }
+
+            } else if (r_dd == 0 && b_dd > 0) {
+                var bbcj = minus(brr, drr);
+                var bbcj_len = bbcj.length;
+                for (var i = 0; i < r_nu; i++) {
+                    red.eq(arr[i] - 1).addClass("rxq").next().next().val(1);
+
+                }
+
+
+                for (var j = 0; j < bbcj_len; j++) {
+                    blue.eq(bbcj[j] - 1).addClass("bxq").next().next().val(1);
+
+                }
+
+                for (var h = 0; h < b_dd; h++) {
+                    blue.eq(drr[h] - 1).addClass("bxq bb_dan").html("<span class='font_num'>" + drr[h] + "</span><span class='font_rdan'>胆</span>").next().next().val(2);
+
+
+                }
+
+            } else if (r_dd > 0 && b_dd > 0) {
+                var rrcj = minus(arr, crr);
+                var rrcj_len = rrcj.length;
+                var bbcj = minus(brr, drr);
+                var bbcj_len = bbcj.length;
+                for (var i = 0; i < rrcj_len; i++) {
+                    red.eq(rrcj[i] - 1).addClass("rxq").next().next().val(1);
+
+                }
+
+                for (var h = 0; h < r_dd; h++) {
+                    red.eq(crr[h] - 1).addClass("rxq rr_dan").html("<span class='font_num'>" + crr[h] + "</span><span class='font_rdan'>胆</span>").next().next().val(2);
+
+
+                }
+
+                for (var j = 0; j < bbcj_len; j++) {
+                    blue.eq(bbcj[j] - 1).addClass("bxq").next().next().val(1);
+
+                }
+
+                for (var h = 0; h < b_dd; h++) {
+                    blue.eq(drr[h] - 1).addClass("bxq bb_dan").html("<span class='font_num'>" + drr[h] + "</span><span class='font_rdan'>胆</span>").next().next().val(2);
+
+
+                }
+            }
+
+            /*从新记录各种颜色球的数量*/
+            var red_xq = jQuery('.r_ball.rxq').length;
+            jQuery('#red_num').val(red_xq);
+
+            var blue_xq = jQuery('.b_ball.bxq').length;
+            jQuery('#blue_num').val(blue_xq);
+
+            var red_dd = jQuery('.rr_dan').length;
+            jQuery('#rr_dan').val(red_dd);
+
+            var blue_dd = jQuery('.bb_dan').length;
+            jQuery('#bb_dan').val(blue_dd);
+
+
+        })
+
+
+if (tz_bj == 0) {
+            //随时计算金额数
+            if (red_n < 5 || blue_n < 2) {
+                jQuery('.footer_font').html('至少选5红球2蓝球');
+            } else {
+
+                var money = parseInt(su(5, red_n) * su(2, blue_n) * 2);
+                var num = parseInt(money / 2);
+                jQuery('#money').val(money);
+                jQuery('#tz').val(num);
+
+                jQuery('.footer_font').html(function () {
+                    return red_n + "红球" + blue_n + "蓝球，共" + money + "元";
+                });
+            }
+
+        } else if (tz_bj == 1) {
+            if (red_n < 5 || blue_n < 2) {
+                jQuery('.footer_font').html('至少选5红球2蓝球');
+            } else {
+                if (rdan_num > 0 || bdan_num > 0) {
+
+                    var money = parseInt(rd(rdan_num, re) * bd(bdan_num, blu) * 2);
+                    var num = parseInt(money / 2);
+                    jQuery('#money').val(money);
+                    jQuery('#tz').val(num);
+
+                    jQuery('.footer_font').html(function () {
+                        return red_n + "红球" + blue_n + "蓝球，共" + money + "元";
+                    });
+                } else {
+                    var money = parseInt(su(5, red_n) * su(2, blue_n) * 2);
+                    var num = parseInt(money / 2);
+                    jQuery('#money').val(money);
+                    jQuery('#tz').val(num);
+
+                    jQuery('.footer_font').html(function () {
+                        return red_n + "红球" + blue_n + "蓝球，共" + money + "元";
+                    });
+                }
+
+
+            }
+        }
+
+
+    })
+
+
+    //投注模式选择刷新
+    jQuery('.mui-navigate-right').on('tap', function () {
+        var red = jQuery('.r_ball');
+        var blue = jQuery('.b_ball');
+        red.removeClass('rxq');
+        blue.removeClass('bxq');
+        jQuery('.font_rdan').remove();
+        jQuery('.r_ball').children('span').removeClass('font_num');
+        jQuery('.font_bdan').remove();
+        jQuery('.b_ball').children('span').removeClass('font_num');
+        jQuery('.footer_font').html('至少选5红球2蓝球');
+        jQuery('#red_num').val(0);
+        jQuery('#blue_num').val(0);
+        jQuery('#money').val(0);
+        jQuery('#rr_dan').val(0);
+        jQuery('#bb_dan').val(0);
+    })
+
+
+    //颜色进制转换
+    function rgb2hex(rgb) {
+        rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        function hex(x) {
+            return ("0" + parseInt(x).toString(16)).slice(-2);
+        }
+
+        return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    }
+
+
+    //绑定红球点击事件
+    mui('#index_main1').on('tap', '.r_ball', function () {
+        var b = this.nextSibling.value;
+        var c = jQuery(this).css('color');
+        var a = rgb2hex(c);
+
+        if (tz_bj == 0) {
+            if (a == '#ff0000') {
+                jQuery(this).addClass('rxq').next().next().val(1);
+
+            } else {
+                jQuery(this).removeClass('rxq').next().next().val(0);
+            }
+
+            var red_xq = jQuery('.r_ball.rxq').length;
+
+            jQuery('#red_num').val(red_xq);
+
+        } else if (tz_bj == 1) {
+            var r_dan = this.nextSibling.nextSibling.value;
+            if (r_dan == 0) {
+                jQuery(this).addClass('rxq');
+                jQuery(this).next().next().val(1);
+
+            } else if (r_dan == 1) {
+
+
+                var rdan_num = jQuery('#rr_dan').val();
+                if (rdan_num == '' || rdan_num == 0 || rdan_num < 4) {
+                    var d = jQuery(this).next().val();
+                    jQuery(this).addClass('rr_dan');
+                    jQuery(this).html("<span class='font_num'>" + d + "</span><span class='font_rdan'></span>");
+                    jQuery(this).next().next().val(2);
+                } else if (rdan_num == 4) {
+                    var d = jQuery(this).next().val();
+                    jQuery(this).removeClass('rxq');
+                    jQuery(this).removeClass('rr_dan');
+                    jQuery(this).next().next().val(0);
+                    jQuery(this).html("<span>" + d + "</span>");
+                }
+
+
+            } else if (r_dan == 2) {
+
+                var d = jQuery(this).next().val();
+                jQuery(this).removeClass('rxq');
+                jQuery(this).removeClass('rr_dan');
+                jQuery(this).next().next().val(0);
+                jQuery(this).html("<span>" + d + "</span>");
+            }
+        }
+        var red_x = jQuery('.r_ball.rxq').length;
+
+        jQuery('#red_num').val(red_x);
+        var red_dan = jQuery('.rr_dan').length;
+        jQuery('#rr_dan').val(red_dan);
+
+    })
+
+    //绑定蓝球点击事件
+    mui('#index_main2').on('tap', '.b_ball', function () {
+        var b = this.nextSibling.value;
+        var c = jQuery(this).css('color');
+        var a = rgb2hex(c);
+
+        if (tz_bj == 0) {
+            if (a == '#1e90ff') {
+                jQuery(this).addClass('bxq');
+
+            } else {
+                jQuery(this).removeClass('bxq');
+            }
+            var blue_xq = jQuery('.b_ball.bxq').length;
+            jQuery('#blue_num').val(blue_xq);
+        } else if (tz_bj == 1) {
+            var b_dan = this.nextSibling.nextSibling.value;
+            if (b_dan == 0) {
+                jQuery(this).addClass('bxq');
+                jQuery(this).next().next().val(1);
+
+            } else if (b_dan == 1) {
+
+                var bdan_num = jQuery('#bb_dan').val();
+                if (bdan_num == '' || bdan_num == 0) {
+                    var d = jQuery(this).next().val();
+                    jQuery(this).addClass('bb_dan');
+                    jQuery(this).html("<span class='font_num'>" + d + "</span><span class='font_bdan'>胆</span>");
+                    jQuery(this).next().next().val(2);
+                } else if (bdan_num == 1) {
+                    var d = jQuery(this).next().val();
+                    jQuery(this).removeClass('bxq');
+                    jQuery(this).next().next().val(0);
+                    jQuery(this).html("<span>" + d + "</span>");
+                }
+
+
+            } else if (b_dan == 2) {
+                var d = jQuery(this).next().val();
+                jQuery(this).removeClass('bxq');
+                jQuery(this).removeClass('bb_dan');
+                jQuery(this).next().next().val(0);
+                jQuery(this).html("<span>" + d + "</span>");
+            }
+        }
+        var blue_dan = jQuery('.bb_dan').length;
+        jQuery('#bb_dan').val(blue_dan);
+        var blue_x = jQuery('.b_ball.bxq').length;
+        jQuery('#blue_num').val(blue_x);
+
+    })
+
+
+    //无胆拖排列组合计算
+    /*红色球，m=5,n代表选红球个数*/
+    /*蓝色球，m=2,n代表选蓝球个数*/
+    function su(m, n) {
+        var a = 1;
+        var b = 1;
+        var c = 1;
+        if (m == n) {
+            return 1;
+        } else {
+            for (var i = m; i > 0; i--) {
+                a *= i;
+            }
+
+            for (var j = n; j > 0; j--) {
+                b *= j;
+            }
+
+            for (var k = n - m; k > 0; k--) {
+                c *= k;
+            }
+
+            var su = b / (a * c);
+            return su;
+        }
+
+    }
+
+    //有胆拖排列组合计算
+    /*m代表胆的个数，n代表除胆之外的球个数*/
+    /*红球中，m>=0 && m<=4*/
+    /*蓝球中，m>=0 && m<=2*/
+    function rd(m, n) {
+        var a = 1;
+        var b = 1;
+        var c = 1;
+
+        for (var i = 5 - m; i > 0; i--) {
+            a *= i;
+        }
+
+        for (var j = n; j > 0; j--) {
+            b *= j;
+        }
+
+        for (var k = n - 5 + m; k > 0; k--) {
+            c *= k;
+        }
+
+        var dan = b / (a * c);
+        return dan;
+
+    }
+
+    function bd(m, n) {
+        var a = 1;
+        var b = 1;
+        var c = 1;
+
+        for (var i = 2 - m; i > 0; i--) {
+            a *= i;
+        }
+
+        for (var j = n; j > 0; j--) {
+            b *= j;
+        }
+
+        for (var k = n - 2 + m; k > 0; k--) {
+            c *= k;
+        }
+
+        var dan = b / (a * c);
+        return dan;
+
+    }
+
+
+    //机选
+    jQuery('.sj').on('tap', function () {
+        var red = jQuery('.r_ball');
+        var blue = jQuery('.b_ball');
+        var arr = creatball('red');
+        var brr = creatball('blue');
+        red.removeClass('rxq');
+        blue.removeClass('bxq');
+        red.removeClass('rr_dan');
+        blue.removeClass('bb_dan');
+        jQuery('#rr_dan').val(0);
+        jQuery('#bb_dan').val(0);
+        jQuery('.r_dan').val(0);
+        jQuery('.b_dan').val(0);
+        jQuery('.font_rdan').remove();
+        jQuery('.r_ball').children('span').removeClass('font_num');
+        jQuery('.font_bdan').remove();
+        jQuery('.b_ball').children('span').removeClass('font_num');
+        px(arr, 5);//进行排序
+        px(brr, 2);//进行排序
+
+
+        for (var i = 0; i < 5; i++) {
+            red.eq(arr[i] - 1).addClass("rxq").next().next().val(1);
+
+        }
+
+        for (var j = 0; j < 2; j++) {
+            blue.eq(brr[j] - 1).addClass("bxq").next().next().val(1);
+
+        }
+
+        var red_xq = jQuery('.r_ball.rxq').length;
+        jQuery('#red_num').val(red_xq);
+
+        var blue_xq = jQuery('.b_ball.bxq').length;
+        jQuery('#blue_num').val(blue_xq);
+    })
+
+
+    //随机产生球
+    function creatball(color) {
+        if (color == 'red') {
+            var num = new Array();
+            for (var i = 1; i <= 5; i++) {
+                var val = Math.ceil(Math.random() * (34) + 1);
+                var isEqu = false;
+                for (var idx in num) {
+                    if (num[idx] == val) {
+                        isEqu = true;
+                        break;
+                    }
+                }
+                if (isEqu) {
+                    i--;
+                } else {
+                    num[num.length] = val;
+                }
+
+            }
+            return num;
+        } else {
+            var num = new Array();
+            for (var i = 1; i <= 2; i++) {
+                var val = Math.ceil(Math.random() * (11) + 1);
+                var isEqu = false;
+                for (var idx in num) {
+                    if (num[idx] == val) {
+                        isEqu = true;
+                        break;
+                    }
+                }
+                if (isEqu) {
+                    i--;
+                } else {
+                    num[num.length] = val;
+                }
+
+            }
+            return num;
+        }
+    }
+
+    //冒泡排序
+    function px(arr, len) {
+        for (var i = 0; i < len; i++) {
+            for (var j = i + 1; j < len; j++) {
+                var a = arr[i];
+                if (arr[i] > arr[j]) {
+                    arr[i] = arr[j];
+                    arr[j] = a;
+
+                }
+            }
+        }
+
+    }
+
+</script>
+
+<script type="text/javascript">
+    jQuery('.jt_round').on('tap', function () {
+        var v = jQuery('.jt_v').val();
+        if (v == 0) {
+            jQuery('.jt_change').attr('src', 'wimages/jt_round_up.png');
+            jQuery('.jt_v').val(1);
+            jQuery('.history').attr('style', 'display:block');
+        } else {
+            jQuery('.jt_change').attr('src', 'wimages/jt_round_down.png');
+            jQuery('.jt_v').val(0);
+            jQuery('.history').attr('style', 'display:none');
+        }
+    })
+</script>
+
+
+<script>
+
+
+    /*获取历史开奖*/
+    mui.ajax(config[0].url+'/index.php/cpdlt', {
+        data: {
+            type: '01',
+        },
+        dataType: 'json',//服务器返回json格式数据
+        type: 'get',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            console.log(data)
+            if (data == false) {
+
+            } else {
+                var datalist = data.lists;
+                var html = [];
+
+                for (var i = 0; i < datalist.length; i++) {
+                    //date_num = datalist[i].numbers;
+
+                    var numbers = datalist[i].numbers;//开奖号码
+                    var index_q = numbers.indexOf("|");
+
+                    var q_num = numbers.substr(0, index_q);
+                    var h_num = numbers.substr(index_q + 1, numbers.length);
+                    q_strs = q_num.split(","); //字符分割
+                    h_strs = h_num.split(","); //字符分割
+
+                    var w_numbers = [];
+                    var w_numbersb = [];
+                    for (l = 0; l < q_strs.length; l++) {
+                        w_numbers += "<div class='min_rball'>" + q_strs[l] + "</div>"; //分割后的字符输出
+                    }
+                    for (l = 0; l < h_strs.length; l++) {
+                        w_numbersb += "<div class='min_bball'>" + h_strs[l] + "</div>"; //分割后的字符输出
+                    }
+                    html += "<div class='kj_all'><div class='q_num'>" + datalist[i].num + "</div><div class='k_num'>  " + w_numbers + w_numbersb + " </div></div>";
+                }
+                $('.h_main').html(html);
+            }
+
+
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+            //console.log(type);
+            switch (type) {
+                case "timeout":
+                mui.toast('连接超时，请重试');
+                break;
+                default:
+                mui.toast('请重试或重新登录');
+            }
+        }
+    });
+
+    /*获取开奖时间*/
+    mui.ajax(config[0].url+'/index.php/cpdlt_time', {
+        data: {},
+        dataType: 'json',//服务器返回json格式数据
+        type: 'get',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            /* console.log(JSON.stringify(data));*/
+            var arr = ['日', '一', '二', '三', '四', '五', '六'];
+            /*console.log(arr[data]);*/
+            if (data == 0 || data == 2 || data == 5) {
+                jQuery('.kjt').text("星期" + arr[data + 1] + "20:00截止，20:30开奖");
+            } else if (data == 4) {
+                jQuery('.kjt').text("星期" + arr[data + 2] + "20:00截止，20:30开奖");
+            } else {
+                jQuery('.kjt').text("星期" + arr[data] + "20:00截止，20:30开奖");
+            }
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+            //console.log(type);
+            switch (type) {
+                case "timeout":
+                mui.toast('连接超时，请重试');
+                break;
+                default:
+                mui.toast('请重试或重新登录');
+            }
+        }
+    });
+
+
+
+</script>
+
+
+</html>

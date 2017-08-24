@@ -1,0 +1,108 @@
+.top{
+	width:100%;
+	height: 35px;
+
+}
+
+.top_list{
+	width:24%;
+	height:35px;
+	text-align: center;
+	float: left;
+	background-color: #56abe4;
+	margin-right:1%;
+	line-height: 35px;
+	color:#fff;
+	font-size: 14px;
+}
+
+
+.mid{
+	width:100%;
+	min-height: 400px;
+	
+}
+
+
+.list{
+	width:100%;
+	height:100px;
+	border:1px soild red;
+}
+
+.list_1{
+	width:100%;
+	height:20px;
+	background-color: gainsboro;
+	font-size: 12px;
+}
+
+.left_1{
+	min-width:20%;
+	height:20px;
+	line-height: 20px;
+	float:left;
+	margin-left:2%;
+	text-align: center;
+}
+
+.right_1{
+	width:20%;
+	height:20px;
+	line-height: 20px;
+	float:right;
+	margin-right:12%;
+	text-align: center;
+	color:darkgoldenrod;
+	
+}
+
+.list_2{
+	width:100%;
+	height:80px;
+	background-color: #fff;
+	
+}
+
+.left_2{
+	width:38%;
+	height:80px;
+	font-size: 14px;
+	float:left;
+	padding: 12px;
+}
+
+.right_2{
+	width:43%;
+	height:80px;
+	font-size: 14px;
+	float:right;
+	/*padding: 12px;*/
+}
+
+.s_left{
+	width:84%;
+	height:56px;
+	float:left;
+	text-align: right;
+	/*margin-left:38px;*/
+	margin-top: 10px;
+}
+
+.s_right{
+	background-image: url(../wimages/personal/jt_rr.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 30px;
+    background-position: center;
+    display: block;
+    /*margin-left: 2px;*/
+    margin-top: 15px;
+    float:right;
+}
+
+.f_red{
+	color:red;
+}
+

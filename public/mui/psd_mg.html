@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/zx_personal.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+        mui.init();
+    </script>
+    <script src="js/jquery-latest.js"></script>
+    <style>
+        .mui-content {
+            background-color: #fff;
+            padding-bottom: 0px;
+        }
+
+        .index {
+            background-image: url(./wimages/index.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 24px;
+            height: 22px;
+            background-position: center;
+            display: block;
+            margin: 0 auto;
+            margin-top: 3px;
+        }
+
+        .index_font, .wd_font {
+            font-size: 11px;
+            color: #56abe4;
+        }
+
+        .wd {
+            background-image: url(./wimages/gr.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 24px;
+            height: 22px;
+            background-position: center;
+            display: block;
+            margin: 0 auto;
+            margin-top: 3px;
+        }
+
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+            padding: 11px 9px;
+        }
+
+        .bottom_nav {
+            display: table-cell;
+            overflow: hidden;
+            width: 1%;
+            height: 52px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #929292;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+    <h1 class="mui-title">密码管理</h1>
+</header>
+<!--<nav class="mui-bar mui-bar-tab">
+    <dt class="active_r login_out">退出登录</dt>
+</nav>-->
+
+<div class="mui-content" style="padding-bottom: 0px;">
+
+    <div class='clear'></div>
+    <div class='main_bottom'>
+
+        <div class='list update_pass'>
+            <!--<div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/pass.png" width='30' height='30'/></div>
+                <div class='left_font'>修改密码</div>
+            </div>-->
+            <div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/pass.png" width='30' height='30'/></div>
+                <div class='left_font'>登录密码重置</div>
+            </div>
+            <div class='list_right'>
+                <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+            </div>
+
+        </div>
+        <!--<div class='list update_zf'>
+            <div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/pass.png" width='30' height='30'/></div>
+                <div class='left_font'>支付密码</div>
+            </div>
+            <div class='list_right'>
+                <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+            </div>
+
+        </div>-->
+        <div class='list update_zf'>
+            <div class='list_left'>
+                <div class='left_img'><img src="wimages/personal/shop.png" width='30' height='30'/></div>
+                <div class='left_font'>支付密码重置</div>
+            </div>
+            <div class='list_right'>
+                <div class='jt'><img src="wimages/personal/jt_rr.png" width='30' height='30'/></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script src="js/tk_check.js"></script>
+<script src="js/shop_check.js"></script>
+<script type="text/javascript">
+
+    var url = window.location.search;
+    var loc = url.substring(url.lastIndexOf('=') + 1, url.length);
+
+    var userid = window.localStorage.getItem('token');
+    var shopid = window.localStorage.getItem('shopid');
+    //var openid = window.localStorage.getItem('openid');
+    //var headimgurl = window.localStorage.getItem('headimgurl');
+
+
+    $('.bk').on('tap', function () {
+        if (loc == 1) {
+            mui.openWindow({
+                url: 'zx_personal.html',
+                id: 'zx_personal',
+                createNew:true
+            });
+        } else {
+            mui.openWindow({
+                url: 'shop_zx.html',
+                id: 'shop_zx',
+                createNew:true
+            });
+        }
+
+    })
+
+
+
+
+
+    $('.update_pass').on('tap', function () {
+        /*mui.openWindow({
+         url: 'update_pass.html',
+         id:'update_pass'
+         });*/
+        var html='update_pass.html?update=' + loc;
+        if(loc==1){
+        	token_check(userid,html);
+        }else if(loc==2){
+        	shop_check(shopid,html);
+        }
+    	
+        //window.location.href = 'update_pass.html?update=' + loc;
+    })
+    $('.update_zf').on('tap', function () {
+    	var html='pay_psd.html?update='+loc;
+    	if(loc==1){
+        	token_check(userid,html);
+        }else if(loc==2){
+        	shop_check(shopid,html);
+        }
+    	//token_check(userid,html);
+       /* mui.openWindow({
+         url: 'pay_psd.html?update='+loc,
+         id:'update_pass'
+         });*/
+        //window.location.href = 'pay_psd.html?update=' + loc;
+    })
+
+
+
+</script>
+</html>

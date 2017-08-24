@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script src="js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">微信测试</h1>
+	</header>
+	<div class="mui-content">
+		
+	</div>
+</body>
+<script type="text/javascript">
+function getQueryString(name) { 
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return unescape(r[2]); return null; 
+} 
+var code = getQueryString('code');
+
+	mui.ajax('/index.php/wx_token',{
+		data:{
+			code:code,
+		},
+		dataType:'json',//服务器返回json格式数据
+		type:'get',//HTTP请求类型
+		timeout:10000,//超时时间设置为10秒；
+		success:function(data){
+		    if(typeof data == "string") {var data = eval('('+data+')');}
+		    console.log(JSON.stringify(data));
+		},
+		error:function(xhr,type,errorThrown){
+		//异常处理；
+//			console.log(type);
+            switch (type) {
+                case "timeout":
+                    mui.toast('连接超时，请重试');
+                    break;
+                default:
+                    mui.toast('请重试或重新登录');
+            }
+		}
+	});
+
+</script>
+</html>

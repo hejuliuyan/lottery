@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/css.css">
+    <style>
+        .sea {
+            width: 90%;
+            float: left;
+
+        }
+
+        .sea_img {
+            width: 10%;
+            float: left;
+            height: 40px;
+            padding: 5px;
+            background-color: #56abe4;
+        }
+
+        .search {
+            width: 100%;
+            min-height: 50px;
+        }
+
+        .s_right {
+            background-image: url(wimages/personal/jt_rr.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 24px;
+            height: 30px;
+            background-position: center;
+            display: block;
+            /* margin-left: 2px; */
+            /*margin-top: 15px;*/
+            float: right;
+        }
+
+        .shop_b {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+<script type="text/javascript">
+    mui.init()
+</script>
+<script src="js/jquery-latest.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=3N9hsSctbasaQ9cP7cATdEQOg0SDaDA3" type="text/javascript"></script>
+<script src="js/tk_check.js"></script>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-left-nav mui-pull-left bck"></a>
+    <h1 class="mui-title">搜店</h1>
+</header>
+<div class="mui-content">
+    <div class='search'>
+        <div class='sea'>
+            <input class='sea_shop' type="text" placeholder="请输入店铺名或地址"
+                   style='background-color: #bbddf4;margin-bottom: 0;'/>
+        </div>
+        <div class='sea_img'>
+            <img src="wimages/search.png" width='30' height='30'/>
+        </div>
+    </div>
+    <!--选择彩店-->
+    <section style="margin-bottom: 50px;">
+        <div class="w_mycai2">
+
+        </div>
+    </section>
+</div>
+</body>
+<script>
+    var userid = window.localStorage.getItem('token');
+    var shop_in = '';
+    mui.ajax(
+            config[0].url+'/index.php/search_shop',
+            {
+                data: {
+                    shop_info: shop_in,
+                },
+                dataType: 'json',//服务器返回json格式数据
+                type: 'post',//HTTP请求类型
+                timeout: 10000,//超时时间设置为10秒；
+                success: function (data) {
+                    if (typeof data == "string") {
+                        var data = eval('(' + data + ')');
+                    }
+                    var datalist = data.data.lists;
+                    for (var i = 0; i <= datalist.length - 1; i++) {
+                        var map = new BMap.Map("allmap");
+                        //map.centerAndZoom("重庆",12);  //初始化地图,设置城市和地图级别。
+                        var mylon = window.localStorage.getItem('long');
+                        var mylat = window.localStorage.getItem('lat');
+                        var pointA = new BMap.Point(mylon, mylat); // 创建点坐标A
+                        var pointB = new BMap.Point(datalist[i].longitude, datalist[i].latitude); // 创建点坐标B--江北区
+                        datalist[i].location = ((map.getDistance(pointA, pointB)) / 1000).toFixed(2);
+                    }
+                    //console.log(datalist);
+
+                    var html = [];
+                    for (var i = 0; i <= datalist.length - 1; i++) {
+                        if (datalist[i].verified == 'Y'
+                                & datalist[i].margin_paid == 'Y') {
+                            html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><input type="hidden" value="' + datalist[i].id + '" class="shopid"><div class="ord1_listl"><dt>'
+                                    + datalist[i].shop_name
+                                    + '</dt><dt><span class="shop_y"></span><span class="shop_b"></span><span>出票:'
+                                    + datalist[i].shop_cpnum
+                                    + '次</span><span></span><span>'
+                                    + datalist[i].location
+                                    + 'km</span></dt></div><div class="ord1_listr"><div class="s_right"></div></div></div></div></div>'
+                        } else if (datalist[i].verified == 'N'
+                                & datalist[i].margin_paid == 'Y') {
+                            html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><input type="hidden" value="' + datalist[i].id + '" class="shopid"><div class="ord1_listl"><dt>'
+                                    + datalist[i].shop_name
+                                    + '</dt><dt><span class=""></span><span class="shop_b"></span><span>出票:'
+                                    + datalist[i].shop_cpnum
+                                    + '次</span><span></span><span>'
+                                    + datalist[i].location
+                                    + 'km</span></dt></div><div class="ord1_listr"><div class="s_right"></div></div></div></div></div>'
+                        } else if (datalist[i].verified == 'Y'
+                                & datalist[i].margin_paid == 'N') {
+                            html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><input type="hidden" value="' + datalist[i].id + '" class="shopid"><div class="ord1_listl"><dt>'
+                                    + datalist[i].shop_name
+                                    + '</dt><dt><span class="shop_y"></span><span class=""></span><span>出票:'
+                                    + datalist[i].shop_cpnum
+                                    + '次</span><span></span><span>'
+                                    + datalist[i].location
+                                    + 'km</span></dt></div><div class="ord1_listr"><div class="s_right"></div></div></div></div></div>'
+                        } else {
+                            html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><input type="hidden" value="' + datalist[i].id + '" class="shopid"><div class="ord1_listl"><dt>'
+                                    + datalist[i].shop_name
+                                    + '</dt><dt><span class=""></span><span class=""></span><span>出票:'
+                                    + datalist[i].shop_cpnum
+                                    + '次</span><span></span><span>'
+                                    + datalist[i].location
+                                    + 'km</span></dt></div><div class="ord1_listr"><div class="s_right"></div></div></div></div></div>'
+                        }
+                    }
+                    $('.w_mycai2').html(html);
+
+                },
+                error: function (xhr, type, errorThrown) {
+                    //异常处理；
+                    console.log(type);
+                }
+            });
+
+
+    $(document).on('tap', '.ord1_list', function () {
+        var shopid = $(this).children('.shopid').val();
+        var html = 'myshop_detail.html?shopid=' + shopid;
+        token_check(userid, html);
+        //alert(shopid);
+    })
+
+    $('.bck').on('tap', function () {
+        window.location.href = 'myshop_main.html';
+    })
+
+    $(document).on('tap', '.sea_img', function () {
+        var shop_info = $('.sea_shop').val();
+        mui.ajax(config[0].url+'/index.php/search_shop', {
+            data: {
+                shop_info: shop_info,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                console.log(data);
+                var lon_a = window.localStorage.getItem('long');
+//                alert(lon_a);
+                var lat_a = window.localStorage.getItem('lat');
+                var mylon = '';
+                var mylat = '';
+                $.post("http://test.foodietech.cn/get_loc", {lon: lon_a, lat: lat_a},
+                        function (arr) {
+                            if (typeof arr == "string") {
+                                var arr = eval('(' + arr + ')');
+
+                            }
+                            mylon = arr.result[0]['x'];
+//                            alert(mylon);
+                            mylat = arr.result[0]['y'];
+                            var datalist = data.data.lists;
+                            for (var i = 0; i <= datalist.length - 1; i++) {
+                                var map = new BMap.Map("allmap");
+                                //map.centerAndZoom("重庆",12);  //初始化地图,设置城市和地图级别。
+                                /*var mylon = window.localStorage.getItem('long');
+                                 var mylat = window.localStorage.getItem('lat');*/
+                                var pointA = new BMap.Point(mylon, mylat); // 创建点坐标A
+                                var pointB = new BMap.Point(datalist[i].longitude, datalist[i].latitude); // 创建点坐标B--江北区
+                                datalist[i].location = ((map.getDistance(pointA, pointB)) / 1000).toFixed(2);
+                            }
+                            console.log(datalist);
+
+                            var html = [];
+                            for (var i = 0; i <= datalist.length - 1; i++) {
+                                if (datalist[i].verified == 'Y'
+                                        & datalist[i].margin_paid == 'Y') {
+                                    html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><input type="hidden" value="' + datalist[i].id + '" class="shopid"><div class="ord1_listl"><dt>'
+                                            + datalist[i].shop_name
+                                            + '</dt><dt><span class="shop_y"></span><span class="shop_b"></span><span>出票:'
+                                            + datalist[i].shop_cpnum
+                                            + '次</span><span></span><span>'
+                                            + datalist[i].location
+                                            + 'km</span></dt></div><div class="ord1_listr"><div class="s_right"></div></div></div></div></div>'
+                                } else if (datalist[i].verified == 'N'
+                                        & datalist[i].margin_paid == 'Y') {
+                                    html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><input type="hidden" value="' + datalist[i].id + '" class="shopid"><div class="ord1_listl"><dt>'
+                                            + datalist[i].shop_name
+                                            + '</dt><dt><span class=""></span><span class="shop_b"></span><span>出票:'
+                                            + datalist[i].shop_cpnum
+                                            + '次</span><span></span><span>'
+                                            + datalist[i].location
+                                            + 'km</span></dt></div><div class="ord1_listr"><div class="s_right"></div></div></div></div></div>'
+                                } else if (datalist[i].verified == 'Y'
+                                        & datalist[i].margin_paid == 'N') {
+                                    html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><input type="hidden" value="' + datalist[i].id + '" class="shopid"><div class="ord1_listl"><dt>'
+                                            + datalist[i].shop_name
+                                            + '</dt><dt><span class="shop_y"></span><span class=""></span><span>出票:'
+                                            + datalist[i].shop_cpnum
+                                            + '次</span><span></span><span>'
+                                            + datalist[i].location
+                                            + 'km</span></dt></div><div class="ord1_listr"><div class="s_right"></div></div></div></div></div>'
+                                } else {
+                                    html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><input type="hidden" value="' + datalist[i].id + '" class="shopid"><div class="ord1_listl"><dt>'
+                                            + datalist[i].shop_name
+                                            + '</dt><dt><span class=""></span><span class=""></span><span>出票:'
+                                            + datalist[i].shop_cpnum
+                                            + '次</span><span></span><span>'
+                                            + datalist[i].location
+                                            + 'km</span></dt></div><div class="ord1_listr"><div class="s_right"></div></div></div></div></div>'
+                                }
+                            }
+                            $('.w_mycai2').html(html);
+                        })
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                console.log(type);
+            }
+        });
+
+
+    })
+</script>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/personal.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+        mui.init();
+    </script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <style>
+        .mui-input-row:last-child {
+            background-color: #fff;
+        }
+
+        .head_s {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+        }
+
+        .head_pic {
+            width: 30%;
+            height: 100px;
+            float: left;
+            padding-left: 19px;
+            padding-top: 8px;
+        }
+
+        .shop_info {
+            width: 70%;
+            height: 100px;
+            float: left;
+        }
+
+        .read_money {
+            width: 54%;
+            height: 35px;
+            float: left;
+            font-size: 23px;
+            color: red;
+            margin-left: 23px;
+        }
+
+        .read_pic {
+            float: left;
+            margin-left: 5px;
+        }
+
+        .read_font {
+            float: left;
+            margin-left: 20px;
+            color: gray;
+        }
+
+        .star {
+            float: left;
+        }
+
+        .licence_font {
+            width: 100%;
+            height: 20px;
+            background-color: lightgray;
+        }
+
+        .iicence_pic {
+            width: 90%;
+            height: 200px;
+            margin-left: 5%;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            border: 1px solid gray
+        }
+
+        #pics {
+            width: 100%;
+            min-height: 50px;
+            margin-top: 10px
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">店铺信息</h1>
+    <div class='mui-icon mui-icon-right-nav mui-pull-right save'><img src="wimages/gou.png" width='15' heigth='15'/>
+    </div>
+</header>
+<div class="mui-content">
+    <div class='head_s'>
+        <div class='head_pic'>
+            <img class='headimgurl' src="wimages/head2.png" width='80' height='80'/>
+        </div>
+        <div class='shop_info'>
+            <dt style='width: 100%;height:35px;margin-top: 16px;'>
+            <div class='read_pic'><img src="wimages/no_rz.png" width='20' height='20'/></div>
+            <div class='read_font'>未认证</div>
+            <div class='read_money'></div>
+            </dt>
+            <dt class='shop_level' style='width: 100%;height: 35px;'>
+
+            </dt>
+        </div>
+        <!--<div class='read_money'>1000.00元</div>-->
+        <!---->
+
+    </div>
+
+    <div class="person">
+        <div class="mui-input-row us">
+            <div class='head'><img src="wimages/personal/shop.png" width='15' height="15"/></div>
+            <input id='shop_name' type="text" class="mui-input-clear inp" placeholder="请输入店铺名">
+        </div>
+        <div class="mui-input-row us">
+            <div class='head'><img src="wimages/address.png" width='15' height="15"/></div>
+            <input id='address' type="text" class="mui-input-clear inp" placeholder="请输入地址">
+        </div>
+        <div class="mui-input-row phone">
+            <div class='head'><img src="wimages/phone.png" width='15' height="15"/></div>
+            <input id='phone' type="text" class=" mui-input-clear inp" value='' placeholder="请输入手机号">
+        </div>
+        <div class="mui-input-row realname">
+            <div class='head'><img src="wimages/realname.png" width='15' height="15"/></div>
+            <input id='realname' type="text" class="mui-input-clear inp" placeholder="请输入真实姓名">
+        </div>
+        <div class="mui-input-row idcard">
+            <div class='head'><img src="wimages/idcard.png" width='15' height="15"/></div>
+            <input id='idcard' type="text" class="mui-input-clear inp" placeholder="请输入身份证号">
+        </div>
+        <div class="mui-input-row pass">
+            <div class='head'><img src="wimages/card.png" width='15' height="15"/></div>
+            <input id='licence' type="text" class="mui-input-clear inp" placeholder="请输入代销证号">
+        </div>
+
+    </div>
+    <div class='licence' style='margin-top: 12px;width: 90%;margin-left: 5%;'>
+        <div class='licence_font'>
+            代销证照片
+        </div>
+        <div class='licence_pic'>
+            <div class='photo'>
+                <img id='chooseImage' src="wimages/photo.png" width='50' height='50'/>
+            </div>
+            <div id="pics"></div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value='1' class='timestamp'/>
+<input type="hidden" value='2' class='nonceStr'/>
+<input type="hidden" value='3' class='signature'/>
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+
+	if(isWeiXin()){
+		
+	
+    var url = window.location.href;
+    mui.ajax(config[0].url+'/index.php/jdk', {
+        data: {url: url},
+        dataType: 'json',//服务器返回json格式数据
+        type: 'post',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            //console.log(data);
+            $('.timestamp').val(data.time);
+            $('.nonceStr').val(data.noncestr);
+            $('.signature').val(data.data);
+            var time = $('.timestamp').val();
+            var nonc = $('.nonceStr').val();
+            var sig = $('.signature').val();
+
+            /*
+             * 注意：
+             * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+             * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+             * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+             *
+             * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
+             * 邮箱地址：weixin-open@qq.com
+             * 邮件主题：【微信JS-SDK反馈】具体问题
+             * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+             */
+            wx.config({
+
+                debug: false,
+                appId: 'wxa0f60c7684f8ac70',
+                timestamp: time,
+                nonceStr: nonc,
+                signature: sig,
+                jsApiList: [
+                    'checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'onMenuShareQZone',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onVoiceRecordEnd',
+                    'playVoice',
+                    'onVoicePlayEnd',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+                ]
+            });
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+//            console.log(type);
+            switch (type) {
+                case "timeout":
+                    mui.toast('连接超时，请重试');
+                    break;
+                default:
+                    mui.toast('请重试或重新登录');
+            }
+        }
+    });
+    
+ }
+    
+    function isWeiXin(){
+		    var ua = window.navigator.userAgent.toLowerCase();
+		    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+		        return true;
+		    }else{
+		        return false;
+		    }
+		}
+</script>
+<script type="text/javascript">
+
+	if(isWeiXin()){
+		
+	
+
+    // 5 图片接口
+    // 5.1 拍照、本地选图
+    var images = {
+        localId: [],
+        serverId: []
+    };
+    document.querySelector('#chooseImage').onclick = function () {
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                images.localId = res.localIds;
+                /* alert('已选择 ' + res.localIds.length + ' 张图片');*/
+                wx_upload();
+
+
+            }
+        });
+
+
+    };
+
+
+    // 5.3 上传图片
+    function wx_upload() {
+        var i = 0, length = images.localId.length;
+        images.serverId = [];
+        function upload() {
+            wx.uploadImage({
+                localId: images.localId[i],
+                success: function (res) {
+                    i++;
+                    //alert('已上传：' + i + '/' + length);
+                    images.serverId.push(res.serverId);
+                    mids = images.serverId[0];
+                    // alert(mids);
+//		          if (i < length) {
+//		            upload();
+//		          }
+                    /*if (i < length) {
+
+                     }*/
+                    //var oid=jQuery('.dlt_num').text();
+                    var shopid = window.localStorage.getItem('shopid');
+                    wxImgCallback(mids, shopid);
+
+
+                },
+                fail: function (res) {
+                    alert(JSON.stringify(res));
+                }
+            });
+
+        };
+        upload();
+
+    }
+    function wxImgCallback(mids, shopid) {
+        //var oid=jQuery('#oid').text();
+        // console.log(oid);
+        mui.ajax(config[0].url+'/index.php/wx_upload_licence', {
+            data: {
+                mid: mids,
+                shopid: shopid,
+            },
+            dataType: 'json',//服务器返回json格式数据
+            type: 'post',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                if (typeof data == "string") {
+                    var data = eval('(' + data + ')');
+                }
+                console.log(data);
+                if (data == 1) {
+                    alert('上传成功');
+                    window.location.reload();//刷新当前页面.
+                } else {
+                    /*  $("#pics").append("<img src=../../Uploads/photo/"+data+" width='100%' height='400' / >");*/
+                    alert('上传失败');
+                }
+                // alert(data);
+
+                /*console.log(JSON.stringify(data));*/
+
+            },
+
+
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+//                console.log(type);
+                switch (type) {
+                    case "timeout":
+                        mui.toast('连接超时，请重试');
+                        break;
+                    default:
+                        mui.toast('请重试或重新登录');
+                }
+            }
+        });
+    }
+    
+  }
+    
+    
+    function isWeiXin(){
+		    var ua = window.navigator.userAgent.toLowerCase();
+		    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+		        return true;
+		    }else{
+		        return false;
+		    }
+		}
+</script>
+<script type="text/javascript">
+    var shopid = window.localStorage.getItem("shopid");
+    var headimgurl = window.localStorage.getItem('headimgurl');
+
+    mui.ajax(config[0].url+'/index.php/shop_per', {
+        data: {
+            tokenid: shopid,
+        },
+        dataType: 'json',//服务器返回json格式数据
+        type: 'post',//HTTP请求类型
+        timeout: 10000,//超时时间设置为10秒；
+        success: function (data) {
+            if (typeof data == "string") {
+                var data = eval('(' + data + ')');
+            }
+            /*console.log(JSON.stringify(data));*/
+            console.log(data);
+            jQuery('#shop_name').val(data[0].shop_name);
+            jQuery('#phone').val(data[0].keeper_mobile);
+            jQuery('#realname').val(data[0].keeper_name);
+            jQuery('#idcard').val(data[0].idcard_num);
+            jQuery('#address').val(data[0].address);
+            jQuery('#licence').val(data[0].licence_num);
+
+            if (headimgurl) {
+                $('.headimgurl').attr('src', headimgurl);
+
+            }
+
+            if (data[0].licence_pic) {
+                $("#pics").append("<img src=../../Uploads/photo/" + data[0].licence_pic + " width='100%' height='400' / >");
+                $('.photo').remove();
+            }
+
+            /*if (data[0].margin_paid == 'Y') {
+               
+                $('.read_font').text('已交保').css('color', '#f4c600');
+            	$('.read_money').text('1000.00元');
+            	$('.read_pic img').attr('src', 'wimages/ready_money.png');
+                
+            }*/
+            
+            if(data[0].verified== 'Y'){
+            	$('.save').hide();
+            	$('.read_font').text('已认证').css('color', '#11cd6e');
+            	$('.read_pic img').attr('src', 'wimages/rz.png');
+            	jQuery('#shop_name').attr('disabled',true);
+	            jQuery('#phone').attr('disabled',true);
+	            jQuery('#realname').attr('disabled',true);
+	            jQuery('#idcard').attr('disabled',true);
+	            jQuery('#address').attr('disabled',true);
+                jQuery('#licence').attr('disabled',true);
+            }
+
+            var star_length = data[0].shop_level;
+            console.log(star_length);
+            if (star_length == 0) {
+                var a = '';
+                for (var i = 0; i < 5; i++) {
+
+                    a = "<div class='star'><img  src='wimages/no_star.png' width='30' height='30'/></div>";
+                    $('.shop_level').append(a);
+                }
+
+            } else {
+                var b = '';
+                var c = '';
+                var d = '';
+                for (var i = 0; i < star_length; i++) {
+
+                    b += "<div class='star'><img  src='wimages/read_star.png' width='30' height='30'/></div>";
+                }
+
+                for (var k = 0; k < 5 - star_length; k++) {
+
+                    c += "<div class='star'><img  src='wimages/no_star.png' width='30' height='30'/></div>";
+
+                }
+
+                d = b + c;
+
+                $('.shop_level').append(d);
+            }
+
+
+        },
+        error: function (xhr, type, errorThrown) {
+            //异常处理；
+//            console.log(type);
+            switch (type) {
+                case "timeout":
+                    mui.toast('连接超时，请重试');
+                    break;
+                default:
+                    mui.toast('请重试或重新登录');
+            }
+        }
+    });
+
+
+    jQuery(document).on('tap', '.save', function () {
+        var name = jQuery('#realname').val();
+        var idcard = jQuery('#idcard').val();
+        var shop_name = jQuery('#shop_name').val();
+        var address = $('#address').val();
+        var phone = jQuery('#phone').val();
+        var licence_num = $('#licence').val();
+
+        if (username(shop_name) == false || !shop_name) {
+            mui.toast('请输入正确的店铺名');
+        } else if (rname(name) == false || !name) {
+            mui.toast('请填写真实的姓名');
+        } else if (card(idcard) == false || !idcard) {
+            mui.toast('请填写正确的身份证号');
+        } else if (lic_num(licence_num) == false || !licence_num) {
+            mui.toast('请填写正确的代销证号');
+        } else if (username(address) == false || !address) {
+            mui.toast('请填写正确的地址');
+        } else if (iphone(phone) == false || !phone) {
+            mui.toast('请填写正确的电话号码');
+        } else {
+
+            mui.ajax(config[0].url+'/index.php/update_shop_info', {
+                data: {
+                    mobile: phone,
+                    real_name: name,
+                    idcard_num: idcard,
+                    shopid: shopid,
+                    shop_name: shop_name,
+                    address: address,
+                    licence_num: licence_num,
+                },
+                dataType: 'json',//服务器返回json格式数据
+                type: 'post',//HTTP请求类型
+                timeout: 10000,//超时时间设置为10秒；
+                success: function (data) {
+                    if (typeof data == "string") {
+                        var data = eval('(' + data + ')');
+                    }
+                    /*console.log(JSON.stringify(data));*/
+                    if (data == false) {
+                        mui.toast('请修改后再进行保存')
+                    } else if (data == true) {
+                        mui.openWindow({
+                            url: 'shop_zx.html',
+                            id: 'shop_zx',
+                            createNew:true
+                        });
+                    } else if(data==333){
+                    	mui.toast('此号码已存在');
+                    }else {
+                        for (var i in data) {
+                            mui.toast(data[i][0])
+                        }
+                    }
+
+                },
+                error: function (xhr, type, errorThrown) {
+                    //异常处理；
+//                    console.log(type);
+                    switch (type) {
+                        case "timeout":
+                            mui.toast('连接超时，请重试');
+                            break;
+                        default:
+                            mui.toast('请重试或重新登录');
+                    }
+                }
+            });
+        }
+
+
+    })
+
+    //身份证匹配
+    function card(obj) {
+
+        reg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    //真实姓名匹配
+    function rname(obj) {
+
+        reg = /^[\u4e00-\u9fa5]{0,4}$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //账号名匹配
+    function username(obj) {
+
+        reg = /^[\w\u4E00-\u9FA5\uF900-\uFA2D]{1,10}$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //证件号匹配
+    function lic_num(obj) {
+        reg = /^[0-9]+$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //手机号匹配
+    function iphone(obj) {
+
+        reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+        if (!reg.test(obj)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+</html>

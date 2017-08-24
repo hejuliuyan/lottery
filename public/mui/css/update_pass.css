@@ -1,0 +1,134 @@
+.clear{
+	clear:both;
+}
+.update_ready{
+    line-height: 34px;
+    height: 34px;
+    text-align: center;
+    border-radius: 6px;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.active_r {
+    background: red;
+    color: #fff;
+}
+
+html,body {
+	background-color: #efeff4;
+	min-width: 320px;
+	max-width: 640px;
+	margin:0 auto;
+			}
+			
+.clear{
+	clear:both;
+}
+
+
+.mui-input-row .l_font{
+	width:27%;
+	padding: 12px 5px;
+	margin-left:5% ;
+	font-size: 15px;
+}
+
+.mui-input-row .inp{
+	border:1px solid gray;
+	font-size: 12px;
+	width:64%;
+	margin-right: 4%;
+	background-color: #fff;
+}
+
+.mui-input-row{
+	margin-top: 10px;
+}
+
+.mui-input-row .yzm .inp{
+	border:0;
+	font-size: 12px;
+	width:70%;
+	margin-right: 4%;
+	padding: 10px 0;
+}
+
+.mui-input-row .pass .inp{
+	border:1px solid gray;
+	font-size: 12px;
+	width:64%;
+	margin-right: 4%;
+	padding: 10px 0;
+}
+
+
+.h_yzm{
+	float: right;
+}
+
+.yzm{
+	width:64%;
+	float: left;
+	border:1px solid gray;
+	background-color: #fff;
+	height:43px;
+	
+}
+
+
+
+.mui-input-row .mui-input-clear~.mui-icon-clear{
+	top:10px;
+	right:3%;
+}
+
+.c_yzm .mui-input-clear~.mui-icon-clear{
+	top:10px;
+	right:33%;
+}
+
+.paw .mui-input-password~.mui-icon-eye{
+	top:10px;
+	right:3%;
+}
+
+
+.paw .mui-input-clear~.mui-icon-clear{
+	top:10px;
+	right:27%;
+}
+
+.c_yzm .mui-btn{
+	width:40%;
+	padding:6px;
+	right: 5%;
+	top:5px;
+}
+
+.xy{
+	width:100%;
+	font-size: 12px;
+	color: gray;
+	text-align: center;
+	margin-top: 5px;
+}
+
+.sub_btn{
+	width:100%;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.sub{
+	width:80%;
+	
+	
+}
+
+
+
+

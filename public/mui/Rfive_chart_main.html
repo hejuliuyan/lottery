@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script><script src="js/config.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/save_case.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+        mui.init();
+    </script>
+    <script src="js/jquery-latest.js"></script>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav f_record">
+    <a href="javascript:void(0)" class=" mui-icon mui-icon-left-nav mui-pull-left bk"></a>
+    <h1 class="mui-title">排列五走势图</h1>
+</header>
+<div class="mui-content">
+
+</div>
+<script type="text/javascript">
+    //启用双击监听
+    mui.init({
+        gestureConfig:{
+            doubletap:true
+        },
+        subpages:[{
+            url:config[0].url+'/mui/Rfive_chart.html',
+            id:'Rfive_chart.html',
+            styles:{
+                top: '45px',
+                bottom: '0px',
+            }
+        }]
+    });
+	
+	 $(document).on('tap','.bk',function(){
+    	mui.plusReady(function () {
+			var web=plus.webview.getWebviewById('p5');
+			//web.show();
+			if(web){
+				web.show();
+			}else{
+				mui.openWindow({
+				    url: 'p5.html', 
+				    id:'p5',
+				    createNew:true
+				});
+			}
+        	
+			             
+    	});
+    	//alert(2)
+    	/*mui.openWindow({
+		    url: 'dlt.html', 
+		    //id:'index',
+		    createNew:true
+		});*/
+    })
+
+</script>
+</body>
+<script>
+
+</script>
+</html>

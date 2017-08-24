@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>选择彩店</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/css.css">
+		<style>
+			body {
+				background-color: #efeff4;
+			}
+			/*.mui-bar {
+            background-color: #fff;
+            webkit-box-shadow: 0 0 0;
+            box-shadow: 0 0 0;
+        }*/
+			
+			.mui-bar dt {
+				line-height: 34px;
+				height: 34px;
+				text-align: center;
+				border-radius: 6px;
+				margin-top: 10px;
+				font-size: 14px;
+				width: 80%;
+				margin: 0 auto;
+				margin-top: 10px;
+				;
+			}
+			
+			.active_r {
+				background: red;
+				color: #fff;
+			}
+			
+			.mr {
+				background-color: red;
+				border-radius: 4px;
+				color: #fff;
+				font-size: 12px;
+				padding: 2px 4px;
+			}
+			
+			.s_right {
+				background-image: url(wimages/personal/jt_rr.png);
+				background-size: 100%;
+				background-repeat: no-repeat;
+				width: 24px;
+				height: 30px;
+				background-position: center;
+				display: block;
+				/* margin-left: 2px; */
+				margin-top: 8px;
+				float: right;
+			}
+			
+			.shop_b {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class=" mui-icon mui-icon-left-nav mui-pull-left bck"></a>
+			<h1 class="mui-title">选择彩店</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+			<dt class="active_r w_but">确认</dt>
+		</nav>
+		<div class="mui-content">
+			<!--选择彩店-->
+			<section style="margin-bottom: 50px;">
+				<dt class="ord1_dt">我的彩店</dt>
+				<div class="w_mycai1">
+					<div class="ord1_bot">
+						<div class="ord1_cen">
+
+						</div>
+					</div>
+				</div>
+				<dt class="ord1_dt">附近彩店</dt>
+				<div class="w_mycai2">
+
+				</div>
+			</section>
+		</div>
+
+		<script src="js/mui.min.js"></script><script src="js/config.js"></script>
+		<script src="js/jquery-latest.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=3N9hsSctbasaQ9cP7cATdEQOg0SDaDA3" type="text/javascript"></script>
+		<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+		<script src="js/tk_check.js"></script>
+		<script>
+			userid = window.localStorage.getItem("token");
+			/*order_id = window.localStorage.getItem("order_id");*/
+			//nickname = window.localStorage.getItem("nickname");
+			var order_money = window.localStorage.getItem('to_money');
+			var order_z = window.localStorage.getItem('to_z');
+			var order_b = window.localStorage.getItem('to_b');
+			var order_qi = window.localStorage.getItem('order_qi');
+			var cp_hm = window.localStorage.getItem('cp_hm');
+			//var order_content = window.localStorage.getItem('order_content');
+			var type = window.localStorage.getItem('cp_types');
+			var user_mobile = window.localStorage.getItem("phone");
+			var add = window.localStorage.getItem('zjj');
+			var tz_type = window.localStorage.getItem('tz_type');
+			var tz_bj = window.localStorage.getItem('tz_bj');
+			console.log(tz_type);
+
+			shop_id = 0;
+			$('.bck').on('tap', function() {
+				var html = 'order_1.html';
+				token_check(userid, html);
+
+			})
+
+			shops(userid);
+			//选择店铺信息
+			function shops(userid) {
+				mui.ajax(config[0].url+'/index.php/info_d', {
+					data: {
+						userid: userid,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(typeof data == "string") {
+							var data = eval('(' + data + ')');
+						}
+						console.log(data);
+						if(data.data[0].shop_name == null || data.data[0].shop_name == '' || data.data[0].shop_name == undefined) {
+							$('.w_mycai1').prev().hide();
+							$('.w_mycai1').hide();
+						} else {
+							var data = data.data[0];
+							var map = new BMap.Map("allmap");
+							//map.centerAndZoom("重庆",12);  //初始化地图,设置城市和地图级别。
+							var mylon = window.localStorage.getItem('long');
+							var mylat = window.localStorage.getItem('lat');
+							var pointA = new BMap.Point(mylon, mylat); // 创建点坐标A
+							var pointB = new BMap.Point(data.longitude, data.latitude); // 创建点坐标B
+							data.location = ((map.getDistance(pointA, pointB)) / 1000).toFixed(2);
+							if(data.shop_status == 1) {
+								var html = '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><div class="ord1_listl"><dt>' +
+									data.shop_name +
+									'<span>默认</span></dt><dt><span class="shop_y"></span><span class="shop_b"></span><span>出票:' +
+									data.shop_cpnum +
+									'次</span><span></span><span>' +
+									data.location +
+									'km</span></dt></div><div class="ord1_listr"><dt class="active_c" shop_id="' + data.id + '">选择</dt></div></div></div></div>'
+								shop_id = data.id;
+							} else {
+								var html = '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><div class="ord1_listl"><dt>' +
+									data.shop_name +
+									'<span>默认</span></dt><dt><span class="shop_y"></span><span class="shop_b"></span><span>出票:' +
+									data.shop_cpnum +
+									'次</span><span></span><span>' +
+									data.location +
+									'km</span></dt></div><div class="ord1_listr"></div></div></div></div>'
+							}
+							$('.w_mycai1').html(html)
+							if(data.verified == 'N') {
+								$('.shop_y').removeClass();
+							}
+							if(data.margin_paid == 'N') {
+								$('.shop_b').removeClass();
+							}
+
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+					}
+				});
+
+				mui.ajax(
+					config[0].url+'/index.php/shopslists', {
+						data: {
+							userid: userid,
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(typeof data == "string") {
+								var data = eval('(' + data + ')');
+							}
+							var lon_a = window.localStorage.getItem('long');
+							//                        alert(lon_a);
+							var lat_a = window.localStorage.getItem('lat');
+							var mylon = '';
+							var mylat = '';
+							$.post("http://test.foodietech.cn/get_loc", {
+									lon: lon_a,
+									lat: lat_a
+								},
+								function(arr) {
+									if(typeof arr == "string") {
+										var arr = eval('(' + arr + ')');
+									}
+									mylon = arr.result[0]['x'];
+									//                                    alert(mylon);
+									mylat = arr.result[0]['y'];
+									var datalist = data.data.lists;
+									for(var i = 0; i <= datalist.length - 1; i++) {
+										var map = new BMap.Map("allmap");
+										//map.centerAndZoom("重庆",12);  //初始化地图,设置城市和地图级别。
+										/*var mylon = window.localStorage.getItem('long');
+										 var mylat = window.localStorage.getItem('lat');*/
+										var pointA = new BMap.Point(mylon, mylat); // 创建点坐标A
+										var pointB = new BMap.Point(datalist[i].longitude, datalist[i].latitude); // 创建点坐标B--江北区
+										datalist[i].location = ((map.getDistance(pointA, pointB)) / 1000).toFixed(2);
+									}
+									console.log(datalist);
+
+									var html = [];
+									for(var i = 0; i <= datalist.length - 1; i++) {
+										if(datalist[i].verified == 'Y' &
+											datalist[i].margin_paid == 'Y') {
+											html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><div class="ord1_listl"><dt>' +
+												datalist[i].shop_name +
+												'</dt><dt><span class="shop_y"></span><span class="shop_b"></span><span>出票:' +
+												datalist[i].shop_cpnum +
+												'次</span><span></span><span>' +
+												datalist[i].location +
+												'km</span></dt></div><input type="hidden" value="' + datalist[i].id + '"><div class="ord1_listr"><dt class="active_l" shop_id="' + datalist[i].id + '">选择</dt></div></div></div></div>'
+										} else if(datalist[i].verified == 'N' &
+											datalist[i].margin_paid == 'Y') {
+											html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><div class="ord1_listl"><dt>' +
+												datalist[i].shop_name +
+												'</dt><dt><span class=""></span><span class="shop_b"></span><span>出票:' +
+												datalist[i].shop_cpnum +
+												'次</span><span></span><span>' +
+												datalist[i].location +
+												'km</span></dt></div><input type="hidden" value="' + datalist[i].id + '"><div class="ord1_listr"><dt class="active_l" shop_id="' + datalist[i].id + '">选择</dt></div></div></div></div>'
+										} else if(datalist[i].verified == 'Y' &
+											datalist[i].margin_paid == 'N') {
+											html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><div class="ord1_listl"><dt>' +
+												datalist[i].shop_name +
+												'</dt><dt><span class="shop_y"></span><span class=""></span><span>出票:' +
+												datalist[i].shop_cpnum +
+												'次</span><span></span><span>' +
+												datalist[i].location +
+												'km</span></dt></div><input type="hidden" value="' + datalist[i].id + '"><div class="ord1_listr"><dt class="active_l" shop_id="' + datalist[i].id + '">选择</dt></div></div></div></div>'
+										} else {
+											html += '<div class="ord1_bot"><div class="ord1_cen"><div class="ord1_list"><div class="ord1_listl"><dt>' +
+												datalist[i].shop_name +
+												'</dt><dt><span class=""></span><span class=""></span><span>出票:' +
+												datalist[i].shop_cpnum +
+												'次</span><span></span><span>' +
+												datalist[i].location +
+												'km</span></dt></div><input type="hidden" value="' + datalist[i].id + '"><div class="ord1_listr"><dt class="active_l" shop_id="' + datalist[i].id + '">选择</dt></div></div></div></div>'
+										}
+									}
+									$('.w_mycai2').html(html);
+
+								});
+
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log(type);
+						}
+					});
+
+			}
+
+			$(document).on('tap', '.w_but', function() {
+				//$(this).attr('disabled',true);
+				var shop_id = $('.active_c').attr('shop_id');
+				if(shop_id == '' || shop_id == null || shop_id == undefined || shop_id == 0) {
+					mui.toast('请选择投注店铺');
+					//setTimeout("window.location.reload()",2000);
+					return;
+				} else {
+					window.localStorage.setItem('choose_shop', shop_id);
+					var html = 'order_1.html';
+					token_check(userid, html);
+				}
+
+			});
+
+			$(document).on('tap', '.w_mycai2 .ord1_listl', function() {
+				var sid = $(this).next().val();
+				var html = 'myshop_detail.html?id=' + sid;
+				token_check(userid, html);
+			})
+
+			$(document).on('tap', '.ord1_listr dt', function() {
+				$(".ord1_listr dt").removeClass("active_c");
+				$(".ord1_listr dt").addClass("active_l");
+				$(this).removeClass("active_l");
+				$(this).addClass("active_c");
+				shop_id = $(this).attr('shop_id');
+			});
+		</script>
+	</body>
+
+</html>

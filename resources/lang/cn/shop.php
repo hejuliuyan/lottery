@@ -1,0 +1,50 @@
+<?php
+return [
+    'title1' => '店铺管理',
+    'title2' => '列表',
+    'search' => [
+        'num' => '店铺编号',
+        'phone' => '店主手机号',
+    ],
+    'shop_name' => '店名',
+    'mobile' => '手机号码',
+    'log_name' => '登录名',
+    'c_time' => '创建时间',
+    'cp_num' => '出票次数',
+    'address' => '详细地址',
+    'js' => [
+        'null' => '请填写数据再提交',
+        'num' => '请选择条数',
+        'max_num' => '不能大于50条',
+        'is_del' => '确定要删除吗'
+    ],
+    'edit' => [
+        'title1' => '店铺管理',
+        'title2' => '店铺名',
+        'idcard' => '身份证号',
+        'real_name' => '真实姓名',
+        'phone'=>'手机号码',
+        'log_name'=>'登录名',
+        'star' => '星级',
+        'star_list' => [
+            '0'=>'请选择',
+            '1'=>'一星',
+            '2'=>'二星',
+            '3'=>'三星',
+            '4'=>'四星',
+            '5'=>'五星',
+        ],
+        'u_time'=>'修改时间',
+        'is_Authenticate'=>'是否认证',
+        'verified'=>'已认证',
+        'not_certified'=>'未认证',
+        'is_ensure'=>'是否交保',
+        'ok_ensure'=>'已交',
+        'no_ensure'=>'未交',
+        'is_enable'=>'是否启用',
+        'enable'=>'启用',
+        'no_enable'=>'禁用',
+
+    ],
+    'dxz'=>'商家代销证',
+];

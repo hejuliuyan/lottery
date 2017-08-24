@@ -1,0 +1,156 @@
+.heads{
+	width:100%;
+	height: 100px;
+	background-color: #fff;
+}
+
+.h_left{
+	width:70%;
+	float:left;
+	height: 100px;
+}
+
+.h_right{
+	width:30%;
+	float:left;
+	height: 100px;
+}
+
+.hpic{
+	width:32%;
+	height:100px;
+	float:left;
+	padding-top: 10px;
+    padding-left: 2px;
+}
+
+.hfont{
+	width:60%;
+	height: 100px;
+	float:left;
+	padding-top: 12px;
+}
+
+.m_left{
+	width:50%;
+	height: 80px;
+	float:left;
+	text-align: center;
+    padding-top: 20px;
+}
+
+
+.m_right{
+	width:50%;
+	height: 80px;
+	float:left;
+	text-align: center;
+    padding-top: 20px;
+}
+
+.h_mid{
+	width:100%;
+	height: 80px;
+	background-color: #fff;
+	margin-top: 30px;
+	}
+	
+.h_bottom{
+	width:100%;
+	min-height: 455px;
+	background-color: #fff;
+	margin-top: 30px;
+}
+
+
+
+.add_pic{
+	    background-image: url(../wimages/lbs.png);
+	    background-size: 100%;
+	    background-repeat: no-repeat;
+	    width: 20px;
+	    height: 20px;
+	    display: block;
+	    float: left;
+	    margin-left: 6%;
+	    margin-top: 9px;
+	    margin-right: 4%;
+}
+
+.ph_pic{
+		background-image: url(../wimages/shop_phone.png);
+	    background-size: 100%;
+	    background-repeat: no-repeat;
+	    width: 20px;
+	    height: 20px;
+	    display: block;
+	    float: left;
+	    margin-left: 6%;
+	    margin-top: 9px;
+	    margin-right: 4%;
+}
+
+.list{
+	width:100%;
+	height: 40px;
+	background-color: #fff;
+	border-bottom: 1px solid lightgray;
+}
+
+.s_right{    
+	background-image: url(../wimages/personal/jt_rr.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 30px;
+    background-position: center;
+    display: block;
+    /* margin-left: 2px; */
+    margin-top: 8px;
+    float: right;
+    }
+    
+ .add_font{
+ 	width:70%;
+ 	height: 40px;
+ 	line-height: 40px;
+ 	float:left;
+ 	font-size: 14px;
+ }
+ 
+ .ph_font{
+ 	width:40%;
+ 	height: 40px;
+ 	line-height: 40px;
+ 	float:left;
+ 	font-size: 14px;
+ }
+
+.r_font{
+	width:55%;
+	color:#11cd6e;
+	font-weight: 600;
+	float:left;
+	margin-top: 30px;
+	}
+
+.r_pic{    
+	background-image: url(../wimages/rz.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    background-position: center;
+    display: block;
+    /* margin-left: 2px; */
+    margin-top: 22px;
+    float: left;
+    }
+
+.star {
+            float: left;
+        }
+        
+.shop_name{
+	text-align: center;
+}
